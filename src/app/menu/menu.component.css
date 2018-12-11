@@ -1,0 +1,16 @@
+.header {
+    background: #417af8;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    height: 60px;
+}
+
+nav a {
+    color: white
+}
+
+.custom_width {
+    width: 40%;
+    display: inline-flex;
+}

@@ -20,6 +20,7 @@ nav a {
 
 .custom_width {
     width: 50%;
+    display: inline-flex;
 }
 
 .box {

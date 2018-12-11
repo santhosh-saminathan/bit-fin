@@ -1,0 +1,27 @@
+.nav-tabs>li {
+    width: 20%;
+    text-align: center;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+    font-weight: bold;
+    border:none;
+    border-bottom: 2px solid #417af8;
+}
+
+a{
+    color: #417af8
+}
+.nav-tabs{
+    border-bottom: none;
+}
+
+.bg_color{
+    background:  #f2f2f3;
+    height:calc(100vh - 60px);
+}
+
+.container{
+    background: white;
+    height:calc(100vh - 60px);
+}
