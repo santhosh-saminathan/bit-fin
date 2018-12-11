@@ -1,0 +1,56 @@
+.header {
+    background: #417af8;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    height: 60px;
+}
+
+.register-section {
+    background: #f2efff;
+    position: relative;
+    top: 60px;
+    padding: 50px 0px;
+    color: black !important;
+}
+
+nav a {
+    color: white
+}
+
+.custom_width {
+    width: 50%;
+}
+
+.box {
+    /* border:1px solid grey; */
+    background: white;
+    border-radius: 3px;
+    padding: 20px;
+    /* line-height: 2; */
+}
+
+.input input {
+    padding: 0px 5px;
+}
+
+label {
+    margin: 0px;
+}
+
+.form-group {
+    text-align: left;
+}
+
+.login_btn {
+    background: #417af8;
+    color: white;
+    font-size: 14px;
+    width: 100%;
+}
+
+footer.footer {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    background: #f2efff;
+}
