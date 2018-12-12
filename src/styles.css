@@ -7,3 +7,12 @@
 .text_align_center{
     text-align: center;
 }
+.btn-primary{
+    background-color: #417af8;
+    border-color: #417af8;
+}
+
+.btn-primary:focus, .btn-primary:hover{
+    background-color: #0b56fd;
+    border-color: #417af8;
+}

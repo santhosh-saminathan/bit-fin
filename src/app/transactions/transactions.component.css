@@ -14,14 +14,41 @@ a{
 }
 .nav-tabs{
     border-bottom: none;
+    padding-top:10px;
 }
 
 .bg_color{
-    background:  #f2f2f3;
-    height:calc(100vh - 60px);
+    background: white;
+    /* height:calc(100vh - 60px); */
 }
 
 .container{
     background: white;
-    height:calc(100vh - 60px);
+    min-height:calc(100vh - 121px);
+}
+.internal_section {
+    padding: 10px;
+}
+
+.center_align {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.text_align_left {
+    text-align: left;
+}
+
+.text_align_left{
+    text-align: left;
+}
+.table-bordered {
+    border: 1px solid #ddd;
+}
+td{
+    white-space: nowrap;
+    padding: 10px !important;
+}
+th{
+    text-align: center;
 }
