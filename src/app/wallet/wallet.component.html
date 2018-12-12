@@ -7,19 +7,85 @@
     <div class="container">
 
       <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#wallet">WALLET</a></li>
-        <li><a data-toggle="tab" href="#send">SEND</a></li>
-        <li><a data-toggle="tab" href="#receive">RECEIVE</a></li>
-        <li><a data-toggle="tab" href="#deposit">DEPOSIT</a></li>
-        <li><a data-toggle="tab" href="#withdraw">WITHDRAW</a></li>
+        <li class="active">
+          <a data-toggle="tab" href="#wallet">WALLET</a>
+        </li>
+        <li>
+          <a data-toggle="tab" href="#send">SEND</a>
+        </li>
+        <li>
+          <a data-toggle="tab" href="#receive">RECEIVE</a>
+        </li>
+        <li>
+          <a data-toggle="tab" href="#deposit">DEPOSIT</a>
+        </li>
+        <li>
+          <a data-toggle="tab" href="#withdraw">WITHDRAW</a>
+        </li>
       </ul>
 
       <div class="tab-content">
-        <div id="wallet" class="tab-pane fade in active">
+        <div id="wallet" class="tab-pane fade ">
           <div> Wallet details</div>
         </div>
-        <div id="send" class="tab-pane fade">
-          <div>Send money</div>
+        <div id="send" class="tab-pane fade in active">
+          <div class="internal_section">
+            <div class="text_align_center center_align">
+              <h4>Send Money</h4>
+              <div>
+                <br>
+                <p class="text_align_left">
+                  Send money to other people who are registered on the app. A small transaction fee will apply above the amount you intend
+                  to send and it would be deducted from your balance.
+                </p>
+                <br>
+                <form class="form-horizontal" action="/action_page.php">
+
+                  <div class="form-group">
+                    <label class="control-label col-sm-4" for="email">Available Balance:</label>
+                    <div class="col-sm-8 text_align_left" style="margin-top:8px">
+                      $ 182.44
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label col-sm-4" for="mobile">Receipient Mobile:</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="mobile" placeholder="Recipient Mobile Number" name="mobile">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-sm-4" for="amount">Amount to Send:</label>
+                    <div class="col-sm-8">
+                      <input type="number" class="form-control" id="amount" placeholder="Enter the amount" name="amount">
+                    </div>
+                  </div>
+
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Amount to be sent</td>
+                        <td>$11</td>
+                      </tr>
+                      <tr>
+                        <td>Transaction Fee</td>
+                        <td>$11</td>
+                      </tr>
+                      <tr>
+                        <td>Total</td>
+                        <td>$11</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
         <div id="receive" class="tab-pane fade">
           <div>Receive money</div>

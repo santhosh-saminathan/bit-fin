@@ -3,25 +3,48 @@
     text-align: center;
 }
 
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
     font-weight: bold;
-    border:none;
+    border: none;
     border-bottom: 2px solid #417af8;
 }
 
-a{
+a {
     color: #417af8
 }
-.nav-tabs{
+
+.nav-tabs {
     border-bottom: none;
 }
 
-.bg_color{
-    background:  #f2f2f3;
-    height:calc(100vh - 60px);
+.bg_color {
+    background: #f2f2f3;
+    height: calc(100vh - 60px);
 }
 
-.container{
+.container {
     background: white;
-    height:calc(100vh - 60px);
+    height: calc(100vh - 60px);
+}
+
+.internal_section {
+    padding: 10px;
+}
+
+.center_align {
+    width: 60%;
+    margin: 0 auto;
+}
+
+.text_align_left {
+    text-align: left;
+}
+
+table {
+    float: right;
+}
+
+td {
+    padding: 5px;
+    text-align: left;
 }
