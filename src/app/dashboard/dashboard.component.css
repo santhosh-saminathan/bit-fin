@@ -1,0 +1,37 @@
+.dashboard_section {
+    padding: 15px 0px;
+}
+
+.balance_section {
+    /* border: 1px solid red; */
+    margin: 15px;
+}
+
+.graph_section {
+    /* border: 1px solid red; */
+    margin: 15px;
+}
+
+.recent_activities_section {
+    /* border: 1px solid red; */
+    margin: 15px;
+}
+
+.outer_box{
+    border:1px solid blue;
+    padding: 10px;
+    border-radius: 4px;
+    background: #417af8;
+    color:white;
+    text-align: center;
+    margin: 10px;
+}
+
+.font_bold{
+    font-weight: bold;
+}
+.conversion_rate{
+    font-size: 21px;
+    font-weight: bold;
+    padding:  6px 0px;
+}

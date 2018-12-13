@@ -1,4 +1,40 @@
 <app-menu></app-menu>
 <section class="top_custom_height">
-  dsahboer
+  <div class="container dashboard_section">
+    <div class="balance_section">
+        <h4 class="font_bold">Your Account Balance</h4>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="outer_box">
+            <h4 class="font_bold">Available Balance - USD</h4>
+            <h3 class="font_bold">$ 45.88555533</h3>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="outer_box">
+            <h4 class="font_bold">Available Balance - XLM</h4>
+            <h3 class="font_bold"> 45.88995544 XLM</h3>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="outer_box">
+            <!-- <h4 class="font_bold">Rate Flow</h4> -->
+            <div class="conversion_rate">1 XLM = 0.1129 USD</div>
+            <div class="conversion_rate">1 USD = 14.66 XLM</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="graph_section">
+      <h4 class="font_bold">XLM Rate Flow</h4>
+      <div style="display: block;">
+        <canvas baseChart width="300" height="120" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+          [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
+      </div>
+
+    </div>
+    <div class="recent_activities_section">
+      <h4 class="font_bold">Recent Transactions</h4>
+    </div>
+  </div>
 </section>
