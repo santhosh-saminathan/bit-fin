@@ -1,4 +1,59 @@
 <app-menu></app-menu>
 <section class="top_custom_height">
-  progilr
+  <div class="container profile_section">
+    <h3>KYC Details</h3>
+    <p>Submit your "Know Your Customer" documentation below. We are required to collect these as part of legal
+      requirements and regulatory complilance.</p>
+    <p>Note: Please make sure that you upload a High Resolution image. Photo should be clear & readable</p>
+
+    <br>
+    <div class="row">
+      <div class="col-sm-4">
+        <h4>Address Proof</h4>
+        <p>Document which contains your full address.</p>
+        <br>
+        <div class="">
+          <label for="file-upload" class="custom_file_input">
+            <i class="fas fa-edit"></i>
+          </label>
+          <input (change)="documentUpload()" id="file-upload" type="file" accept=".png, .jpg, .jpeg" #avatar>
+          <img src="./../../assets/img/idproof_default.png">
+          <div *ngIf="picDetails">New Pic:
+            <b>{{picDetails.name}}</b> , Size: {{picDetails.size}} bytes</div>
+          <div class="size_exceed_error" *ngIf="maxSizeExceed">Maximum file size should be 1.5 Mb</div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <h4>Id Proof</h4>
+        <p>Any government Id proof of you.</p>
+        <br>
+        <div class="">
+          <label for="file-upload" class="custom_file_input">
+            <i class="fas fa-edit"></i>
+          </label>
+          <input (change)="documentUpload()" id="file-upload" type="file" accept=".png, .jpg, .jpeg" #avatar>
+          <img src="./../../assets/img/idproof_default.png">
+          <div *ngIf="picDetails">New Pic:
+            <b>{{picDetails.name}}</b> , Size: {{picDetails.size}} bytes</div>
+          <div class="size_exceed_error" *ngIf="maxSizeExceed">Maximum file size should be 1.5 Mb</div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <h4>Profile Proof</h4>
+        <p>Photo of you holding Id proof document.</p>
+        <br>
+        <div class="">
+          <label for="file-upload" class="custom_file_input">
+            <i class="fas fa-edit"></i>
+          </label>
+          <input (change)="documentUpload()" id="file-upload" type="file" accept=".png, .jpg, .jpeg" #avatar>
+          <img src="./../../assets/img/idproof_default.png">
+          <div *ngIf="picDetails">New Pic:
+            <b>{{picDetails.name}}</b> , Size: {{picDetails.size}} bytes</div>
+          <div class="size_exceed_error" *ngIf="maxSizeExceed">Maximum file size should be 1.5 Mb</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-footer></app-footer>
 </section>

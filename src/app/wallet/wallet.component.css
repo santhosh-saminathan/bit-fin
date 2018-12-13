@@ -27,6 +27,7 @@ a , .theme_color {
 .container {
     background: white;
     min-height:calc(100vh - 121px);
+    padding-bottom: 10px;
 }
 
 .internal_section {
@@ -49,4 +50,16 @@ table {
 td {
     padding: 5px;
     text-align: left;
+}
+.saved_card_section{
+    padding: 10px 0px;
+}
+
+.text_align_left{
+    text-align: left;
+
+}
+
+.red{
+    color: red;
 }

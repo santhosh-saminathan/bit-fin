@@ -28,7 +28,7 @@
         <!-- <div id="wallet" class="tab-pane fade ">
           <div> Wallet details</div>
         </div> -->
-        <div id="send" class="tab-pane fade in active">
+        <div id="send" class="tab-pane fade">
           <div class="internal_section">
             <div class="text_align_center center_align">
               <h4>Send Money</h4>
@@ -112,29 +112,89 @@
             </div>
           </div>
         </div>
-        <div id="deposit" class="tab-pane fade">
+        <div id="deposit" class="tab-pane fade  in active">
           <div class="internal_section">
             <div class="text_align_center center_align">
-              <h4>Add money</h4>
+              <h4 class="text_align_left">Add money</h4>
               <div>
                 <br>
                 <p class="text_align_left">
                   Add money to your wallet and the amount will be available for sending to others.
                 </p>
                 <br>
-                <br>
                 <div class="form-group">
                   <label class="control-label col-sm-4" for="amountToAdd">Amount to Add:</label>
                   <div class="col-sm-8">
                     <input type="number" class="form-control" id="amountToAdd" placeholder="Enter the amount" name="amountToAdd">
+                    <span style="float:right;font-size: 12px;">* Transaction Fee Applies</span>
                   </div>
                 </div>
                 <br>
-                <p class="text_align_left">
+                <br>
+                <div class="text_align_left">
                   Tip: Keep sufficient balance in your wallet, a small transaction fee will be apply above the amount
                   you plan to send.
-                </p>
+                </div>
               </div>
+
+              <div class="saved_card_section">
+                <h4 class="text_align_left">Saved Cards</h4>
+              </div>
+              <div class="saved_card_section">
+                <h4 class="text_align_left">New Card</h4>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group text_align_left">
+                      <label for="usrName">Name on Card <span class="red">*</span></label>
+                      <input type="text" class="form-control" id="usrName">
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group text_align_left">
+                      <label for="cardNum">Card Number <span class="red">*</span></label>
+                      <input type="number" class="form-control" id="cardNum">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div class="form-group text_align_left">
+                      <label for="month">Month <span class="red">*</span></label>
+                      <select class="form-control" id="month">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group text_align_left">
+                      <label for="year">Year <span class="red">*</span></label>
+                      <select class="form-control" id="year">
+                        <option>2020</option>
+                        <option>2021</option>
+                        <option>2022</option>
+                        <option>2023</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group text_align_left">
+                      <label for="cvvNum">CVV Number <span class="red">*</span></label>
+                      <input type="number" class="form-control" id="cvvNum">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <button style="float:right" type="submit" class="btn btn-primary">Add New Card</button>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
