@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import { InternationalPhoneModule } from 'ng4-intl-phone';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,7 +18,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { FooterComponent } from './footer/footer.component';
 import { SigningService } from './services/signing.service';
 import { ProfileService } from './services/profile.service';
-import { InternationalPhoneModule } from 'ng4-intl-phone';
+import { CryptoService } from './services/crypto.service';
+
 
 
 @NgModule({
@@ -41,7 +43,7 @@ import { InternationalPhoneModule } from 'ng4-intl-phone';
     HttpClientJsonpModule,
     InternationalPhoneModule
   ],
-  providers: [SigningService, ProfileService],
+  providers: [SigningService, ProfileService, CryptoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

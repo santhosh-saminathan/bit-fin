@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CryptoService } from './../services/crypto.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,8 +10,10 @@ export class DashboardComponent implements OnInit {
   lineChartData: any;
   lineChartLabels: any;
   lineChartColors: any;
+  usd_Xlm: any;
+  xlm_Usd: any;
 
-  constructor() { }
+  constructor(private cryptoService: CryptoService) { }
 
   // lineChart
 
@@ -18,11 +21,13 @@ export class DashboardComponent implements OnInit {
     responsive: true,
     scales: {
       yAxes: [
-      { ticks: { min: 0, stepValue: 10, max: 100 },
-      scaleLabel: {
-        display: true,
-        labelString: 'probability'
-      } }]
+        {
+          ticks: { min: 0, stepValue: 10, max: 100 },
+          scaleLabel: {
+            display: true,
+            labelString: 'probability'
+          }
+        }]
     }
   };
 
@@ -30,6 +35,22 @@ export class DashboardComponent implements OnInit {
   public lineChartType: string = 'line';
 
   ngOnInit() {
+
+
+    this.cryptoService.getUsdToXlm().subscribe(data => {
+      console.log(data);
+      this.usd_Xlm = data;
+    }, err => {
+      console.log(err);
+    })
+
+    this.cryptoService.getXlmToUsd().subscribe(data => {
+      console.log(data);
+      this.xlm_Usd = data;
+    }, err => {
+      console.log(err);
+    })
+
     this.lineChartData = [
       { data: [65, 59, 80, 81, 56, 55, 40, 54, 54, 54, 45], label: 'XLM Rate flow' },
     ];
