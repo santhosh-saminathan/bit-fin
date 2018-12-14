@@ -1,7 +1,8 @@
 <!-- Navigation -->
 <nav class="navbar navbar-light header static-top">
   <div class="container">
-    <a class="navbar-brand custom_width"><img src="assets/img/bit-fin-white.png" style="width: 20px;margin-right: 10px;"> BitFin</a>
+    <a class="navbar-brand custom_width">
+      <img src="assets/img/bit-fin-white.png" style="width: 20px;margin-right: 10px;"> BitFin</a>
     <a class="btn btn-link">About</a>
     <a class="btn btn-link">How it works</a>
     <a class="btn btn-link">Login</a>
@@ -13,6 +14,7 @@
 <header class="register-section text-white text-center">
   <div class="overlay"></div>
   <div class="container">
+
 
     <div class="row">
       <div class="col-sm-4">
@@ -26,28 +28,45 @@
       <div class="col-sm-4">
         <div class="box">
           <h4>Sign In</h4>
+          <div class="error_msg">{{invalidMobile}}</div>
 
-
-          <div class="form-group">
-            <label>Mobile Number</label>
-            <input type="text" autocomplete="false" onkeydown="return ( event.ctrlKey || event.altKey 
-                  || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) 
-                  || (95<event.keyCode && event.keyCode<106)
-                  || (event.keyCode==8) || (event.keyCode==9) 
-                  || (event.keyCode>34 && event.keyCode<40) 
-                  || (event.keyCode==46) )" class="form-control form-white" placeholder="Phone Number" name="phone" [(ngModel)]="login.phone">
+          <div *ngIf="!otpScreen">
+            <div class="form-group">
+              <label class="normal_font_weight">Mobile Number</label>
+              <int-phone-prefix [locale]="'hi'" id="mobileNumber" (change)="countryCode($event)" defaultCountry="in" [(ngModel)]="login.phone"></int-phone-prefix>
+            </div>
+            <div class="form-group">
+              <label class="normal_font_weight">Password</label>
+              <input type="password" class="form-control form-white" placeholder="Password" name="password" [(ngModel)]="login.password">
+              <a class="forgot_pass_option" (click)="forgotPasswordScreen()">Forgot Password?</a>
+            </div>
+            <button type="submit" class="btn btn-submit login_btn" (click)="loginUser()">Login</button>
+            <div style="font-size: 12px;text-align:left;padding-top:4px">* For demo purpose mobile number and password are prefilled. For this for
+              <span class="new_login" (click)="newLogin()">New login</span>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label>Password</label>
-            <input type="password" class="form-control form-white" placeholder="Password" name="password" [(ngModel)]="login.password">
-            <a class="cursor_poiter" (click)="forgotPasswordScreen()">Forgot Password?</a>
+          <div *ngIf="otpScreen">
+
+            <div style="font-size: 12px;text-align:left;">
+              * For demo purpose, OTP will be displayed here
+              <b> {{loginResponse.otp}}</b>
+            </div>
+            <br>
+            <div>
+              Enter the verification code sent to your registered mobile number {{loginResponse.code}} {{loginResponse.mobile_number}}
+            </div>
+            <br>
+            <div>
+              <input type="text" id="partitioned" maxlength="4" name="otpCode" [(ngModel)]="otp" />
+            </div>
+            <br>
+
+            <button type="submit" class="btn btn-submit login_btn" (click)="verifyOTP()">Submit</button>
 
           </div>
 
-          <div class="text-left">
-          </div>
-          <button type="submit" class="btn btn-submit login_btn" (click)="loginUser()">Login</button>
+
         </div>
       </div>
 

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +15,10 @@ import { WalletComponent } from './wallet/wallet.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { ProfileComponent } from './profile/profile.component';
 import { FooterComponent } from './footer/footer.component';
+import { SigningService } from './services/signing.service';
+import { ProfileService } from './services/profile.service';
+import { InternationalPhoneModule } from 'ng4-intl-phone';
+
 
 @NgModule({
   declarations: [
@@ -33,9 +37,11 @@ import { FooterComponent } from './footer/footer.component';
     FormsModule,
     QRCodeModule,
     ChartsModule,
-    AngularFontAwesomeModule
+    HttpClientModule,
+    HttpClientJsonpModule,
+    InternationalPhoneModule
   ],
-  providers: [],
+  providers: [SigningService, ProfileService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

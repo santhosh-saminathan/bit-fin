@@ -55,3 +55,30 @@ footer.footer {
     padding-bottom: 2rem;
     background: #f2efff;
 }
+
+.error_msg {
+    color: red;
+    text-align: center;
+}
+
+.normal_font_weight {
+    font-weight: 500;
+}
+
+.forgot_pass_option {
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.new_login {
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#partitioned {
+    letter-spacing: 30px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid grey;
+}

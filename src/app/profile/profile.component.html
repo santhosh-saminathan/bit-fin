@@ -1,59 +1,132 @@
 <app-menu></app-menu>
 <section class="top_custom_height">
   <div class="container profile_section">
-    <h3>KYC Details</h3>
-    <p>Submit your "Know Your Customer" documentation below. We are required to collect these as part of legal
-      requirements and regulatory complilance.</p>
-    <p>Note: Please make sure that you upload a High Resolution image. Photo should be clear & readable</p>
 
-    <br>
-    <div class="row">
-      <div class="col-sm-4">
-        <h4>Address Proof</h4>
-        <p>Document which contains your full address.</p>
-        <br>
-        <div class="">
-          <label for="file-upload" class="custom_file_input">
-            <i class="fas fa-edit"></i>
-          </label>
-          <input (change)="documentUpload()" id="file-upload" type="file" accept=".png, .jpg, .jpeg" #avatar>
-          <img src="./../../assets/img/idproof_default.png">
-          <div *ngIf="picDetails">New Pic:
-            <b>{{picDetails.name}}</b> , Size: {{picDetails.size}} bytes</div>
-          <div class="size_exceed_error" *ngIf="maxSizeExceed">Maximum file size should be 1.5 Mb</div>
+    <div class="profile">
+      <h3>Profile Details</h3>
+      <div class="row">
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label class="control-label col-sm-4" for="fname">First Name:</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control profile" placeholder="First name" [(ngModel)]="profileDetails.firstName" name="fname">
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="col-sm-4">
-        <h4>Id Proof</h4>
-        <p>Any government Id proof of you.</p>
-        <br>
-        <div class="">
-          <label for="file-upload" class="custom_file_input">
-            <i class="fas fa-edit"></i>
-          </label>
-          <input (change)="documentUpload()" id="file-upload" type="file" accept=".png, .jpg, .jpeg" #avatar>
-          <img src="./../../assets/img/idproof_default.png">
-          <div *ngIf="picDetails">New Pic:
-            <b>{{picDetails.name}}</b> , Size: {{picDetails.size}} bytes</div>
-          <div class="size_exceed_error" *ngIf="maxSizeExceed">Maximum file size should be 1.5 Mb</div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label class="control-label col-sm-4" for="lname">Last Name:</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control profile" placeholder="Last name" [(ngModel)]="profileDetails.lastName" name="lname">
+            </div>
+          </div>
         </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label class="control-label col-sm-4" for="email">Email:</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control profile" placeholder="demo@email.com" [(ngModel)]="profileDetails.email" name="email">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label class="control-label col-sm-4" for="dob">Date of Birth:</label>
+            <div class="col-sm-8">
+              <!-- <input class="datePicker" type="datetime-local" name="dob" [(ngModel)]="profileDetails.dob"> -->
+              <input type="date" class="form-control profile" placeholder="15-04-1996" [(ngModel)]="profileDetails.dob" name="dob">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label class="control-label col-sm-4" for="address">Address:</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control profile" placeholder="Mecricar road" [(ngModel)]="profileDetails.address" name="address">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label class="control-label col-sm-4" for="postcode">Postal Code:</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control profile" placeholder="643232" [(ngModel)]="profileDetails.postal" name="postcode">
+            </div>
+          </div>
+        </div>
+        <div style="width:100%">
+          <button style="float:right;margin-right:20px" type="submit" class="btn btn-primary" (click)="updateProfile()">Update Profile</button>
+
+        </div>
+
       </div>
-      <div class="col-sm-4">
-        <h4>Profile Proof</h4>
-        <p>Photo of you holding Id proof document.</p>
-        <br>
-        <div class="">
-          <label for="file-upload" class="custom_file_input">
-            <i class="fas fa-edit"></i>
-          </label>
-          <input (change)="documentUpload()" id="file-upload" type="file" accept=".png, .jpg, .jpeg" #avatar>
-          <img src="./../../assets/img/idproof_default.png">
-          <div *ngIf="picDetails">New Pic:
-            <b>{{picDetails.name}}</b> , Size: {{picDetails.size}} bytes</div>
-          <div class="size_exceed_error" *ngIf="maxSizeExceed">Maximum file size should be 1.5 Mb</div>
+    </div>
+
+    <div class="kyc">
+      <h3>KYC Details</h3>
+      <p>Submit your "Know Your Customer" documentation below. We are required to collect these as part of legal requirements
+        and regulatory complilance.</p>
+      <p>Note: Please make sure that you upload a High Resolution image. Photo should be clear & readable</p>
+
+      <br>
+      <div class="row">
+        <div class="col-sm-4">
+          <h4>Address Proof</h4>
+          <p>Document which contains your full address.</p>
+          <br>
+          <div class="">
+            <label for="addressproof" class="custom_file_input">
+              <i class="fas fa-edit"></i>
+            </label>
+            <input (change)="documentUpload()" name="addressproof" id="addressproof" type="file" accept=".png, .jpg, .jpeg" #avatar>
+            <img src="./../../assets/img/idproof_default.png">
+            <div *ngIf="picDetails">New Pic:
+              <b>{{picDetails.name}}</b> , Size: {{picDetails.size}} bytes</div>
+            <div class="size_exceed_error" *ngIf="maxSizeExceed">Maximum file size should be 1.5 Mb</div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <h4>Id Proof</h4>
+          <p>Any government Id proof of you.</p>
+          <br>
+          <div class="">
+            <label for="idproof" class="custom_file_input">
+              <i class="fas fa-edit"></i>
+            </label>
+            <input (change)="documentUpload()" name="idproof" id="idproof" type="file" accept=".png, .jpg, .jpeg" #avatar>
+            <img src="./../../assets/img/idproof_default.png">
+            <div *ngIf="picDetails">New Pic:
+              <b>{{picDetails.name}}</b> , Size: {{picDetails.size}} bytes</div>
+            <div class="size_exceed_error" *ngIf="maxSizeExceed">Maximum file size should be 1.5 Mb</div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <h4>Profile Proof</h4>
+          <p>Photo of you holding Id proof document.</p>
+          <br>
+          <div class="">
+            <label for="profileproof" class="custom_file_input">
+              <i class="fas fa-edit"></i>
+            </label>
+            <input type="file" accept="image/*" id="profileproof" name="profileproof" class="btn btn-sm image_input_style" (change)="fileChangeListener($event)"
+            />
+
+            <!-- <input (change)="fileChangeListener($event)" type="file" accept=".png, .jpg, .jpeg" > -->
+            <img src="./../../assets/img/idproof_default.png">
+            <div *ngIf="picDetails">New Pic:
+              <b>{{picDetails.name}}</b> , Size: {{picDetails.size}} bytes</div>
+            <div class="size_exceed_error" *ngIf="maxSizeExceed">Maximum file size should be 1.5 Mb</div>
+          </div>
         </div>
       </div>
     </div>
+
   </div>
   <app-footer></app-footer>
 </section>
