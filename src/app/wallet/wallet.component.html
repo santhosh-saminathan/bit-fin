@@ -7,9 +7,6 @@
     <div class="container">
 
       <ul class="nav nav-tabs">
-        <!-- <li>
-          <a data-toggle="tab" href="#wallet">WALLET</a>
-        </li> -->
         <li class="active">
           <a data-toggle="tab" href="#send">SEND</a>
         </li>
@@ -25,18 +22,15 @@
       </ul>
 
       <div class="tab-content">
-        <!-- <div id="wallet" class="tab-pane fade ">
-          <div> Wallet details</div>
-        </div> -->
-        <div id="send" class="tab-pane fade">
+
+        <div id="send" class="tab-pane fade in active">
           <div class="internal_section">
-            <div class="text_align_center center_align">
+            <div class="text_align_center width_60">
               <h4>Send Money</h4>
               <div>
                 <br>
                 <p class="text_align_left">
-                  Send money to other people who are registered on the app. A small transaction fee will apply above
-                  the amount you intend
+                  Send money to other people who are registered on the app. A small transaction fee will apply above the amount you intend
                   to send and it would be deducted from your balance.
                 </p>
                 <br>
@@ -90,20 +84,21 @@
         </div>
         <div id="receive" class="tab-pane fade">
           <div class="internal_section">
-            <div class="text_align_center center_align">
+            <div class="text_align_center width_60">
               <h4>Receive money</h4>
               <div>
                 <br>
                 <p class="text_align_left">
-                  To receive money, the other person sending money has to scan the QR code or type your phone number
-                  displayed below. Only users registered on the app can send you money.
+                  To receive money, the other person sending money has to scan the QR code or type your phone number displayed below. Only
+                  users registered on the app can send you money.
                 </p>
                 <br>
                 <div style="margin-left: calc(100% - 60%);">
                   <qrcode [qrdata]="yourMobileNumber" [size]="128" [level]="'H'"></qrcode>
                 </div>
                 <br>
-                <div> <span class="theme_color"> Mobile Number </span> : 989789779</div>
+                <div>
+                  <span class="theme_color"> Mobile Number </span> : 989789779</div>
                 <br>
                 <p class="text_align_left">
                   Tip: You can also screenshot the QR code image and display it on your website or shop.
@@ -114,7 +109,7 @@
         </div>
         <div id="deposit" class="tab-pane fade ">
           <div class="internal_section">
-            <div class="text_align_center center_align">
+            <div class="text_align_center width_80">
               <h4 class="text_align_left">Add money</h4>
               <div>
                 <br>
@@ -132,26 +127,78 @@
                 <br>
                 <br>
                 <div class="text_align_left">
-                  Tip: Keep sufficient balance in your wallet, a small transaction fee will be apply above the amount
-                  you plan to send.
+                  Tip: Keep sufficient balance in your wallet, a small transaction fee will be apply above the amount you plan to send.
                 </div>
               </div>
 
               <div class="saved_card_section">
                 <h4 class="text_align_left">Saved Cards</h4>
+                <div class="row">
+                  <div [ngClass]="{'selected': card.selected}" (click)="selectedCard(card)" class="text_align_left col-xs-6 card" *ngFor="let card of savedCards">
+                    <div class="row card_top">
+                      <div class="col-xs-6">
+                        <span class="card_label">
+                          Card Number
+                        </span>
+                        <br>
+                        <span>{{card.cardNumber}}</span>
+                      </div>
+                      <div class="col-xs-6" style="text-align:right;font-size:20px;font-weight:bold">
+                        <span>{{card.cardType}}</span>
+                      </div>
+                    </div>
+                    <!-- <br> -->
+                    <div class="row card_bottom">
+                      <div class="col-xs-4">
+                        <span class="card_label">
+                          Expiry Date
+                        </span>
+                        <br>
+                        <span>{{card.expDate}}</span>
+                      </div>
+                      <div class="col-xs-4">
+                        <span class="card_label">
+                          Card Holder
+                        </span>
+                        <br>
+                        <span style="white-space:nowrap">{{card.holderName.slice(0,10)}}
+                          <span *ngIf="card.holderName.length>10">... </span>
+                        </span>
+                      </div>
+                      <div class="col-xs-4" style="text-align:center">
+                        <span class="card_label">
+                          CVV
+                        </span>
+                        <br>
+                        <span>{{card.cvv}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <button style="float:right" type="submit" class="btn btn-primary">Use This Card</button>
+                  </div>
+                </div>
+
               </div>
               <div class="saved_card_section">
                 <h4 class="text_align_left">New Card</h4>
                 <div class="row">
                   <div class="col-sm-6">
                     <div class="form-group text_align_left">
-                      <label for="usrName">Name on Card <span class="red">*</span></label>
+                      <label for="usrName">Name on Card
+                        <span class="red">*</span>
+                      </label>
                       <input type="text" class="form-control" id="usrName">
                     </div>
                   </div>
                   <div class="col-sm-6">
                     <div class="form-group text_align_left">
-                      <label for="cardNum">Card Number <span class="red">*</span></label>
+                      <label for="cardNum">Card Number
+                        <span class="red">*</span>
+                      </label>
                       <input type="number" class="form-control" id="cardNum">
                     </div>
                   </div>
@@ -159,7 +206,9 @@
                 <div class="row">
                   <div class="col-sm-3">
                     <div class="form-group text_align_left">
-                      <label for="month">Month <span class="red">*</span></label>
+                      <label for="month">Month
+                        <span class="red">*</span>
+                      </label>
                       <select class="form-control" id="month">
                         <option>1</option>
                         <option>2</option>
@@ -170,7 +219,9 @@
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group text_align_left">
-                      <label for="year">Year <span class="red">*</span></label>
+                      <label for="year">Year
+                        <span class="red">*</span>
+                      </label>
                       <select class="form-control" id="year">
                         <option>2020</option>
                         <option>2021</option>
@@ -182,7 +233,9 @@
 
                   <div class="col-sm-6">
                     <div class="form-group text_align_left">
-                      <label for="cvvNum">CVV Number <span class="red">*</span></label>
+                      <label for="cvvNum">CVV Number
+                        <span class="red">*</span>
+                      </label>
                       <input type="number" class="form-control" id="cvvNum">
                     </div>
                   </div>
@@ -198,38 +251,191 @@
             </div>
           </div>
         </div>
-        <div id="withdraw" class="tab-pane fade in active">
-            <div class="internal_section">
-                <div class="text_align_center center_align">
-                  <h4 class="text_align_left">Withdraw money</h4>
-                  <div>
-                    <br>
-                    <p class="text_align_left">
-                      Add money to your wallet and the amount will be available for sending to others.
-                    </p>
-                    <br>
-                    <div class="form-group">
-                      <label class="control-label col-sm-4" for="amountToAdd">Amount to Add:</label>
-                      <div class="col-sm-8">
-                        <input type="number" class="form-control" id="amountToAdd" placeholder="Enter the amount" name="amountToAdd">
-                        <span style="float:right;font-size: 12px;">* Transaction Fee Applies</span>
+        <div id="withdraw" class="tab-pane fade ">
+          <div class="internal_section">
+            <div class="text_align_center width_80">
+              <h4 class="text_align_left">Withdraw money</h4>
+              <div>
+                <br>
+                <p class="text_align_left">
+                  Refund money from your wallet to your bank account.
+                </p>
+                <br>
+                <div class="form-group">
+                  <label class="control-label col-sm-4" for="amountToWithdraw">Amount to Withdraw:</label>
+                  <div class="col-sm-8">
+                    <input type="number" class="form-control" id="amountToWithdraw" placeholder="Enter the amount" name="amountToWithdraw">
+                    <span style="float:right;font-size: 12px;">* Transaction Fee Applies</span>
+                  </div>
+                </div>
+                <br>
+              </div>
+
+              <div class="saved_card_section">
+                <h4 class="text_align_left">Saved Cards</h4>
+                <div class="row">
+                  <div [ngClass]="{'selected': card.selected}" (click)="selectedCard(card)" class="text_align_left col-xs-6 card" *ngFor="let card of savedCards">
+                    <div class="row card_top">
+                      <div class="col-xs-6">
+                        <span class="card_label">
+                          Card Number
+                        </span>
+                        <br>
+                        <span>{{card.cardNumber}}</span>
+                      </div>
+                      <div class="col-xs-6" style="text-align:right;font-size:20px;font-weight:bold">
+                        <span>{{card.cardType}}</span>
                       </div>
                     </div>
-                    <br>
-                    <br>
-                    <div class="text_align_left">
-                      Tip: Keep sufficient balance in your wallet, a small transaction fee will be apply above the amount
-                      you plan to send.
+                    <!-- <br> -->
+                    <div class="row card_bottom">
+                      <div class="col-xs-4">
+                        <span class="card_label">
+                          Expiry Date
+                        </span>
+                        <br>
+                        <span>{{card.expDate}}</span>
+                      </div>
+                      <div class="col-xs-4">
+                        <span class="card_label">
+                          Card Holder
+                        </span>
+                        <br>
+                        <span style="white-space:nowrap">{{card.holderName.slice(0,10)}}
+                          <span *ngIf="card.holderName.length>10">... </span>
+                        </span>
+                      </div>
+                      <div class="col-xs-4" style="text-align:center">
+                        <span class="card_label">
+                          CVV
+                        </span>
+                        <br>
+                        <span>{{card.cvv}}</span>
+                      </div>
                     </div>
                   </div>
-    
-                  <div class="saved_card_section">
-                    <h4 class="text_align_left">Saved Cards</h4>
-                  </div>
-                
                 </div>
               </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button style="float:right" type="submit" class="btn btn-primary">Use This Card</button>
+                </div>
+              </div>
+
+              <div class="">
+                <h4 class="text_align_left">Withdraw to bank account</h4>
+                <div class="row">
+
+                  <div class="col-sm-6">
+                    <div class="form-group text_align_left">
+                      <label for="fName">First Name </label>
+                      <input type="text" class="form-control" placeholder="John" name="fName">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group text_align_left">
+                      <label for="lName">Last Name </label>
+                      <input type="text" class="form-control" placeholder="Kennedy" name="lName">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group text_align_left">
+                      <label for="address1">Address Line1 </label>
+                      <input type="text" class="form-control" placeholder="4, Leng Kee Road " name="address1">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group text_align_left">
+                      <label for="address2">Address Line2 </label>
+                      <input type="text" class="form-control" placeholder="Citilink Warehouse Complex" name="address2">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group text_align_left">
+                      <label for="state">State </label>
+                      <input type="text" class="form-control" placeholder="California" name="state">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group text_align_left">
+                      <label for="city">City </label>
+                      <input type="text" class="form-control" placeholder="Los Angeles" name="city">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group text_align_left">
+                      <label for="zipcode">Zip Code </label>
+                      <input type="text" class="form-control" placeholder="90001" name="zipcode">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group text_align_left">
+                      <label for="mobile">Mobile Number </label>
+                      <input type="number" class="form-control" placeholder="213-509-6995" name="mobile">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group text_align_left">
+                      <label for="ssn">Social Security Number </label>
+                      <input type="number" class="form-control" placeholder="XXXX" name="ssn">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group text_align_left">
+                      <label for="dob">Date of Birth </label>
+                      <input type="date" class="form-control profile" placeholder="15-04-1996" name="dob">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group text_align_left">
+                      <label for="accNum">Account Number</label>
+                      <input type="number" class="form-control" placeholder="000987466364" name="accNum">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group text_align_left">
+                      <label for="accholderName">Account Holder Name </label>
+                      <input type="text" class="form-control" placeholder="Jenny" name="accholderName">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group text_align_left">
+                      <label for="account">Account </label>
+                      <input type="text" class="form-control" placeholder="00399883477848" name="account">
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div class="form-group text_align_left">
+                      <label for="proof">Upload Proof </label>
+                      <input type="file" class="form-control" name="proof">
+                    </div>
+                  </div>
+
+
+                  <div style="width:100%">
+                    <button style="float:right;margin-right:20px" type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
 

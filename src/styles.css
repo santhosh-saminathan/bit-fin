@@ -16,3 +16,7 @@
     background-color: #0b56fd;
     border-color: #417af8;
 }
+
+::-webkit-scrollbar { 
+    display: none; 
+}

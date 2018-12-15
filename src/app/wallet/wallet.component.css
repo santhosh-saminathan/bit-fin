@@ -9,13 +9,13 @@
     border-bottom: 2px solid #417af8;
 }
 
-a , .theme_color {
+a, .theme_color {
     color: #417af8
 }
 
 .nav-tabs {
     border-bottom: none;
-    padding-top:10px;
+    padding-top: 10px;
 }
 
 .bg_color {
@@ -26,7 +26,7 @@ a , .theme_color {
 
 .container {
     background: white;
-    min-height:calc(100vh - 121px);
+    min-height: calc(100vh - 121px);
     padding-bottom: 10px;
 }
 
@@ -34,9 +34,27 @@ a , .theme_color {
     padding: 10px;
 }
 
-.center_align {
+.width_60 {
     width: 60%;
     margin: 0 auto;
+}
+
+.width_80 {
+    width: 65%;
+    margin: 0 auto;
+}
+
+@media only screen and (min-device-width: 1000px) and (max-device-width: 1200px) {
+    .width_80 {
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .width_80, .width_60 {
+        width: 100%;
+    }
 }
 
 .text_align_left {
@@ -51,15 +69,42 @@ td {
     padding: 5px;
     text-align: left;
 }
-.saved_card_section{
+
+.saved_card_section {
     padding: 10px 0px;
 }
 
-.text_align_left{
+.text_align_left {
     text-align: left;
-
 }
 
-.red{
+.red {
     color: red;
+}
+
+.card {
+    margin: 10px;
+    height: 135px;
+    width: 340px !important;
+    cursor: pointer;
+    border: 1px solid #d8d8fd;
+    background: #fbfbfd;
+}
+
+.card:hover, .selected {
+    border: 1px solid black;
+    box-shadow: 8px 8px 12px 4px #dbdde0;
+}
+
+.card_label {
+    color: grey;
+    white-space: nowrap;
+}
+
+.card_bottom {
+    padding: 15px
+}
+
+.card_top {
+    padding: 15px
 }

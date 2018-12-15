@@ -17,21 +17,30 @@
     margin: 15px;
 }
 
-.outer_box{
-    border:1px solid rgb(49, 49, 241);
+.outer_box {
+    border: 1px solid rgb(49, 49, 241);
     padding: 10px;
     border-radius: 4px;
     background: #457df7;
-    color:white;
+    color: white;
     text-align: center;
     margin: 10px;
 }
 
-.font_bold{
+.font_bold {
     font-weight: bold;
 }
-.conversion_rate{
+
+.conversion_rate {
     font-size: 21px;
     font-weight: bold;
-    padding:  6px 0px;
+    padding: 6px 0px;
+}
+
+.recent_transactions_card {
+    width: 100%;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 3px;
+    background: #f2eefe;
 }

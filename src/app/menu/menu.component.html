@@ -1,10 +1,53 @@
-<nav class="navbar navbar-light header static-top">
+<nav class="navbar navbar-light header static-top web-view">
   <div class="container">
-    <a class="navbar-brand custom_width"><img src="assets/img/bit-fin-white.png" style="width: 20px;margin-right: 10px;"> BitFin</a>
-    <a class="btn btn-link" (click)="dashboard()">Dashboard</a>
-    <a class="btn btn-link" (click)="wallet()">Wallet</a>
-    <a class="btn btn-link" (click)="transactions()">Transactions</a>
-    <a class="btn btn-link" (click)="profile()">Profile</a>
+    <a class="navbar-brand custom_width">
+      <img src="assets/img/bit-fin-white.png" style="width: 20px;margin-right: 10px;">
+      <b>BitFin</b>
+    </a>
+    <a [ngClass]="{'highlight': dashboardTag}" class="btn btn-link" (click)="dashboard()">Dashboard</a>
+    <a [ngClass]="{'highlight': walletTag}" class="btn btn-link" id="wallet" (click)="wallet()">Wallet</a>
+    <a [ngClass]="{'highlight': transactionTag}" class="btn btn-link" (click)="transactions()">Transactions</a>
+    <a [ngClass]="{'highlight': profileTag}" class="btn btn-link" (click)="profile()">Profile</a>
     <a class="btn btn-link" (click)="logout()">Logout</a>
   </div>
 </nav>
+
+
+<nav class="navbar navbar-light header static-top mobile-view">
+  <div class="container">
+    <a class="navbar-brand custom_width">
+      <img src="assets/img/bit-fin-white.png" style="width: 20px;margin-right: 10px;">
+      <b>BitFin</b>
+    </a>
+    <div style="margin: 0 auto;margin-right: 1px;">
+      <button style="border:none;background:none;font-size:20px;color:white" (click)="openNav()">&#9776;</button>
+    </div>
+
+  </div>
+</nav>
+
+<!-- <div style="position: absolute;
+height: 100vh;
+background: #417af8;
+width: 50%;
+color: white;
+z-index:2">
+  <div>
+    <div>1</div>
+    <div>1</div>
+    <div>1</div>
+    <div>1</div>
+  </div>
+
+
+</div> -->
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+  <a class="navbar-brand custom_width" style="font-size:20px;position:absolute;top:15px;"> BitFin</a>
+  <a [ngClass]="{'mobile_highlight': dashboardTag}" class="btn btn-link side_menu" (click)="dashboard()">Dashboard</a>
+  <a [ngClass]="{'mobile_highlight': walletTag}" class="btn btn-link side_menu" (click)="wallet()">Wallet</a>
+  <a [ngClass]="{'mobile_highlight': transactionTag}" class="btn btn-link side_menu" (click)="transactions()">Transactions</a>
+  <a [ngClass]="{'mobile_highlight': profileTag}" class="btn btn-link side_menu" (click)="profile()">Profile</a>
+  <a class="btn btn-link side_menu" (click)="logout()">Logout</a>
+</div>

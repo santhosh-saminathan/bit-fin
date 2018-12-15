@@ -3,21 +3,22 @@
     text-align: center;
 }
 
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
     font-weight: bold;
-    border:none;
+    border: none;
     border-bottom: 2px solid #417af8;
 }
 
-a{
+a {
     color: #417af8
 }
-.nav-tabs{
+
+.nav-tabs {
     border-bottom: none;
-    padding-top:10px;
+    padding-top: 10px;
 }
 
-.bg_color{
+.bg_color {
     background: white;
     /* height:calc(100vh - 60px); */
     /* background-image: url("./../../assets/img/bit-fin.png");
@@ -27,12 +28,12 @@ a{
     background-size: 60px 90px; */
 }
 
-.container{
+.container {
     background: white;
-    min-height:calc(100vh - 121px);
+    min-height: calc(100vh - 121px);
     padding-bottom: 10px;
-   
 }
+
 .internal_section {
     padding: 10px;
 }
@@ -42,20 +43,29 @@ a{
     margin: 0 auto;
 }
 
+@media only screen and (max-width: 768px) {
+    .center_align {
+        width: 100%;
+    }
+}
+
 .text_align_left {
     text-align: left;
 }
 
-.text_align_left{
+.text_align_left {
     text-align: left;
 }
+
 .table-bordered {
     border: 1px solid #ddd;
 }
-td{
+
+td {
     white-space: nowrap;
     padding: 10px !important;
 }
-th{
+
+th {
     text-align: center;
 }

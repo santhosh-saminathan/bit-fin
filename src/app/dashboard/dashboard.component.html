@@ -18,23 +18,53 @@
         </div>
         <div class="col-sm-4">
           <div class="outer_box">
-            <!-- <h4 class="font_bold">Rate Flow</h4> -->
             <div *ngIf="xlm_Usd" class="conversion_rate">1 XLM = {{xlm_Usd.USD}} USD</div>
             <div *ngIf="usd_Xlm" class="conversion_rate">1 USD = {{usd_Xlm.XLM}} XLM</div>
           </div>
         </div>
       </div>
     </div>
+
     <div class="graph_section">
       <h4 class="font_bold">XLM Rate Flow</h4>
       <div style="display: block;">
-        <canvas baseChart width="300" height="120" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+        <canvas baseChart width="300" height="80" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
           [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
       </div>
-
     </div>
+
     <div class="recent_activities_section">
       <h4 class="font_bold">Recent Transactions</h4>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="recent_transactions_card">
+            Successfully
+            <b style="color:blue">Sent</b> $ 15.30 USD to
+            <b>Krish Jack</b> on 15-12-2018 14.35.
+          </div>
+
+          <div class="recent_transactions_card">
+            Successfully
+            <b style="color:blue">Received</b> $ 100.50 USD from
+            <b>Krish Jack</b> on 14-12-2018 13.05.
+          </div>
+
+          <div class="recent_transactions_card">
+            Successfully
+            <b style="color:blue">Sent</b> $ 150.30 USD to
+            <b>John Kennedy</b> on 12-12-2018 01.35.
+          </div>
+
+          <div class="recent_transactions_card">
+            Successfully
+            <b style="color:blue">Received</b> $ 5.00 USD to
+            <b>Alisa</b> on 10-12-2018 10.35.
+          </div>
+        </div>
+      </div>
     </div>
+
   </div>
+
+  <app-footer></app-footer>
 </section>

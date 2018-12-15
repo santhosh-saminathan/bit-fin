@@ -4,13 +4,86 @@
     width: 100%;
     z-index: 1;
     height: 60px;
+    border-radius: 0px;
 }
 
 nav a {
-    color: white
+    color: white;
+    font-size: 16px;
+}
+
+.highlight {
+    font-weight: bold;
+    border-bottom: 2px solid white;
 }
 
 .custom_width {
-    width: 40%;
+    width: 35%;
     display: inline-flex;
+}
+
+@media only screen and (min-width: 769px) {
+    .mobile-view {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .web-view {
+        display: none;
+    }
+}
+
+.side_menu{
+    border-bottom: 1px solid white;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #417af8;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+   
+}
+
+.sidenav a {
+    padding: 10px;
+    text-decoration: none;
+    font-size: 16px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+    text-align: left;
+    padding-left: 15px;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+    .sidenav a {
+        font-size: 18px;
+    }
+}
+
+.mobile_highlight {
+    font-weight: bold;
 }

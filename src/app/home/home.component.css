@@ -4,6 +4,7 @@
     width: 100%;
     z-index: 1;
     height: 60px;
+    border-radius: 0px;
 }
 
 .register-section {
@@ -15,7 +16,8 @@
 }
 
 nav a {
-    color: white
+    color: white;
+    font-size: 16px;
 }
 
 .custom_width {
@@ -81,4 +83,11 @@ footer.footer {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid grey;
+}
+
+.features-icons .features-icons-item {
+    max-width: 100% !important;
+}
+.lead{
+    font-size: 18px;
 }
