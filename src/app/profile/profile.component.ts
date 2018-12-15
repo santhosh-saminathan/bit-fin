@@ -8,6 +8,8 @@ import { ProfileService } from './../services/profile.service';
 })
 export class ProfileComponent implements OnInit {
   profileDetails: any = {};
+  picDetails: any;
+  maxSizeExceed: any;
 
   constructor(private profileService: ProfileService) { }
 
