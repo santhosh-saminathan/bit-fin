@@ -10,10 +10,22 @@ export class ProfileComponent implements OnInit {
   profileDetails: any = {};
   picDetails: any;
   maxSizeExceed: any;
+  userProfileResponse: any;
+  proofs: any = {};
 
   constructor(private profileService: ProfileService) { }
 
   ngOnInit() {
+    this.profileService.getUserDetails().subscribe((data) => {
+      console.log(data);
+      this.userProfileResponse = data;
+      if (this.userProfileResponse) {
+        this.profileDetails = this.userProfileResponse;
+        this.profileDetails.dob = this.profileDetails.dob.split('T')[0];
+      }
+    }, err => {
+      console.log(err);
+    })
   }
 
   documentUpload() {
@@ -23,27 +35,53 @@ export class ProfileComponent implements OnInit {
   updateProfile() {
     this.profileService.updateProfile(this.profileDetails).subscribe((data) => {
       console.log(data);
+      this.ngOnInit();
     }, err => {
       console.log(err);
     })
   }
 
   uploadKyc() {
-    this.profileService.updateKYC({}).subscribe((data) => {
+    let proofs = {
+      "addressProof": this.proofs.addressProof ? this.proofs.addressProof : this.profileDetails.proofs.addressProof,
+      "idProof": this.proofs.idProof ? this.proofs.idProof : this.profileDetails.proofs.idProof,
+      "photoProof": this.proofs.photoProof ? this.proofs.photoProof : this.profileDetails.proofs.photoProof
+    }
+
+    this.profileService.updateKYC(proofs).subscribe((data) => {
       console.log(data);
+      this.ngOnInit();
     }, err => {
       console.log(err);
     })
   }
 
-  fileChangeListener($event) {
-    console.log("data", $event);
+  addressProofUpdate($event) {
     let file = $event.target.files[0];
     const myReader: FileReader = new FileReader();
-    // const that = this;
     myReader.onloadend = (loadEvent: any) => {
-      // this.image = loadEvent.target.result;
-      console.log('file load', loadEvent.target.result);
+      this.profileDetails.proofs.addressProof = loadEvent.target.result;
+      this.proofs.addressProof = loadEvent.target.result;
+    };
+    myReader.readAsDataURL(file);
+  }
+
+  idProofUpdate($event) {
+    let file = $event.target.files[0];
+    const myReader: FileReader = new FileReader();
+    myReader.onloadend = (loadEvent: any) => {
+      this.profileDetails.proofs.idProof = loadEvent.target.result;
+      this.proofs.idProof = loadEvent.target.result;
+    };
+    myReader.readAsDataURL(file);
+  }
+
+  photoProofUpdate($event) {
+    let file = $event.target.files[0];
+    const myReader: FileReader = new FileReader();
+    myReader.onloadend = (loadEvent: any) => {
+      this.profileDetails.proofs.photoProof = loadEvent.target.result;
+      this.proofs.photoProof = loadEvent.target.result;
     };
     myReader.readAsDataURL(file);
   }

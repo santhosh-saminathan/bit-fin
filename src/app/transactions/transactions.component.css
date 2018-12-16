@@ -63,9 +63,16 @@ a {
 
 td {
     white-space: nowrap;
+    /* text-align: left; */
     padding: 10px !important;
 }
 
 th {
+    white-space: nowrap;
     text-align: center;
+}
+
+.no_transactions {
+    color: red;
+    font-size: 16px;
 }

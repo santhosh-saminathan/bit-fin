@@ -38,7 +38,7 @@
             <label class="control-label col-sm-4" for="dob">Date of Birth:</label>
             <div class="col-sm-8">
               <!-- <input class="datePicker" type="datetime-local" name="dob" [(ngModel)]="profileDetails.dob"> -->
-              <input type="date" class="form-control profile" placeholder="15-04-1996" [(ngModel)]="profileDetails.dob" name="dob">
+              <input type="date" class="form-control profile" [(ngModel)]="profileDetails.dob" name="dob">
             </div>
           </div>
         </div>
@@ -84,11 +84,12 @@
             <label for="addressproof" class="custom_file_input">
               <i class="fas fa-edit"></i>
             </label>
-            <input (change)="documentUpload()" name="addressproof" id="addressproof" type="file" accept=".png, .jpg, .jpeg" #avatar>
-            <img src="./../../assets/img/idproof_default.png">
-            <div *ngIf="picDetails">New Pic:
+            <input (change)="addressProofUpdate($event)" name="addressproof" id="addressproof" type="file" accept=".png, .jpg, .jpeg">
+            <img *ngIf="profileDetails && profileDetails.proofs && profileDetails.proofs.addressProof" src={{profileDetails.proofs.addressProof}}>
+            <img *ngIf="!profileDetails || !profileDetails.proofs || !profileDetails.proofs.addressProof" src="./../../assets/img/idproof_default.png">
+            <!-- <div *ngIf="picDetails">New Pic:
               <b>{{picDetails.name}}</b> , Size: {{picDetails.size}} bytes</div>
-            <div class="size_exceed_error" *ngIf="maxSizeExceed">Maximum file size should be 1.5 Mb</div>
+            <div class="size_exceed_error" *ngIf="maxSizeExceed">Maximum file size should be 1.5 Mb</div> -->
           </div>
         </div>
         <div class="col-sm-4">
@@ -99,11 +100,13 @@
             <label for="idproof" class="custom_file_input">
               <i class="fas fa-edit"></i>
             </label>
-            <input (change)="documentUpload()" name="idproof" id="idproof" type="file" accept=".png, .jpg, .jpeg" #avatar>
-            <img src="./../../assets/img/idproof_default.png">
-            <div *ngIf="picDetails">New Pic:
+            <input (change)="idProofUpdate($event)" name="idproof" id="idproof" type="file" accept=".png, .jpg, .jpeg">
+            <img *ngIf="profileDetails && profileDetails.proofs && profileDetails.proofs.idProof" src={{profileDetails.proofs.idProof}}>
+            <img *ngIf="!profileDetails || !profileDetails.proofs || !profileDetails.proofs.idProof" src="./../../assets/img/idproof_default.png">
+
+            <!-- <div *ngIf="picDetails">New Pic:
               <b>{{picDetails.name}}</b> , Size: {{picDetails.size}} bytes</div>
-            <div class="size_exceed_error" *ngIf="maxSizeExceed">Maximum file size should be 1.5 Mb</div>
+            <div class="size_exceed_error" *ngIf="maxSizeExceed">Maximum file size should be 1.5 Mb</div> -->
           </div>
         </div>
         <div class="col-sm-4">
@@ -114,17 +117,22 @@
             <label for="profileproof" class="custom_file_input">
               <i class="fas fa-edit"></i>
             </label>
-            <input type="file" accept="image/*" id="profileproof" name="profileproof" class="btn btn-sm image_input_style" (change)="fileChangeListener($event)"
+            <input type="file" accept="image/*" id="profileproof" name="profileproof" class="btn btn-sm image_input_style" (change)="photoProofUpdate($event)"
             />
 
-            <!-- <input (change)="fileChangeListener($event)" type="file" accept=".png, .jpg, .jpeg" > -->
-            <img src="./../../assets/img/idproof_default.png">
-            <div *ngIf="picDetails">New Pic:
+            <img *ngIf="profileDetails && profileDetails.proofs && profileDetails.proofs.photoProof" src={{profileDetails.proofs.photoProof}}>
+            <img *ngIf="!profileDetails || !profileDetails.proofs || !profileDetails.proofs.photoProof" src="./../../assets/img/idproof_default.png">
+
+            <!-- <div *ngIf="picDetails">New Pic:
               <b>{{picDetails.name}}</b> , Size: {{picDetails.size}} bytes</div>
-            <div class="size_exceed_error" *ngIf="maxSizeExceed">Maximum file size should be 1.5 Mb</div>
+            <div class="size_exceed_error" *ngIf="maxSizeExceed">Maximum file size should be 1.5 Mb</div> -->
           </div>
         </div>
       </div>
+    </div>
+    <br>
+    <div style="width:100%">
+      <button style="float:right;margin-right:20px" type="submit" class="btn btn-primary" (click)="uploadKyc()">Update KYC</button>
     </div>
 
   </div>

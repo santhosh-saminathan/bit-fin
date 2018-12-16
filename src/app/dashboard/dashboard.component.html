@@ -3,17 +3,17 @@
   <div class="container dashboard_section">
     <div class="balance_section">
       <h4 class="font_bold">Your Account Balance</h4>
-      <div class="row">
+      <div class="row" *ngIf="userBalance && usd_Xlm && usd_Xlm">
         <div class="col-sm-4">
           <div class="outer_box">
             <h4 class="font_bold">Available Balance - USD</h4>
-            <h3 class="font_bold">$ 45.88555533</h3>
+            <h3 class="font_bold">$ {{userBalance}}</h3>
           </div>
         </div>
         <div class="col-sm-4">
           <div class="outer_box">
             <h4 class="font_bold">Available Balance - XLM</h4>
-            <h3 class="font_bold"> 45.88995544 XLM</h3>
+            <h3 class="font_bold"> {{userBalance * usd_Xlm.XLM}} XLM</h3>
           </div>
         </div>
         <div class="col-sm-4">

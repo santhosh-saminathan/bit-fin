@@ -9,6 +9,11 @@ export class ProfileService {
 
     constructor(private http: HttpClient) { }
 
+    getUserDetails() {
+        let userId = localStorage.getItem('userId')
+        return this.http.get(url + "user/" + userId);
+    }
+
     updateProfile(data) {
         let userId = localStorage.getItem('userId')
         return this.http.post(url + "user/" + userId, data);
@@ -17,6 +22,11 @@ export class ProfileService {
     updateKYC(data) {
         let userId = localStorage.getItem('userId')
         return this.http.post(url + "proof/" + userId, data);
+    }
+
+    getBalance() {
+        let userId = localStorage.getItem('userId')
+        return this.http.get(url + "account/" + userId);
     }
 
 }

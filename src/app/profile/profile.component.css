@@ -11,7 +11,6 @@ label {
   white-space: nowrap;
 }
 
-
 input[type="file"] {
   display: none;
 }
@@ -20,6 +19,7 @@ img {
   border: 1px solid grey;
   border-radius: 5px;
   width: 80%;
+  height: 250px;
 }
 
 .custom_file_input {
@@ -38,6 +38,6 @@ img {
   margin-top: 15px;
 }
 
-.kyc{
+.kyc {
   padding-left: 15px;
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CryptoService } from './../services/crypto.service';
+import { ProfileService } from './../services/profile.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,8 +13,10 @@ export class DashboardComponent implements OnInit {
   lineChartColors: any;
   usd_Xlm: any;
   xlm_Usd: any;
+  userBalanceResponse: any;
+  userBalance: any;
 
-  constructor(private cryptoService: CryptoService) { }
+  constructor(private cryptoService: CryptoService, private profileService: ProfileService) { }
 
   // lineChart
 
@@ -47,6 +50,14 @@ export class DashboardComponent implements OnInit {
     this.cryptoService.getXlmToUsd().subscribe(data => {
       console.log(data);
       this.xlm_Usd = data;
+    }, err => {
+      console.log(err);
+    })
+
+    this.profileService.getBalance().subscribe(data => {
+      console.log(data);
+      this.userBalanceResponse = data;
+      this.userBalance = this.userBalanceResponse[0].balance;
     }, err => {
       console.log(err);
     })

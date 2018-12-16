@@ -108,3 +108,25 @@ td {
 .card_top {
     padding: 15px
 }
+
+.autocomplete_numbers {
+    position: absolute;
+    height: 200px;
+    overflow: scroll;
+    background: #f2eefe;
+    width: 90%;
+    border: 1px solid gainsboro;
+    border-radius: 4px;
+    z-index: 1;
+    text-align: left;
+}
+
+.number_div {
+    padding: 5px 15px;
+    border-bottom: 1px solid gainsboro;
+    cursor: pointer;
+}
+
+.number_div:hover{
+    background: #d8d8fd;
+}

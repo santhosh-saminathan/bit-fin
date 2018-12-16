@@ -5,10 +5,18 @@
 
     <div class="container">
       <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#send">SEND</a></li>
-        <li><a data-toggle="tab" href="#receive">RECEIVE</a></li>
-        <li><a data-toggle="tab" href="#deposit">DEPOSIT</a></li>
-        <li><a data-toggle="tab" href="#withdraw">WITHDRAW</a></li>
+        <li class="active">
+          <a data-toggle="tab" href="#send">SEND</a>
+        </li>
+        <li>
+          <a data-toggle="tab" href="#receive">RECEIVE</a>
+        </li>
+        <li>
+          <a data-toggle="tab" href="#deposit">DEPOSIT</a>
+        </li>
+        <li>
+          <a data-toggle="tab" href="#withdraw">WITHDRAW</a>
+        </li>
       </ul>
 
       <div class="tab-content">
@@ -24,41 +32,32 @@
                 </p>
                 <br>
 
-                <div class="table-responsive">
+
+
+                <div *ngIf="sentTransactions" class="table-responsive">
+                  <div *ngIf="sentTransactions.length == 0">
+                    <p class="no_transactions">Sorry , No transactions found</p>
+                  </div>
                   <table class="table table-striped">
                     <thead>
                       <tr>
                         <th>S.No</th>
                         <th>Sent To</th>
-                        <th>Amount</th>
+                        <th>Amount - USD</th>
+                        <!-- <th>Amount - XLM</th> -->
                         <th>Transaction ID</th>
                         <th>Time</th>
                         <th>Status</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Yokesh Maxwell</td>
-                        <td>15 USD</td>
-                        <td>5c1087374da6453faafbcdjffff7</td>
-                        <td>12/12/2018 16.79</td>
-                        <td>Success</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Yokesh Maxwell</td>
-                        <td>15 USD</td>
-                        <td>5c107374da6453faafbcdj7gge44</td>
-                        <td>12/12/2018 16.79</td>
-                        <td>Success</td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>Yokesh Maxwell</td>
-                        <td>15 USD</td>
-                        <td>5c1087374da6453faafbcdj4445s</td>
-                        <td>12/12/2018 16.79</td>
+                      <tr *ngFor="let transaction of sentTransactions;let i = index">
+                        <td>{{i+1}}</td>
+                        <td>{{transaction.receiver.firstName}} {{transaction.receiver.lastName}}</td>
+                        <td>$ {{transaction.walletAmount}}</td>
+                        <!-- <td>{{transaction.amount}} XLM</td> -->
+                        <td>{{transaction._id}}</td>
+                        <td>{{transaction.createdTs | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
                         <td>Success</td>
                       </tr>
                     </tbody>
@@ -81,7 +80,10 @@
                 </p>
                 <br>
 
-                <div class="table-responsive">
+                <div *ngIf="receivedTransactions" class="table-responsive">
+                  <div *ngIf="receivedTransactions.length == 0">
+                    <p class="no_transactions">Sorry , No transactions found</p>
+                  </div>
                   <table class="table table-striped">
                     <thead>
                       <tr>
@@ -94,28 +96,13 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Yokesh Maxwell</td>
-                        <td>15 USD</td>
-                        <td>5c1087374da6453faafbcdjffff7</td>
-                        <td>12/12/2018 16.79</td>
-                        <td>Success</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Yokesh Maxwell</td>
-                        <td>15 USD</td>
-                        <td>5c107374da6453faafbcdj7gge44</td>
-                        <td>12/12/2018 16.79</td>
-                        <td>Success</td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>Yokesh Maxwell</td>
-                        <td>15 USD</td>
-                        <td>5c1087374da6453faafbcdj4445s</td>
-                        <td>12/12/2018 16.79</td>
+                      <tr *ngFor="let transaction of receivedTransactions;let i = index">
+                        <td>{{i+1}}</td>
+                        <td>{{transaction.sender.firstName}} {{transaction.sender.lastName}}</td>
+                        <td>$ {{transaction.walletAmount}}</td>
+                        <!-- <td>{{transaction.amount}} XLM</td> -->
+                        <td>{{transaction._id}}</td>
+                        <td>{{transaction.createdTs | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
                         <td>Success</td>
                       </tr>
                     </tbody>
@@ -137,33 +124,28 @@
                 </p>
                 <br>
 
-                <div class="table-responsive">
+                <div *ngIf="depositTransactions" class="table-responsive">
+                  <div *ngIf="depositTransactions.length == 0">
+                    <p class="no_transactions">Sorry , No transactions found</p>
+                  </div>
                   <table class="table table-striped">
                     <thead>
                       <tr>
                         <th>S.No</th>
                         <th>USD Amount</th>
+                        <th>Transaction ID</th>
                         <th>Time</th>
                         <th>Status</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>$ 15</td>
-                        <td>12/12/2018 16.79</td>
-                        <td>Success</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>$ 15</td>
-                        <td>12/12/2018 16.79</td>
-                        <td>Success</td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>$ 15</td>
-                        <td>12/12/2018 16.79</td>
+
+                      <tr *ngFor="let transaction of depositTransactions;let i = index">
+                        <td>{{i+1}}</td>
+                        <td>$ {{transaction.amount}}</td>
+                        <!-- <td>{{transaction.amount}} XLM</td> -->
+                        <td>{{transaction._id}}</td>
+                        <td>{{transaction.createdTs | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
                         <td>Success</td>
                       </tr>
                     </tbody>
@@ -184,7 +166,10 @@
                   All the details of the withdrawl requests by you are listed below.
                 </p>
                 <br>
-                <div class="table-responsive">
+                <div *ngIf="withdrawTransactions" class="table-responsive">
+                  <div *ngIf="withdrawTransactions.length == 0">
+                    <p class="no_transactions">Sorry , No transactions found</p>
+                  </div>
                   <table class="table table-striped">
                     <thead>
                       <tr>
@@ -195,22 +180,12 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>$ 15</td>
-                        <td>12/12/2018 16.79</td>
-                        <td>Success</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>$ 15</td>
-                        <td>12/12/2018 16.79</td>
-                        <td>Success</td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>$ 15</td>
-                        <td>12/12/2018 16.79</td>
+                      <tr *ngFor="let transaction of withdrawTransactions;let i = index">
+                        <td>{{i+1}}</td>
+                        <td>$ {{transaction.amount}}</td>
+                        <!-- <td>{{transaction.amount}} XLM</td> -->
+                        <td>{{transaction._id}}</td>
+                        <td>{{transaction.createdTs | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
                         <td>Success</td>
                       </tr>
                     </tbody>
