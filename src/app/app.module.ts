@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
@@ -25,6 +25,8 @@ import { CryptoService } from './services/crypto.service';
 import { WalletService } from './services/wallet.service';
 import { TransactionService } from './services/transaction.service';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +42,7 @@ import { TransactionService } from './services/transaction.service';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     QRCodeModule,
     ChartsModule,
     HttpClientModule,
@@ -50,7 +53,7 @@ import { TransactionService } from './services/transaction.service';
     //   positionClass: 'toast-bottom-right',
     //   preventDuplicates: true,
     // }),
-    // NgxStripeModule.forRoot('sk_test_BlD4SrbP60Qa94PrQ1pTHYtB')
+    NgxStripeModule.forRoot('pk_test_uzFnOtl3tNwStqKIi5Vflq61')
   ],
   providers: [SigningService, ProfileService, CryptoService, WalletService, TransactionService],
   bootstrap: [AppComponent]

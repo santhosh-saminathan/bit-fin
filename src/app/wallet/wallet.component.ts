@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { WalletService } from './../services/wallet.service';
-import { StripeService, Elements, Element as StripeElement, ElementsOptions } from "ngx-stripe";
+// import { StripeService, Elements, Element as StripeElement, ElementsOptions } from "ngx-stripe";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ProfileService } from './../services/profile.service';
 import { CryptoService } from './../services/crypto.service';
+
+
+import { StripeService, StripeCardComponent, ElementOptions, ElementsOptions } from "ngx-stripe";
 
 @Component({
   selector: 'app-wallet',
@@ -24,19 +27,33 @@ export class WalletComponent implements OnInit {
   xlm_Usd_conversion: any = 0;
   transactionFee: any = 0;
 
-  // elements: Elements;
-  // card: StripeElement;
+  @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
-  // // optional parameters
-  // elementsOptions: ElementsOptions = {
-  //   locale: 'es'
-  // };
+  cardOptions: ElementOptions = {
+    style: {
+      base: {
+        iconColor: '#666EE8',
+        color: '#31325F',
+        lineHeight: '40px',
+        fontWeight: 300,
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSize: '18px',
+        '::placeholder': {
+          color: '#CFD7E0'
+        }
+      }
+    }
+  };
 
-  // stripeTest: FormGroup;
+  elementsOptions: ElementsOptions = {
+    locale: 'es'
+  };
 
-  // constructor(private walletService: WalletService, private fb: FormBuilder, private stripeService: StripeService) { }
+  stripeTest: FormGroup;
 
-  constructor(private walletService: WalletService, private profileService: ProfileService, private cryptoService: CryptoService) { }
+  constructor(private walletService: WalletService, private fb: FormBuilder, private stripeService: StripeService, private profileService: ProfileService, private cryptoService: CryptoService) { }
+
+  // constructor(private walletService: WalletService, private profileService: ProfileService, private cryptoService: CryptoService) { }
 
   ngOnInit() {
 
@@ -97,9 +114,9 @@ export class WalletComponent implements OnInit {
       cvv: '566'
     }]
 
-    // this.stripeTest = this.fb.group({
-    //   name: ['', [Validators.required]]
-    // });
+    this.stripeTest = this.fb.group({
+      name: ['', [Validators.required]]
+    });
     // this.stripeService.elements(this.elementsOptions)
     //   .subscribe(elements => {
     //     this.elements = elements;
@@ -124,7 +141,6 @@ export class WalletComponent implements OnInit {
     //     }
     //   });
 
-
   }
 
 
@@ -143,6 +159,22 @@ export class WalletComponent implements OnInit {
   //       }
   //     });
   // }
+
+  buy() {
+    const name = this.stripeTest.get('name').value;
+    this.stripeService
+      .createToken(this.card.getCard(), { name })
+      .subscribe(result => {
+        if (result.token) {
+          // Use the token to create a charge or a customer
+          // https://stripe.com/docs/charges
+          console.log(result.token.id);
+        } else if (result.error) {
+          // Error creating the token
+          console.log(result.error.message);
+        }
+      });
+  }
 
   selectedCard(card) {
     // console.log(card)
