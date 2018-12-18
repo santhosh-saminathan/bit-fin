@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CryptoService } from './../services/crypto.service';
 import { ProfileService } from './../services/profile.service';
+import { TransactionService } from './../services/transaction.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,8 +17,9 @@ export class DashboardComponent implements OnInit {
   userBalanceResponse: any;
   userBalance: any;
   rateFlow: any;
+  sentTransactions: any;
 
-  constructor(private cryptoService: CryptoService, private profileService: ProfileService) { }
+  constructor(private transactionService: TransactionService, private cryptoService: CryptoService, private profileService: ProfileService) { }
 
   // lineChart
 
@@ -49,8 +51,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
 
-
-
     this.cryptoService.getUsdToXlm().subscribe(data => {
       console.log(data);
       this.usd_Xlm = data;
@@ -73,8 +73,15 @@ export class DashboardComponent implements OnInit {
       console.log(err);
     })
 
-    this.cryptoService.getRateFlow().subscribe(data => {
+    this.transactionService.sentTransactions().subscribe(data => {
       console.log(data);
+      this.sentTransactions = data;
+    }, err => {
+      console.log(err);
+    })
+
+    this.cryptoService.getRateFlow().subscribe(data => {
+      // console.log(data);
       this.rateFlow = data;
       if (this.rateFlow.Response === "Success") {
 
@@ -99,12 +106,11 @@ export class DashboardComponent implements OnInit {
         this.lineChartLabels = [];
 
         this.rateFlow.Data.forEach(element => {
-          console.log(element.close, element.time);
           this.lineChartData[0].data.push(element.close);
-          this.lineChartLabels.push(element.time)
+          let time = new Date(element.time * 1000).getDate() + "/" + new Date(element.time * 1000).getMonth() + " " + new Date(element.time * 1000).getHours() + ":" + new Date(element.time * 1000).getMinutes();
+          console.log(time);
+          this.lineChartLabels.push(time)
         });
-
-
 
       }
     }, err => {

@@ -3,17 +3,17 @@
   <div class="container dashboard_section">
     <div class="balance_section">
       <h4 class="font_bold">Your Account Balance</h4>
-      <div class="row" *ngIf="userBalance && usd_Xlm && usd_Xlm">
+      <div class="row" *ngIf="userBalance && usd_Xlm && xlm_Usd">
         <div class="col-sm-4">
           <div class="outer_box">
             <h4 class="font_bold">Available Balance - USD</h4>
-            <h3 class="font_bold">$ {{userBalance}}</h3>
+            <h3 class="font_bold">$ {{userBalance * xlm_Usd.USD}}</h3>
           </div>
         </div>
         <div class="col-sm-4">
           <div class="outer_box">
             <h4 class="font_bold">Available Balance - XLM</h4>
-            <h3 class="font_bold"> {{userBalance * usd_Xlm.XLM}} XLM</h3>
+            <h3 class="font_bold"> {{userBalance}} XLM</h3>
           </div>
         </div>
         <div class="col-sm-4">
@@ -34,32 +34,15 @@
     </div>
 
     <div class="recent_activities_section">
-      <h4 class="font_bold">Recent Transactions</h4>
+      <h4 class="font_bold">Recent sent Transactions</h4>
       <div class="row">
-        <div class="col-sm-6">
-          <div class="recent_transactions_card">
+        <div class="col-sm-10">
+          <div class="recent_transactions_card" *ngFor="let transaction of sentTransactions | slice:0:10">
             Successfully
-            <b style="color:blue">Sent</b> $ 15.30 USD to
-            <b>Krish Jack</b> on 15-12-2018 14.35.
+            <b style="color:blue">Sent</b> <b> $ {{transaction.walletAmount}}</b> USD to
+            <b>{{transaction.receiver.firstName}} {{transaction.receiver.lastName}}</b> on {{transaction.createdTs | date: 'dd/MM/yyyy HH:mm:ss'}}.  Ref-Id: {{transaction._id}}
           </div>
 
-          <div class="recent_transactions_card">
-            Successfully
-            <b style="color:blue">Received</b> $ 100.50 USD from
-            <b>Krish Jack</b> on 14-12-2018 13.05.
-          </div>
-
-          <div class="recent_transactions_card">
-            Successfully
-            <b style="color:blue">Sent</b> $ 150.30 USD to
-            <b>John Kennedy</b> on 12-12-2018 01.35.
-          </div>
-
-          <div class="recent_transactions_card">
-            Successfully
-            <b style="color:blue">Received</b> $ 5.00 USD to
-            <b>Alisa</b> on 10-12-2018 10.35.
-          </div>
         </div>
       </div>
     </div>

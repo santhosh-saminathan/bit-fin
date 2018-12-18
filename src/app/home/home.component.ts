@@ -19,8 +19,8 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router, private signingService: SigningService) { }
 
   ngOnInit() {
-    this.login.phone = "+919988776655"
-    this.login.password = "12345"
+    this.login.phone = "+919900887766"
+    this.login.password = "00000"
     this.country_code = '+91'
   }
 
@@ -50,8 +50,8 @@ export class HomeComponent implements OnInit {
         }
       }, err => {
 
-        localStorage.setItem('userId', '5c0e1e4360b89e4138df36bf');
-        this.router.navigate(['/dashboard']);
+        // localStorage.setItem('userId', '5c0e1e4360b89e4138df36bf');
+        // this.router.navigate(['/dashboard']);
         this.invalidMobile = "Incorrect Password";
       })
     } else {

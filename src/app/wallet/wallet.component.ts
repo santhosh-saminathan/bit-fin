@@ -21,6 +21,8 @@ export class WalletComponent implements OnInit {
   feePercentage: any = 0.1;
   adminDetails: any;
   usd_xlm_conversion: any = 0;
+  xlm_Usd_conversion: any = 0;
+  transactionFee: any = 0;
 
   // elements: Elements;
   // card: StripeElement;
@@ -56,6 +58,14 @@ export class WalletComponent implements OnInit {
       console.log(data);
       this.usd_xlm_conversion = data;
       this.usd_xlm_conversion = this.usd_xlm_conversion.XLM;
+    })
+
+    this.cryptoService.getXlmToUsd().subscribe(data => {
+      console.log(data);
+      this.xlm_Usd_conversion = data;
+      this.xlm_Usd_conversion = this.xlm_Usd_conversion.USD;
+    }, err => {
+      console.log(err);
     })
 
 
@@ -173,14 +183,27 @@ export class WalletComponent implements OnInit {
   }
 
   calculateFee() {
-    // RAte calculation: (XLM * sellRate) / 100
-    // updatedAmount = XLM + rate
-    // fee calculation = (updatedAmount * sellTransactionFee) / 100
+    this.transactionFee = 0;
+    // console.log("user usd amount", this.amountToSend);
+    // console.log("admin sell rate", parseFloat(this.adminDetails.sellRate));
+    // console.log("admin sell transaction fee", parseFloat(this.adminDetails.sellTransactionFee));
+
+    var amountToSendXlm = parseFloat(this.amountToSend) * parseFloat(this.usd_xlm_conversion);
+
+    // console.log("xlm converison of usd amount", amountToSendXlm);
+
+    var rate = (amountToSendXlm * parseFloat(this.adminDetails.sellRate)) / 100;
+    console.log("rate", rate);
+    var updatedAmount = amountToSendXlm + rate;
+    console.log("updatedAmount", updatedAmount);
+    var fee = (updatedAmount * parseFloat(this.adminDetails.sellTransactionFee)) / 100;
+    console.log("Fee", fee);
+    this.transactionFee = fee;
   }
 
   sendAmount() {
     let data = {
-      "sender": "5bd2de33c1d90124a76e0185",
+      "sender": localStorage.getItem('userId'),
       "receiver": this.selectedReceiver._id,
       "amount": "4.5",
       "fee": "1.1",
