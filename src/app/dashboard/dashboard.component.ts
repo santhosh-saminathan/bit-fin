@@ -15,6 +15,7 @@ export class DashboardComponent implements OnInit {
   xlm_Usd: any;
   userBalanceResponse: any;
   userBalance: any;
+  rateFlow: any;
 
   constructor(private cryptoService: CryptoService, private profileService: ProfileService) { }
 
@@ -25,19 +26,29 @@ export class DashboardComponent implements OnInit {
     scales: {
       yAxes: [
         {
-          ticks: { min: 0, stepValue: 10, max: 100 },
+          ticks: { stepValue: 0.02 },
           scaleLabel: {
             display: true,
-            labelString: 'probability'
+            labelString: 'USD value'
+          }
+        }],
+      xAxes: [
+        {
+          scaleLabel: {
+            display: true,
+            labelString: 'Time'
           }
         }]
     }
   };
 
+
+
   public lineChartLegend: boolean = false;
   public lineChartType: string = 'line';
 
   ngOnInit() {
+
 
 
     this.cryptoService.getUsdToXlm().subscribe(data => {
@@ -62,24 +73,46 @@ export class DashboardComponent implements OnInit {
       console.log(err);
     })
 
-    this.lineChartData = [
-      { data: [65, 59, 80, 81, 56, 55, 40, 54, 54, 54, 45], label: 'XLM Rate flow' },
-    ];
+    this.cryptoService.getRateFlow().subscribe(data => {
+      console.log(data);
+      this.rateFlow = data;
+      if (this.rateFlow.Response === "Success") {
 
-    this.lineChartLabels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'G', 'G', 'v', 'G'];
+        this.lineChartColors = [
+          { // grey
+            backgroundColor: '#f2efff',
+            borderColor: '#417af8',
+            pointBackgroundColor: 'rgb(71, 71, 243)',
+            pointBorderColor: 'blue',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: 'rgba(148,159,177,0.8)',
+            fill: false,
+          }
+        ];
+
+        this.lineChartData = [
+          { data: [], label: 'XLM Rate flow' },
+        ];
 
 
-    this.lineChartColors = [
-      { // grey
-        backgroundColor: '#f2efff',
-        borderColor: '#417af8',
-        pointBackgroundColor: 'rgb(71, 71, 243)',
-        pointBorderColor: 'blue',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-        fill: false,
+
+        this.lineChartLabels = [];
+
+        this.rateFlow.Data.forEach(element => {
+          console.log(element.close, element.time);
+          this.lineChartData[0].data.push(element.close);
+          this.lineChartLabels.push(element.time)
+        });
+
+
+
       }
-    ];
+    }, err => {
+      console.log(err);
+    })
+
+
+
 
   }
 

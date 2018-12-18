@@ -29,5 +29,9 @@ export class WalletService {
         return this.http.post(url + "payment", data);
     }
 
+    getAdminDetails() {
+        return this.http.get(url + "admin");
+    }
+
 
 }

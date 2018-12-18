@@ -27,7 +27,7 @@
 
     <div class="graph_section">
       <h4 class="font_bold">XLM Rate Flow</h4>
-      <div style="display: block;">
+      <div style="display: block;" *ngIf="lineChartData && lineChartLabels">
         <canvas baseChart width="300" height="80" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
           [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
       </div>

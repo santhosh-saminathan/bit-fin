@@ -3,6 +3,7 @@ import { WalletService } from './../services/wallet.service';
 import { StripeService, Elements, Element as StripeElement, ElementsOptions } from "ngx-stripe";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ProfileService } from './../services/profile.service';
+import { CryptoService } from './../services/crypto.service';
 
 @Component({
   selector: 'app-wallet',
@@ -18,6 +19,8 @@ export class WalletComponent implements OnInit {
   selectedReceiver: any;
   amountToSend: any = 0;
   feePercentage: any = 0.1;
+  adminDetails: any;
+  usd_xlm_conversion: any = 0;
 
   // elements: Elements;
   // card: StripeElement;
@@ -31,7 +34,7 @@ export class WalletComponent implements OnInit {
 
   // constructor(private walletService: WalletService, private fb: FormBuilder, private stripeService: StripeService) { }
 
-  constructor(private walletService: WalletService, private profileService: ProfileService) { }
+  constructor(private walletService: WalletService, private profileService: ProfileService, private cryptoService: CryptoService) { }
 
   ngOnInit() {
 
@@ -41,6 +44,19 @@ export class WalletComponent implements OnInit {
     }, err => {
       console.log(err);
     });
+
+    this.walletService.getAdminDetails().subscribe(data => {
+      console.log(data);
+      this.adminDetails = data;
+    }, err => {
+      console.log(err);
+    })
+
+    this.cryptoService.getUsdToXlm().subscribe(data => {
+      console.log(data);
+      this.usd_xlm_conversion = data;
+      this.usd_xlm_conversion = this.usd_xlm_conversion.XLM;
+    })
 
 
     this.savedCards = [{
@@ -154,6 +170,12 @@ export class WalletComponent implements OnInit {
     this.selectedReceiver = data;
     this.receiverMobileNumber = this.selectedReceiver.mobile_number;
     this.autocompleteNumbers = [];
+  }
+
+  calculateFee() {
+    // RAte calculation: (XLM * sellRate) / 100
+    // updatedAmount = XLM + rate
+    // fee calculation = (updatedAmount * sellTransactionFee) / 100
   }
 
   sendAmount() {

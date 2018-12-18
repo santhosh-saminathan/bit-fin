@@ -17,4 +17,8 @@ export class CryptoService {
         return this.http.get("https://min-api.cryptocompare.com/data/price?fsym=XLM&tsyms=USD");
     }
 
+    getRateFlow() {
+        return this.http.get("https://min-api.cryptocompare.com/data/histohour?fsym=XLM&tsym=USD&limit=20");
+    }
+
 }
