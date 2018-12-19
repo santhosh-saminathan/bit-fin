@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   userBalance: any;
   rateFlow: any;
   sentTransactions: any;
+  noContent: boolean = true;
 
   constructor(private transactionService: TransactionService, private cryptoService: CryptoService, private profileService: ProfileService) { }
 
@@ -69,6 +70,7 @@ export class DashboardComponent implements OnInit {
       console.log(data);
       this.userBalanceResponse = data;
       this.userBalance = this.userBalanceResponse[0].balance;
+      this.noContent = false;
     }, err => {
       console.log(err);
     })
@@ -107,7 +109,7 @@ export class DashboardComponent implements OnInit {
 
         this.rateFlow.Data.forEach(element => {
           this.lineChartData[0].data.push(element.close);
-          let time = new Date(element.time * 1000).getDate() + "/" + new Date(element.time * 1000).getMonth() + " " + new Date(element.time * 1000).getHours() + ":" + new Date(element.time * 1000).getMinutes();
+          let time = new Date(element.time * 1000).getDate() + "/" + (new Date(element.time * 1000).getMonth() + 1) + " " + new Date(element.time * 1000).getHours() + ":" + new Date(element.time * 1000).getMinutes();
           console.log(time);
           this.lineChartLabels.push(time)
         });

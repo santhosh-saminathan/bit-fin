@@ -15,6 +15,7 @@ export class TransactionsComponent implements OnInit {
   receivedTransactions: any;
   depositTransactions: any;
   withdrawTransactions: any;
+  noContent: boolean = true;
 
   constructor(private transactionService: TransactionService) { }
 
@@ -24,6 +25,7 @@ export class TransactionsComponent implements OnInit {
     this.transactionService.sentTransactions().subscribe(data => {
       console.log(data);
       this.sentTransactions = data;
+      this.noContent = false;
     }, err => {
       console.log(err);
     })

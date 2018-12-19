@@ -1,22 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
 
-.top_custom_height{
+.top_custom_height {
     position: relative;
     top: 60px;
 }
-.text_align_center{
+
+.text_align_center {
     text-align: center;
 }
-.btn-primary{
+
+.btn-primary {
     background-color: #417af8;
     border-color: #417af8;
 }
 
-.btn-primary:focus, .btn-primary:hover{
+.btn-primary:focus, .btn-primary:hover {
     background-color: #0b56fd;
     border-color: #417af8;
 }
 
-::-webkit-scrollbar { 
-    display: none; 
+::-webkit-scrollbar {
+    display: none;
+}
+
+.fa-spinner {
+    font-size: 24px;
+    text-align: center;
+    color: #417af8;
+}
+
+.loading_content {
+    text-align: center;
+    padding: 25px;
 }

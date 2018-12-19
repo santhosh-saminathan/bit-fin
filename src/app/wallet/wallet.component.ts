@@ -14,7 +14,7 @@ import { StripeService, StripeCardComponent, ElementOptions, ElementsOptions } f
   styleUrls: ['./wallet.component.css']
 })
 export class WalletComponent implements OnInit {
-  yourMobileNumber: any = '993434343';
+  yourMobileNumber: any;
   savedCards: any;
   receiverMobileNumber: any;
   autocompleteNumbers: any;
@@ -26,6 +26,8 @@ export class WalletComponent implements OnInit {
   usd_xlm_conversion: any = 0;
   xlm_Usd_conversion: any = 0;
   transactionFee: any = 0;
+  userDetails: any;
+  withdraw: any = {};
 
   @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
@@ -46,7 +48,7 @@ export class WalletComponent implements OnInit {
   };
 
   elementsOptions: ElementsOptions = {
-    locale: 'es'
+    locale: 'en'
   };
 
   stripeTest: FormGroup;
@@ -57,12 +59,23 @@ export class WalletComponent implements OnInit {
 
   ngOnInit() {
 
+    this.withdraw.saveDetails = true;
+
     this.profileService.getBalance().subscribe(data => {
       console.log(data);
       this.availableBalance = data;
     }, err => {
       console.log(err);
     });
+
+    this.profileService.getUserDetails().subscribe(data => {
+      console.log(data);
+      this.userDetails = data;
+      this.yourMobileNumber = this.userDetails.mobile_number;
+    }, err => {
+      console.log(err);
+    });
+
 
     this.walletService.getAdminDetails().subscribe(data => {
       console.log(data);
@@ -81,6 +94,13 @@ export class WalletComponent implements OnInit {
       console.log(data);
       this.xlm_Usd_conversion = data;
       this.xlm_Usd_conversion = this.xlm_Usd_conversion.USD;
+    }, err => {
+      console.log(err);
+    })
+
+    this.walletService.userSavedCardDetails().subscribe(data => {
+      console.log(data);
+      this.savedCards = data;
     }, err => {
       console.log(err);
     })
@@ -117,50 +137,14 @@ export class WalletComponent implements OnInit {
     this.stripeTest = this.fb.group({
       name: ['', [Validators.required]]
     });
-    // this.stripeService.elements(this.elementsOptions)
-    //   .subscribe(elements => {
-    //     this.elements = elements;
-    //     // Only mount the element the first time
-    //     if (!this.card) {
-    //       this.card = this.elements.create('card', {
-    //         style: {
-    //           base: {
-    //             iconColor: '#666EE8',
-    //             color: '#31325F',
-    //             lineHeight: '40px',
-    //             fontWeight: 300,
-    //             fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-    //             fontSize: '18px',
-    //             '::placeholder': {
-    //               color: '#CFD7E0'
-    //             }
-    //           }
-    //         }
-    //       });
-    //       this.card.mount('#card-element');
-    //     }
-    //   });
+
 
   }
 
 
-  // buy() {
-  //   const name = this.stripeTest.get('name').value;
-  //   this.stripeService
-  //     .createToken(this.card, { name })
-  //     .subscribe(token => {
-  //       if (token) {
-  //         // Use the token to create a charge or a customer
-  //         // https://stripe.com/docs/charges
-  //         console.log(token);
-  //       } else {
-  //         // Error creating the token
-  //         // console.log(result.error.message);
-  //       }
-  //     });
-  // }
-
   buy() {
+    console.log(this.stripeTest.get('name').value, this.card.getCard());
+
     const name = this.stripeTest.get('name').value;
     this.stripeService
       .createToken(this.card.getCard(), { name })
@@ -248,6 +232,43 @@ export class WalletComponent implements OnInit {
     }, err => {
       console.log(err);
     })
+
+  }
+
+  withdrawProof($event) {
+    let file = $event.target.files[0];
+    const myReader: FileReader = new FileReader();
+    myReader.onloadend = (loadEvent: any) => {
+      this.withdraw.verificationFile = loadEvent.target.result;
+    };
+    myReader.readAsDataURL(file);
+  }
+
+  withdrawAmount() {
+    console.log(this.withdraw);
+    console.log(this.withdraw.dob);
+
+    this.withdraw.day = new Date(this.withdraw.dob.toString()).getDate();
+    this.withdraw.month = new Date(this.withdraw.dob.toString()).getMonth() + 1;
+    this.withdraw.year = new Date(this.withdraw.dob.toString()).getFullYear();
+
+
+    // this.withdraw.usd =
+    //   this.withdraw.xlm =
+    //   this.withdraw.fee =
+    //   this.withdraw.rate =
+    //   this.withdraw.walletFee = 
+
+    if (this.withdraw.walletFee && this.withdraw.rate && this.withdraw.fee && this.withdraw.xlm
+      && this.withdraw.usd && this.withdraw.routingNumber && this.withdraw.accountNumber) {
+
+      this.walletService.withdrawFromAccount(this.withdraw).subscribe(data => {
+        console.log(data);
+      }, err => {
+        console.log(err);
+      })
+    }
+
 
   }
 

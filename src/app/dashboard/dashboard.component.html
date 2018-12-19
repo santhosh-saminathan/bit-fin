@@ -1,6 +1,12 @@
 <app-menu></app-menu>
 <section class="top_custom_height">
-  <div class="container dashboard_section">
+
+  <div class="loading_content" *ngIf="noContent">
+    <i class="fas fa-spinner fa-spin"></i><br>
+    <b>Please wait...</b>
+  </div>
+
+  <div *ngIf="!noContent" class="container dashboard_section">
     <div class="balance_section">
       <h4 class="font_bold">Your Account Balance</h4>
       <div class="row" *ngIf="userBalance && usd_Xlm && xlm_Usd">
@@ -39,8 +45,10 @@
         <div class="col-sm-10">
           <div class="recent_transactions_card" *ngFor="let transaction of sentTransactions | slice:0:10">
             Successfully
-            <b style="color:blue">Sent</b> <b> $ {{transaction.walletAmount}}</b> USD to
-            <b>{{transaction.receiver.firstName}} {{transaction.receiver.lastName}}</b> on {{transaction.createdTs | date: 'dd/MM/yyyy HH:mm:ss'}}.  Ref-Id: {{transaction._id}}
+            <b style="color:blue">Sent</b>
+            <b> $ {{transaction.walletAmount}}</b> USD to
+            <b>{{transaction.receiver.firstName}} {{transaction.receiver.lastName}}</b> on {{transaction.createdTs | date: 'dd/MM/yyyy
+            HH:mm:ss'}}. Ref-Id: {{transaction._id}}
           </div>
 
         </div>

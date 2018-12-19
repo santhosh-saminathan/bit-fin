@@ -1,6 +1,12 @@
 <app-menu></app-menu>
 <section class="top_custom_height">
-  <div class="container profile_section">
+  <div class="loading_content" *ngIf="noContent">
+    <i class="fas fa-spinner fa-spin"></i>
+    <br>
+    <b>Please wait...</b>
+  </div>
+
+  <div *ngIf="!noContent" class="container profile_section">
 
     <div class="profile">
       <h3>Profile Details</h3>

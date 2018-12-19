@@ -12,12 +12,14 @@ export class ProfileComponent implements OnInit {
   maxSizeExceed: any;
   userProfileResponse: any;
   proofs: any = {};
+  noContent: boolean = true;
 
   constructor(private profileService: ProfileService) { }
 
   ngOnInit() {
     this.profileService.getUserDetails().subscribe((data) => {
       console.log(data);
+      this.noContent = false;
       this.userProfileResponse = data;
       if (this.userProfileResponse) {
         this.profileDetails = this.userProfileResponse;

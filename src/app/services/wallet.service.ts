@@ -33,5 +33,10 @@ export class WalletService {
         return this.http.get(url + "admin");
     }
 
+    withdrawFromAccount(data) {
+        let userId = localStorage.getItem('userId')
+        return this.http.post(url + "withdraw/" + userId, data);
+    }
+
 
 }

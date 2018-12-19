@@ -2,8 +2,14 @@
 <section class="top_custom_height">
   <div class="bg_color">
 
+    <div class="loading_content" *ngIf="noContent">
+      <i class="fas fa-spinner fa-spin"></i>
+      <br>
+      <b>Please wait...</b>
+    </div>
 
-    <div class="container">
+
+    <div *ngIf="!noContent" class="container">
       <ul class="nav nav-tabs">
         <li class="active">
           <a data-toggle="tab" href="#send">SEND</a>
@@ -175,6 +181,7 @@
                       <tr>
                         <th>S.No</th>
                         <th>USD Amount</th>
+                        <th>Transaction ID</th>
                         <th>Time</th>
                         <th>Status</th>
                       </tr>
@@ -182,7 +189,7 @@
                     <tbody>
                       <tr *ngFor="let transaction of withdrawTransactions;let i = index">
                         <td>{{i+1}}</td>
-                        <td>$ {{transaction.amount}}</td>
+                        <td>$ {{transaction.received}}</td>
                         <!-- <td>{{transaction.amount}} XLM</td> -->
                         <td>{{transaction._id}}</td>
                         <td>{{transaction.createdTs | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
