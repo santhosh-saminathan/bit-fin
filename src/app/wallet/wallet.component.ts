@@ -29,7 +29,14 @@ export class WalletComponent implements OnInit {
   transactionFee: any = 0;
   userDetails: any;
   withdraw: any = {};
-  withdrawBankDetails:any;
+  withdrawBankDetails: any;
+
+  //send
+  sendTransactionTotal: any = 0;
+  sendTransactionFee: any = 0;
+  sendWalletAmount_USD: any = 0;
+  sendWalletFee_USD: any = 0;
+  waitingForResponse:boolean = false;
 
   @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
@@ -65,13 +72,13 @@ export class WalletComponent implements OnInit {
 
     this.profileService.getBalance().subscribe(data => {
       this.availableBalance = data;
-      console.log("user balance",data);
+      console.log("user balance", data);
     }, err => {
       this.toastr.error('Failed to get user balance data', 'Error!');
     });
 
     this.profileService.getUserDetails().subscribe(data => {
-      console.log("user details",data);
+      console.log("user details", data);
       this.userDetails = data;
       this.yourMobileNumber = this.userDetails.mobile_number;
     }, err => {
@@ -80,14 +87,14 @@ export class WalletComponent implements OnInit {
 
 
     this.walletService.getAdminDetails().subscribe(data => {
-      console.log("admin data",data);
+      console.log("admin data", data);
       this.adminDetails = data;
     }, err => {
       this.toastr.error('Failed to get Admin details', 'Error!');
     })
 
     this.cryptoService.getUsdToXlm().subscribe(data => {
-      console.log("usd to xlm",data);
+      console.log("usd to xlm", data);
       this.usd_xlm_conversion = data;
       this.usd_xlm_conversion = this.usd_xlm_conversion.XLM;
     }, err => {
@@ -95,7 +102,7 @@ export class WalletComponent implements OnInit {
     })
 
     this.cryptoService.getXlmToUsd().subscribe(data => {
-      console.log("xlm to usd",data);
+      console.log("xlm to usd", data);
       this.xlm_Usd_conversion = data;
       this.xlm_Usd_conversion = this.xlm_Usd_conversion.USD;
     }, err => {
@@ -103,14 +110,14 @@ export class WalletComponent implements OnInit {
     })
 
     this.walletService.userSavedCardDetails().subscribe(data => {
-      console.log("card details",data);
+      console.log("card details", data);
       this.savedCards = data;
     }, err => {
       this.toastr.error('Failed to saved card details', 'Error!');
     })
 
     this.walletService.savedWithdrawBankDetails().subscribe(data => {
-      console.log("withdraw bank details",data);
+      console.log("withdraw bank details", data);
       this.withdrawBankDetails = data;
     }, err => {
       this.toastr.error('Failed to get ', 'Error!');
@@ -162,40 +169,67 @@ export class WalletComponent implements OnInit {
     this.autocompleteNumbers = [];
   }
 
-  calculateFee() {
+  calculateSendFee() {
+
+
+
     this.transactionFee = 0;
-    // console.log("user usd amount", this.amountToSend);
-    // console.log("admin sell rate", parseFloat(this.adminDetails.sellRate));
-    // console.log("admin sell transaction fee", parseFloat(this.adminDetails.sellTransactionFee));
+    let xlmAmount = parseFloat(this.amountToSend) * parseFloat(this.usd_xlm_conversion);
+    this.sendTransactionTotal = xlmAmount + ((xlmAmount * this.adminDetails.sendTransactionFee) / 100);
+    this.sendTransactionFee = (xlmAmount * this.adminDetails.sendTransactionFee) / 100
 
-    var amountToSendXlm = parseFloat(this.amountToSend) * parseFloat(this.usd_xlm_conversion);
+    this.sendWalletAmount_USD = this.sendTransactionTotal * parseFloat(this.xlm_Usd_conversion);
+    this.sendWalletFee_USD = this.sendTransactionFee * parseFloat(this.xlm_Usd_conversion);
 
-    // console.log("xlm converison of usd amount", amountToSendXlm);
+    this.sendTransactionTotal = this.sendTransactionTotal.toFixed(2);
+    this.sendTransactionFee = this.sendTransactionFee.toFixed(2);
 
-    var rate = (amountToSendXlm * parseFloat(this.adminDetails.sellRate)) / 100;
-    console.log("rate", rate);
-    var updatedAmount = amountToSendXlm + rate;
-    console.log("updatedAmount", updatedAmount);
-    var fee = (updatedAmount * parseFloat(this.adminDetails.sellTransactionFee)) / 100;
-    console.log("Fee", fee);
-    this.transactionFee = fee;
+    this.sendWalletAmount_USD = this.sendWalletAmount_USD.toFixed(2);
+    this.sendWalletFee_USD = this.sendWalletFee_USD.toFixed(2);
+
+    // var amountToSendXlm = parseFloat(this.amountToSend) * parseFloat(this.usd_xlm_conversion);
+
+
+    // var rate = (amountToSendXlm * parseFloat(this.adminDetails.sellRate)) / 100;
+    // console.log("rate", rate);
+    // var updatedAmount = amountToSendXlm + rate;
+    // console.log("updatedAmount", updatedAmount);
+    // var fee = (updatedAmount * parseFloat(this.adminDetails.sellTransactionFee)) / 100;
+    // console.log("Fee", fee);
+    // this.transactionFee = fee;
   }
 
   sendAmount() {
+
     let data = {
       "sender": localStorage.getItem('userId'),
-      "receiver": this.selectedReceiver._id,
-      "amount": "4.5",
-      "fee": "1.1",
-      "walletAmount": "1",
-      "walletFee": "0.2"
+      "receiver": this.selectedReceiver ? this.selectedReceiver._id : null,
+      "amount": this.sendTransactionTotal,
+      "fee": this.sendTransactionFee,
+      "walletAmount": this.sendWalletAmount_USD,
+      "walletFee": this.sendWalletFee_USD
     }
 
-    this.walletService.makePayment(data).subscribe(data => {
-      console.log(data);
-    }, err => {
-      console.log(err);
-    })
+    if (data.sender == data.receiver) {
+      this.toastr.error('Sender and Receiver cannot be same', 'Error!');
+    } else if (data.sender && data.receiver && data.amount && data.fee && data.walletAmount && data.walletFee) {
+      this.amountToSend = null;
+      this.waitingForResponse = true;
+      this.walletService.makePayment(data).subscribe(data => {
+        this.waitingForResponse = false;
+        this.sendWalletAmount_USD = null;
+        this.sendWalletFee_USD = null;
+        this.ngOnInit();
+        this.toastr.success('Payment sent successfully');
+      }, err => {
+        this.waitingForResponse = false;
+        this.toastr.error('Error while sending payment', 'Error!');
+      })
+    } else {
+      this.toastr.error('Some fields are missing', 'Error!');
+    }
+
+
 
   }
 
@@ -206,6 +240,10 @@ export class WalletComponent implements OnInit {
       this.withdraw.verificationFile = loadEvent.target.result;
     };
     myReader.readAsDataURL(file);
+  }
+
+  selectedWithdrawAccount(data) {
+    console.log(data)
   }
 
   withdrawAmount() {

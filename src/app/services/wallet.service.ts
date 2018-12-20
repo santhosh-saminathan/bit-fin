@@ -21,7 +21,7 @@ export class WalletService {
 
     savedWithdrawBankDetails() {
         let userId = localStorage.getItem('userId');
-        return this.http.get(url + "withdraw" + userId);
+        return this.http.get(url + "withdraw/" + userId);
     }
 
     makePayment(data) {
