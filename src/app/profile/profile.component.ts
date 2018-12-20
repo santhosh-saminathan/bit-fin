@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ProfileService } from './../services/profile.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile',
@@ -14,11 +15,10 @@ export class ProfileComponent implements OnInit {
   proofs: any = {};
   noContent: boolean = true;
 
-  constructor(private profileService: ProfileService) { }
+  constructor(public toastr: ToastrService, private profileService: ProfileService) { }
 
   ngOnInit() {
     this.profileService.getUserDetails().subscribe((data) => {
-      console.log(data);
       this.noContent = false;
       this.userProfileResponse = data;
       if (this.userProfileResponse) {
@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit {
         this.profileDetails.dob = this.profileDetails.dob.split('T')[0];
       }
     }, err => {
-      console.log(err);
+      this.toastr.error('Failed to get user details', 'Error!');
     })
   }
 
@@ -36,10 +36,10 @@ export class ProfileComponent implements OnInit {
 
   updateProfile() {
     this.profileService.updateProfile(this.profileDetails).subscribe((data) => {
-      console.log(data);
+      this.toastr.success('Profile updated', 'Success!');
       this.ngOnInit();
     }, err => {
-      console.log(err);
+      this.toastr.error('Failed to update user details', 'Error!');
     })
   }
 
@@ -51,10 +51,10 @@ export class ProfileComponent implements OnInit {
     }
 
     this.profileService.updateKYC(proofs).subscribe((data) => {
-      console.log(data);
+      this.toastr.success('KYC details updated', 'Success!');
       this.ngOnInit();
     }, err => {
-      console.log(err);
+      this.toastr.error('Failed to update user KYC details', 'Error!');
     })
   }
 

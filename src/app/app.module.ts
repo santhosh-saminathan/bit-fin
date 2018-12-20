@@ -7,7 +7,7 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { InternationalPhoneModule } from 'ng4-intl-phone';
 // import { ToastrModule } from 'ngx-toastr';
 import { NgxStripeModule } from 'ngx-stripe';
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +24,7 @@ import { ProfileService } from './services/profile.service';
 import { CryptoService } from './services/crypto.service';
 import { WalletService } from './services/wallet.service';
 import { TransactionService } from './services/transaction.service';
+import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -48,11 +49,8 @@ import { TransactionService } from './services/transaction.service';
     HttpClientModule,
     HttpClientJsonpModule,
     InternationalPhoneModule,
-    // ToastrModule.forRoot({
-    //   timeOut: 10000,
-    //   positionClass: 'toast-bottom-right',
-    //   preventDuplicates: true,
-    // }),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot() ,
     NgxStripeModule.forRoot('pk_test_uzFnOtl3tNwStqKIi5Vflq61')
   ],
   providers: [SigningService, ProfileService, CryptoService, WalletService, TransactionService],

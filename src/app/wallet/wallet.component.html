@@ -65,7 +65,7 @@
                       <input type="text" class="form-control" [(ngModel)]="receiverMobileNumber" id="mobile" placeholder="Recipient Mobile Number"
                         name="mobile" (ngModelChange)="getAutocompleteMobileNumbers()">
                       <div *ngIf="autocompleteNumbers && autocompleteNumbers.length>0" class="autocomplete_numbers">
-                        <div class="number_div" *ngFor="let mobile of autocompleteNumbers" (click)="selectedAccount(mobile)">{{mobile.mobile_number}} - {{mobile.firstName}}{{mobile.lastName}}</div>
+                        <div class="number_div" *ngFor="let mobile of autocompleteNumbers" (click)="selectedMobileNumber(mobile)">{{mobile.mobile_number}} - {{mobile.firstName}}{{mobile.lastName}}</div>
                       </div>
                     </div>
                   </div>

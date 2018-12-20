@@ -4,6 +4,7 @@ import { WalletService } from './../services/wallet.service';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ProfileService } from './../services/profile.service';
 import { CryptoService } from './../services/crypto.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 import { StripeService, StripeCardComponent, ElementOptions, ElementsOptions } from "ngx-stripe";
@@ -28,6 +29,7 @@ export class WalletComponent implements OnInit {
   transactionFee: any = 0;
   userDetails: any;
   withdraw: any = {};
+  withdrawBankDetails:any;
 
   @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
@@ -53,7 +55,7 @@ export class WalletComponent implements OnInit {
 
   stripeTest: FormGroup;
 
-  constructor(private walletService: WalletService, private fb: FormBuilder, private stripeService: StripeService, private profileService: ProfileService, private cryptoService: CryptoService) { }
+  constructor(public toastr: ToastrService, private walletService: WalletService, private fb: FormBuilder, private stripeService: StripeService, private profileService: ProfileService, private cryptoService: CryptoService) { }
 
   // constructor(private walletService: WalletService, private profileService: ProfileService, private cryptoService: CryptoService) { }
 
@@ -62,77 +64,57 @@ export class WalletComponent implements OnInit {
     this.withdraw.saveDetails = true;
 
     this.profileService.getBalance().subscribe(data => {
-      console.log(data);
       this.availableBalance = data;
+      console.log("user balance",data);
     }, err => {
-      console.log(err);
+      this.toastr.error('Failed to get user balance data', 'Error!');
     });
 
     this.profileService.getUserDetails().subscribe(data => {
-      console.log(data);
+      console.log("user details",data);
       this.userDetails = data;
       this.yourMobileNumber = this.userDetails.mobile_number;
     }, err => {
-      console.log(err);
+      this.toastr.error('Failed to get user details', 'Error!');
     });
 
 
     this.walletService.getAdminDetails().subscribe(data => {
-      console.log(data);
+      console.log("admin data",data);
       this.adminDetails = data;
     }, err => {
-      console.log(err);
+      this.toastr.error('Failed to get Admin details', 'Error!');
     })
 
     this.cryptoService.getUsdToXlm().subscribe(data => {
-      console.log(data);
+      console.log("usd to xlm",data);
       this.usd_xlm_conversion = data;
       this.usd_xlm_conversion = this.usd_xlm_conversion.XLM;
+    }, err => {
+      this.toastr.error('Failed to get usd to xlm conversion details', 'Error!');
     })
 
     this.cryptoService.getXlmToUsd().subscribe(data => {
-      console.log(data);
+      console.log("xlm to usd",data);
       this.xlm_Usd_conversion = data;
       this.xlm_Usd_conversion = this.xlm_Usd_conversion.USD;
     }, err => {
-      console.log(err);
+      this.toastr.error('Failed to get xlm to usd conversion details', 'Error!');
     })
 
     this.walletService.userSavedCardDetails().subscribe(data => {
-      console.log(data);
+      console.log("card details",data);
       this.savedCards = data;
     }, err => {
-      console.log(err);
+      this.toastr.error('Failed to saved card details', 'Error!');
     })
 
-
-    this.savedCards = [{
-      cardType: 'visa',
-      cardNumber: '99998989942343',
-      expDate: '11/2034',
-      holderName: 'Santhosh kumar saminathan',
-      cvv: '566'
-    },
-    {
-      cardType: 'master',
-      cardNumber: '99998989942343',
-      expDate: '10/2034',
-      holderName: 'Santhosh2',
-      cvv: '566'
-    },
-    {
-      cardType: 'platinum',
-      cardNumber: '99998989942343',
-      expDate: '11/2034',
-      holderName: 'Santhosh3',
-      cvv: '566'
-    }, {
-      cardType: 'visa',
-      cardNumber: '99998989942343',
-      expDate: '12/2034',
-      holderName: 'Santhosh4',
-      cvv: '566'
-    }]
+    this.walletService.savedWithdrawBankDetails().subscribe(data => {
+      console.log("withdraw bank details",data);
+      this.withdrawBankDetails = data;
+    }, err => {
+      this.toastr.error('Failed to get ', 'Error!');
+    })
 
     this.stripeTest = this.fb.group({
       name: ['', [Validators.required]]
@@ -166,33 +148,15 @@ export class WalletComponent implements OnInit {
   }
 
   getAutocompleteMobileNumbers() {
-    console.log(this.receiverMobileNumber);
     this.walletService.autocompleteMobileNumber(this.receiverMobileNumber).subscribe((data) => {
-      console.log(data);
       this.autocompleteNumbers = data;
     }, err => {
-      console.log(err);
+      this.toastr.error('Failed to mobile number for autocomplete', 'Error!');
     })
   }
 
-  getUserCardDetails() {
-    this.walletService.userSavedCardDetails().subscribe(data => {
-      console.log(data);
-    }, err => {
-      console.log(err);
-    })
-  }
 
-  getUserWithdrawSavedCardDetails() {
-    this.walletService.savedWithdrawCardDetails().subscribe(data => {
-      console.log(data);
-    }, err => {
-      console.log(err);
-    })
-  }
-
-  selectedAccount(data) {
-    console.log(data);
+  selectedMobileNumber(data) {
     this.selectedReceiver = data;
     this.receiverMobileNumber = this.selectedReceiver.mobile_number;
     this.autocompleteNumbers = [];

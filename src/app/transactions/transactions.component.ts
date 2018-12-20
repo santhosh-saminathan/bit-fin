@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionService } from './../services/transaction.service';
-
-// import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -17,38 +16,34 @@ export class TransactionsComponent implements OnInit {
   withdrawTransactions: any;
   noContent: boolean = true;
 
-  constructor(private transactionService: TransactionService) { }
+  constructor(public toastr: ToastrService, private transactionService: TransactionService) { }
 
 
   ngOnInit() {
 
     this.transactionService.sentTransactions().subscribe(data => {
-      console.log(data);
       this.sentTransactions = data;
       this.noContent = false;
     }, err => {
-      console.log(err);
+      this.toastr.error('Failed to get sent transaction data', 'Error!');
     })
 
     this.transactionService.receivedTransactions().subscribe(data => {
-      console.log(data);
       this.receivedTransactions = data;
     }, err => {
-      console.log(err);
+      this.toastr.error('Failed to get received transaction data', 'Error!');
     })
 
     this.transactionService.depositTransactions().subscribe(data => {
-      console.log(data);
       this.depositTransactions = data;
     }, err => {
-      console.log(err);
+      this.toastr.error('Failed to get deposit transaction data', 'Error!');
     })
 
     this.transactionService.withdrawTransactions().subscribe(data => {
-      console.log(data);
       this.withdrawTransactions = data;
     }, err => {
-      console.log(err);
+      this.toastr.error('Failed to get withdraw transaction data', 'Error!');
     })
   }
 

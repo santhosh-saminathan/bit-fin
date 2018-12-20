@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CryptoService } from './../services/crypto.service';
 import { ProfileService } from './../services/profile.service';
 import { TransactionService } from './../services/transaction.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,9 +21,7 @@ export class DashboardComponent implements OnInit {
   sentTransactions: any;
   noContent: boolean = true;
 
-  constructor(private transactionService: TransactionService, private cryptoService: CryptoService, private profileService: ProfileService) { }
-
-  // lineChart
+  constructor(public toastr: ToastrService, private transactionService: TransactionService, private cryptoService: CryptoService, private profileService: ProfileService) { }
 
   public lineChartOptions: any = {
     responsive: true,
@@ -44,51 +43,43 @@ export class DashboardComponent implements OnInit {
         }]
     }
   };
-
-
-
   public lineChartLegend: boolean = false;
   public lineChartType: string = 'line';
 
   ngOnInit() {
 
     this.cryptoService.getUsdToXlm().subscribe(data => {
-      console.log(data);
       this.usd_Xlm = data;
     }, err => {
-      console.log(err);
+      this.toastr.error('Failed to get conversion data', 'Error!');
     })
 
     this.cryptoService.getXlmToUsd().subscribe(data => {
-      console.log(data);
       this.xlm_Usd = data;
     }, err => {
-      console.log(err);
+      this.toastr.error('Failed to get conversion data', 'Error!');
     })
 
     this.profileService.getBalance().subscribe(data => {
-      console.log(data);
       this.userBalanceResponse = data;
       this.userBalance = this.userBalanceResponse[0].balance;
       this.noContent = false;
     }, err => {
-      console.log(err);
+      this.toastr.error('Failed to get user balance', 'Error!');
     })
 
     this.transactionService.sentTransactions().subscribe(data => {
-      console.log(data);
       this.sentTransactions = data;
     }, err => {
-      console.log(err);
+      this.toastr.error('Failed to get user transactiona', 'Error!');
     })
 
     this.cryptoService.getRateFlow().subscribe(data => {
-      // console.log(data);
       this.rateFlow = data;
       if (this.rateFlow.Response === "Success") {
 
         this.lineChartColors = [
-          { // grey
+          {
             backgroundColor: '#f2efff',
             borderColor: '#417af8',
             pointBackgroundColor: 'rgb(71, 71, 243)',
@@ -98,28 +89,20 @@ export class DashboardComponent implements OnInit {
             fill: false,
           }
         ];
-
         this.lineChartData = [
           { data: [], label: 'XLM Rate flow' },
         ];
-
-
-
         this.lineChartLabels = [];
-
         this.rateFlow.Data.forEach(element => {
           this.lineChartData[0].data.push(element.close);
           let time = new Date(element.time * 1000).getDate() + "/" + (new Date(element.time * 1000).getMonth() + 1) + " " + new Date(element.time * 1000).getHours() + ":" + new Date(element.time * 1000).getMinutes();
-          console.log(time);
           this.lineChartLabels.push(time)
         });
 
       }
     }, err => {
-      console.log(err);
+      this.toastr.error('Failed to get XLM Rate transactiona', 'Error!');
     })
-
-
 
 
   }

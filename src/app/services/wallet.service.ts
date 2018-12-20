@@ -19,7 +19,7 @@ export class WalletService {
         return this.http.get(url + "card/" + userId);
     }
 
-    savedWithdrawCardDetails() {
+    savedWithdrawBankDetails() {
         let userId = localStorage.getItem('userId');
         return this.http.get(url + "withdraw" + userId);
     }
