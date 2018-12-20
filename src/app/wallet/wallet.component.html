@@ -298,7 +298,7 @@
                   <div class="form-group">
                     <label class="control-label col-sm-4" for="amountToWithdraw">Withdraw Amount:</label>
                     <div class="col-sm-8">
-                      <input type="number" class="form-control" id="amountToWithdraw" placeholder="Enter the amount" name="amountToWithdraw">
+                      <input type="number" class="form-control" id="amountToWithdraw" placeholder="Enter the amount" [(ngModel)]="amountToWithdraw" name="amountToWithdraw">
                       <span style="float:right;font-size: 12px;">* Transaction Fee Applies</span>
                     </div>
                   </div>
@@ -306,45 +306,43 @@
                 <br>
               </div>
 
-              <!-- <div class="saved_card_section">
-                <h4 class="text_align_left">Saved Cards</h4>
+              <div class="saved_card_section">
+                <h4 class="text_align_left">Saved Details</h4>
                 <div class="row">
-                  <div [ngClass]="{'selected': card.selected}" (click)="selectedCard(card)" class="text_align_left col-xs-6 card" *ngFor="let card of savedCards">
+                  <div [ngClass]="{'selected': card.selected}" (click)="selectedWithdrawBankDetails(card)" class="text_align_left col-xs-6 card" *ngFor="let card of withdrawBankDetails">
                     <div class="row card_top">
                       <div class="col-xs-6">
                         <span class="card_label">
-                          Card Number
+                          Full Name
                         </span>
                         <br>
-                        <span>{{card.cardNumber}}</span>
+                        <span>{{card.firstName}} {{card.lastName}}</span>
                       </div>
-                      <div class="col-xs-6" style="text-align:right;font-size:20px;font-weight:bold">
-                        <span>{{card.cardType}}</span>
+                      <div class="col-xs-6">
+                          <span class="card_label">
+                              Account Number
+                            </span>
+                            <br>
+                            <span>{{card.accountNumber}}</span>
                       </div>
                     </div>
                     <div class="row card_bottom">
-                      <div class="col-xs-4">
-                        <span class="card_label">
-                          Expiry Date
-                        </span>
-                        <br>
-                        <span>{{card.expDate}}</span>
-                      </div>
-                      <div class="col-xs-4">
+                     
+                      <div class="col-xs-6">
                         <span class="card_label">
                           Card Holder
                         </span>
                         <br>
-                        <span style="white-space:nowrap">{{card.holderName.slice(0,10)}}
-                          <span *ngIf="card.holderName.length>10">... </span>
+                        <span style="white-space:nowrap">{{card.accountHolder.slice(0,10)}}
+                          <span *ngIf="card.accountHolder.length>10">... </span>
                         </span>
                       </div>
-                      <div class="col-xs-4" style="text-align:center">
+                      <div class="col-xs-6" >
                         <span class="card_label">
-                          CVV
+                          Routing Number
                         </span>
                         <br>
-                        <span>{{card.cvv}}</span>
+                        <span>{{card.routingNumber}}</span>
                       </div>
                     </div>
                   </div>
@@ -352,9 +350,9 @@
               </div>
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                  <button style="float:right" type="submit" class="btn btn-primary">Use This Card</button>
+                  <button style="float:right" type="submit" (click)="withdrawToSelectedAccount()" class="btn btn-primary">Use this Account</button>
                 </div>
-              </div> -->
+              </div>
 
               <div class="">
                 <h4 class="text_align_left">Withdraw to bank account</h4>
@@ -470,7 +468,7 @@
 
 
                   <div style="width:100%">
-                    <button style="float:right;margin-right:20px" type="submit" (click)="withdrawAmount()" class="btn btn-primary">Submit</button>
+                    <button style="float:right;margin-right:20px" type="submit" (click)="withdrawToNewAmount()" class="btn btn-primary">Submit</button>
                   </div>
 
                 </div>

@@ -26,7 +26,6 @@ export class WalletComponent implements OnInit {
   adminDetails: any;
   usd_xlm_conversion: any = 0;
   xlm_Usd_conversion: any = 0;
-  transactionFee: any = 0;
   userDetails: any;
   withdraw: any = {};
   withdrawBankDetails: any;
@@ -36,7 +35,15 @@ export class WalletComponent implements OnInit {
   sendTransactionFee: any = 0;
   sendWalletAmount_USD: any = 0;
   sendWalletFee_USD: any = 0;
-  waitingForResponse:boolean = false;
+  waitingForResponse: boolean = false;
+
+  //withdraw
+  amountToWithdraw: any = 0;
+  withdrawTransactionFee: any = 0;
+  withdrawAmount_xlm: any = 0;
+  withdrawRate: any = 0
+  withdrawFee: any = 0;
+  selectedWithdrawAccount:any;
 
   @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
@@ -154,6 +161,8 @@ export class WalletComponent implements OnInit {
     card.selected = true;
   }
 
+ 
+
   getAutocompleteMobileNumbers() {
     this.walletService.autocompleteMobileNumber(this.receiverMobileNumber).subscribe((data) => {
       this.autocompleteNumbers = data;
@@ -171,9 +180,6 @@ export class WalletComponent implements OnInit {
 
   calculateSendFee() {
 
-
-
-    this.transactionFee = 0;
     let xlmAmount = parseFloat(this.amountToSend) * parseFloat(this.usd_xlm_conversion);
     this.sendTransactionTotal = xlmAmount + ((xlmAmount * this.adminDetails.sendTransactionFee) / 100);
     this.sendTransactionFee = (xlmAmount * this.adminDetails.sendTransactionFee) / 100
@@ -187,16 +193,7 @@ export class WalletComponent implements OnInit {
     this.sendWalletAmount_USD = this.sendWalletAmount_USD.toFixed(2);
     this.sendWalletFee_USD = this.sendWalletFee_USD.toFixed(2);
 
-    // var amountToSendXlm = parseFloat(this.amountToSend) * parseFloat(this.usd_xlm_conversion);
 
-
-    // var rate = (amountToSendXlm * parseFloat(this.adminDetails.sellRate)) / 100;
-    // console.log("rate", rate);
-    // var updatedAmount = amountToSendXlm + rate;
-    // console.log("updatedAmount", updatedAmount);
-    // var fee = (updatedAmount * parseFloat(this.adminDetails.sellTransactionFee)) / 100;
-    // console.log("Fee", fee);
-    // this.transactionFee = fee;
   }
 
   sendAmount() {
@@ -228,9 +225,6 @@ export class WalletComponent implements OnInit {
     } else {
       this.toastr.error('Some fields are missing', 'Error!');
     }
-
-
-
   }
 
   withdrawProof($event) {
@@ -242,24 +236,50 @@ export class WalletComponent implements OnInit {
     myReader.readAsDataURL(file);
   }
 
-  selectedWithdrawAccount(data) {
-    console.log(data)
+  selectedWithdrawBankDetails(bankData) {
+    console.log(bankData);
+    bankData.selected = true;
+    this.selectedWithdrawAccount = bankData;
+  }
+  
+  calculateWithdrawFee() {
+    this.withdrawAmount_xlm = parseFloat(this.amountToWithdraw) * parseFloat(this.usd_xlm_conversion);
+    this.withdrawRate = (this.withdrawAmount_xlm * parseFloat(this.adminDetails.sellRate)) / 100;
+    var updatedAmount = this.withdrawAmount_xlm + this.withdrawRate;
+    this.withdrawFee = (updatedAmount * parseFloat(this.adminDetails.sellTransactionFee)) / 100;
+    this.withdrawTransactionFee = (this.withdrawRate + this.withdrawFee) * parseFloat(this.xlm_Usd_conversion);
   }
 
-  withdrawAmount() {
-    console.log(this.withdraw);
-    console.log(this.withdraw.dob);
+  withdrawToSelectedAccount() {
 
+    this.selectedWithdrawAccount.usd = this.amountToWithdraw.toFixed(2);
+    this.selectedWithdrawAccount.xlm = this.withdrawAmount_xlm.toFixed(2)
+    this.selectedWithdrawAccount.fee = this.withdrawFee.toFixed(2);
+    this.selectedWithdrawAccount.rate = this.withdrawRate.toFixed(2);
+    this.selectedWithdrawAccount.walletFee = this.withdrawTransactionFee.toFixed(2);
+
+
+    this.walletService.withdrawFromAccount(this.selectedWithdrawAccount).subscribe(data => {
+      console.log(data);
+    }, err => {
+      console.log(err);
+    })
+    
+  }
+
+
+  withdrawToNewAmount() {
+   
     this.withdraw.day = new Date(this.withdraw.dob.toString()).getDate();
     this.withdraw.month = new Date(this.withdraw.dob.toString()).getMonth() + 1;
     this.withdraw.year = new Date(this.withdraw.dob.toString()).getFullYear();
 
 
-    // this.withdraw.usd =
-    //   this.withdraw.xlm =
-    //   this.withdraw.fee =
-    //   this.withdraw.rate =
-    //   this.withdraw.walletFee = 
+    this.withdraw.usd = this.amountToWithdraw.toFixed(2);
+    this.withdraw.xlm = this.withdrawAmount_xlm.toFixed(2)
+    this.withdraw.fee = this.withdrawFee.toFixed(2);
+    this.withdraw.rate = this.withdrawRate.toFixed(2);
+    this.withdraw.walletFee = this.withdrawTransactionFee.toFixed(2);
 
     if (this.withdraw.walletFee && this.withdraw.rate && this.withdraw.fee && this.withdraw.xlm
       && this.withdraw.usd && this.withdraw.routingNumber && this.withdraw.accountNumber) {
@@ -270,7 +290,6 @@ export class WalletComponent implements OnInit {
         console.log(err);
       })
     }
-
 
   }
 
