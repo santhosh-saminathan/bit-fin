@@ -38,5 +38,8 @@ export class WalletService {
         return this.http.post(url + "withdraw/" + userId, data);
     }
 
+    depositAmount(data){
+        return this.http.post(url + "deposit" , data);
+    }
 
 }

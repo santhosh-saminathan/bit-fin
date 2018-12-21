@@ -130,3 +130,24 @@ td {
 .number_div:hover{
     background: #d8d8fd;
 }
+
+.stripe_card_input{
+    border:none;
+    color: #31325F;
+    line-height: 40px;
+    padding: 10px;
+    font-weight: 300;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 18px;
+    height: 40px;
+}
+
+.stripe_card_input:hover{
+    border:none;
+    
+}
+
+.stripe_card_input:focus{
+    border:none;
+    
+}

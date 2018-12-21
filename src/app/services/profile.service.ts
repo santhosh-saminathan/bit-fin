@@ -29,4 +29,8 @@ export class ProfileService {
         return this.http.get(url + "account/" + userId);
     }
 
+    uploadImage(data){
+        return this.http.post(url + "upload", data);
+     }
+
 }

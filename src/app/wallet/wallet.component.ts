@@ -6,6 +6,7 @@ import { ProfileService } from './../services/profile.service';
 import { CryptoService } from './../services/crypto.service';
 import { ToastrService } from 'ngx-toastr';
 
+// import { StripeInstance, StripeFactoryService } from "ngx-stripe";
 
 import { StripeService, StripeCardComponent, ElementOptions, ElementsOptions } from "ngx-stripe";
 
@@ -43,7 +44,11 @@ export class WalletComponent implements OnInit {
   withdrawAmount_xlm: any = 0;
   withdrawRate: any = 0
   withdrawFee: any = 0;
-  selectedWithdrawAccount:any;
+  selectedWithdrawAccount: any;
+
+  //deposit
+  amountToDeposit: any = 0;
+  uploadVerificationImage: any;
 
   @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
@@ -71,21 +76,21 @@ export class WalletComponent implements OnInit {
 
   constructor(public toastr: ToastrService, private walletService: WalletService, private fb: FormBuilder, private stripeService: StripeService, private profileService: ProfileService, private cryptoService: CryptoService) { }
 
-  // constructor(private walletService: WalletService, private profileService: ProfileService, private cryptoService: CryptoService) { }
-
   ngOnInit() {
 
     this.withdraw.saveDetails = true;
+    this.withdraw.routingNumber = '110000000';
+    this.withdraw.accountNumber = '000123456789';
+    this.withdraw.accountHolder = 'Jenny';
+    this.withdraw.postalCode = '10001';
 
     this.profileService.getBalance().subscribe(data => {
       this.availableBalance = data;
-      console.log("user balance", data);
     }, err => {
       this.toastr.error('Failed to get user balance data', 'Error!');
     });
 
     this.profileService.getUserDetails().subscribe(data => {
-      console.log("user details", data);
       this.userDetails = data;
       this.yourMobileNumber = this.userDetails.mobile_number;
     }, err => {
@@ -94,14 +99,12 @@ export class WalletComponent implements OnInit {
 
 
     this.walletService.getAdminDetails().subscribe(data => {
-      console.log("admin data", data);
       this.adminDetails = data;
     }, err => {
       this.toastr.error('Failed to get Admin details', 'Error!');
     })
 
     this.cryptoService.getUsdToXlm().subscribe(data => {
-      console.log("usd to xlm", data);
       this.usd_xlm_conversion = data;
       this.usd_xlm_conversion = this.usd_xlm_conversion.XLM;
     }, err => {
@@ -109,7 +112,6 @@ export class WalletComponent implements OnInit {
     })
 
     this.cryptoService.getXlmToUsd().subscribe(data => {
-      console.log("xlm to usd", data);
       this.xlm_Usd_conversion = data;
       this.xlm_Usd_conversion = this.xlm_Usd_conversion.USD;
     }, err => {
@@ -117,14 +119,12 @@ export class WalletComponent implements OnInit {
     })
 
     this.walletService.userSavedCardDetails().subscribe(data => {
-      console.log("card details", data);
       this.savedCards = data;
     }, err => {
       this.toastr.error('Failed to saved card details', 'Error!');
     })
 
     this.walletService.savedWithdrawBankDetails().subscribe(data => {
-      console.log("withdraw bank details", data);
       this.withdrawBankDetails = data;
     }, err => {
       this.toastr.error('Failed to get ', 'Error!');
@@ -133,35 +133,48 @@ export class WalletComponent implements OnInit {
     this.stripeTest = this.fb.group({
       name: ['', [Validators.required]]
     });
-
-
   }
 
-
-  buy() {
-    console.log(this.stripeTest.get('name').value, this.card.getCard());
-
+  createStripeToken() {
     const name = this.stripeTest.get('name').value;
     this.stripeService
       .createToken(this.card.getCard(), { name })
       .subscribe(result => {
         if (result.token) {
-          // Use the token to create a charge or a customer
-          // https://stripe.com/docs/charges
-          console.log(result.token.id);
+          if (this.amountToDeposit) {
+            let data = {
+              "stripeToken": result.token.id,
+              "amount": this.amountToDeposit.toFixed(2),
+              "user": localStorage.getItem('userId'),
+              "xlmAmount": (this.amountToDeposit * this.usd_xlm_conversion).toFixed(2),
+              "card": {
+                "number": "4242424242424242",
+                "holder": result.token.card.name,
+                "expiry": result.token.card.exp_month.toString() + '-' + result.token.card.exp_year.toString(),
+                "user": localStorage.getItem('userId'),
+              }
+            }
+            this.walletService.depositAmount(data).subscribe(data => {
+              this.toastr.success('Deposit amount successfully');
+              this.ngOnInit()
+            }, err => {
+              this.toastr.error('Failed to deposit amount', 'Error!');
+            })
+          } else {
+            this.toastr.error('Please enter deposit amount', 'Error!');
+          }
         } else if (result.error) {
-          // Error creating the token
-          console.log(result.error.message);
+          this.toastr.error('Invalid card details', 'Error!');
         }
       });
   }
 
   selectedCard(card) {
-    // console.log(card)
+    this.savedCards.forEach(element => {
+      element.selected = false;
+    });
     card.selected = true;
   }
-
- 
 
   getAutocompleteMobileNumbers() {
     this.walletService.autocompleteMobileNumber(this.receiverMobileNumber).subscribe((data) => {
@@ -170,7 +183,6 @@ export class WalletComponent implements OnInit {
       this.toastr.error('Failed to mobile number for autocomplete', 'Error!');
     })
   }
-
 
   selectedMobileNumber(data) {
     this.selectedReceiver = data;
@@ -227,21 +239,35 @@ export class WalletComponent implements OnInit {
     }
   }
 
+
+  //withdraw
+  selectedWithdrawBankDetails(bankData) {
+    this.withdrawBankDetails.forEach(element => {
+      element.selected = false;
+    });
+
+    bankData.selected = true;
+    this.selectedWithdrawAccount = bankData;
+  }
+
   withdrawProof($event) {
+
     let file = $event.target.files[0];
     const myReader: FileReader = new FileReader();
     myReader.onloadend = (loadEvent: any) => {
-      this.withdraw.verificationFile = loadEvent.target.result;
+      let image = loadEvent.target.result.split('base64,')[1];
+      this.profileService.uploadImage({ 'image': image }).subscribe(data => {
+        this.uploadVerificationImage = data;
+        if (this.uploadVerificationImage) {
+          this.withdraw.verificationFile = this.uploadVerificationImage.url;
+        }
+      }, err => {
+        this.toastr.error('Error while uploading image', 'Error!');
+      })
     };
     myReader.readAsDataURL(file);
   }
 
-  selectedWithdrawBankDetails(bankData) {
-    console.log(bankData);
-    bankData.selected = true;
-    this.selectedWithdrawAccount = bankData;
-  }
-  
   calculateWithdrawFee() {
     this.withdrawAmount_xlm = parseFloat(this.amountToWithdraw) * parseFloat(this.usd_xlm_conversion);
     this.withdrawRate = (this.withdrawAmount_xlm * parseFloat(this.adminDetails.sellRate)) / 100;
@@ -258,37 +284,56 @@ export class WalletComponent implements OnInit {
     this.selectedWithdrawAccount.rate = this.withdrawRate.toFixed(2);
     this.selectedWithdrawAccount.walletFee = this.withdrawTransactionFee.toFixed(2);
 
-
+    this.waitingForResponse = true;
     this.walletService.withdrawFromAccount(this.selectedWithdrawAccount).subscribe(data => {
-      console.log(data);
+      this.waitingForResponse = false;
+      this.amountToWithdraw = null;
+      this.toastr.success('Withdraw amount successfully');
+      this.ngOnInit();
     }, err => {
+      this.waitingForResponse = false;
+      this.toastr.error('Error while withdraw amount', 'Error!');
       console.log(err);
     })
-    
+
   }
 
-
   withdrawToNewAmount() {
-   
-    this.withdraw.day = new Date(this.withdraw.dob.toString()).getDate();
-    this.withdraw.month = new Date(this.withdraw.dob.toString()).getMonth() + 1;
-    this.withdraw.year = new Date(this.withdraw.dob.toString()).getFullYear();
+
+    if (this.amountToWithdraw && this.withdraw.routingNumber && this.withdraw.accountNumber && this.withdraw.phoneNumber
+      && this.withdraw.accountHolder) {
+
+      this.withdraw.day = new Date(this.withdraw.dob.toString()).getDate();
+      this.withdraw.month = new Date(this.withdraw.dob.toString()).getMonth() + 1;
+      this.withdraw.year = new Date(this.withdraw.dob.toString()).getFullYear();
+
+      this.withdraw.day = this.withdraw.day.toString();
+      this.withdraw.accountNumber = this.withdraw.accountNumber.toString();
+      this.withdraw.month = this.withdraw.month.toString();
+      this.withdraw.phoneNumber = this.withdraw.phoneNumber.toString();
+      this.withdraw.saveDetails = this.withdraw.saveDetails.toString();
+      this.withdraw.ssn = this.withdraw.ssn.toString();
+      this.withdraw.year = this.withdraw.year.toString();
+
+      this.withdraw.usd = this.amountToWithdraw.toFixed(2);
+      this.withdraw.xlm = this.withdrawAmount_xlm.toFixed(2)
+      this.withdraw.fee = this.withdrawFee.toFixed(2);
+      this.withdraw.rate = this.withdrawRate.toFixed(2);
+      this.withdraw.walletFee = this.withdrawTransactionFee.toFixed(2);
 
 
-    this.withdraw.usd = this.amountToWithdraw.toFixed(2);
-    this.withdraw.xlm = this.withdrawAmount_xlm.toFixed(2)
-    this.withdraw.fee = this.withdrawFee.toFixed(2);
-    this.withdraw.rate = this.withdrawRate.toFixed(2);
-    this.withdraw.walletFee = this.withdrawTransactionFee.toFixed(2);
-
-    if (this.withdraw.walletFee && this.withdraw.rate && this.withdraw.fee && this.withdraw.xlm
-      && this.withdraw.usd && this.withdraw.routingNumber && this.withdraw.accountNumber) {
-
+      this.waitingForResponse = true;
       this.walletService.withdrawFromAccount(this.withdraw).subscribe(data => {
-        console.log(data);
+        this.amountToWithdraw = null;
+        this.toastr.success('Withdraw amount successfully');
+        this.ngOnInit()
+        this.waitingForResponse = false;
       }, err => {
-        console.log(err);
+        this.waitingForResponse = false;
+        this.toastr.error('Error while withdraw amount', 'Error!');
       })
+    } else {
+      this.toastr.error('Some fileds are missing', 'Error!');
     }
 
   }
