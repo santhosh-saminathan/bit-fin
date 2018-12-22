@@ -1,3 +1,62 @@
-<p>
-  login works!
-</p>
+<nav class="navbar navbar-light header static-top">
+    <div class="container">
+      <a (click)="redirectToHome()" class="navbar-brand custom_width">
+        <img src="assets/img/bit-fin-white.png" style="width: 20px;margin-right: 10px;display: -webkit-inline-box">
+        <b>BitFin</b>
+      </a>
+    </div>
+  </nav>
+
+<section class="page">
+  <div class="row login">
+    <div class="col-xs-12 col-sm-3 col-md-4"></div>
+    <div class="col-xs-12 col-sm-6 col-md-4 login_box">
+
+      <div class="box">
+        <h4 style="text-align:center;">Sign In</h4>
+        <div class="error_msg">{{invalidMobile}}</div>
+
+        <div *ngIf="!otpScreen">
+          <div class="form-group">
+            <label class="normal_font_weight">Mobile Number</label>
+            <int-phone-prefix [locale]="'hi'" id="mobileNumber" (change)="countryCode($event)" defaultCountry="in" [(ngModel)]="login.phone"></int-phone-prefix>
+          </div>
+          <div class="form-group">
+            <label class="normal_font_weight">Password</label>
+            <input type="password" class="form-control form-white" placeholder="Password" name="password" [(ngModel)]="login.password">
+            <!-- <a class="forgot_pass_option" (click)="forgotPasswordScreen()">Forgot Password?</a> -->
+          </div>
+          <button type="submit" class="btn btn-submit login_btn" (click)="loginUser()">Login</button>
+          <div style="font-size: 12px;text-align:left;padding-top:4px">* For demo purpose mobile number and password are prefilled. For this for
+            <span class="new_login" (click)="newLogin()">New login</span>
+          </div>
+        </div>
+
+        <div *ngIf="otpScreen">
+
+          <div style="font-size: 12px;text-align:left;">
+            * For demo purpose, OTP will be displayed here
+            <b> {{loginResponse.otp}}</b>
+          </div>
+          <br>
+          <div>
+            Enter the verification code sent to your registered mobile number {{loginResponse.code}} {{loginResponse.mobile_number}}
+          </div>
+          <br>
+          <div style="text-align:center">
+            <input type="text" id="partitioned" maxlength="4" name="otpCode" [(ngModel)]="otp" />
+          </div>
+          <br>
+
+          <button type="submit" class="btn btn-submit login_btn" (click)="verifyOTP()">Submit</button>
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+  </div>
+
+</section>

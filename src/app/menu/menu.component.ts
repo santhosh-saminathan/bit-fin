@@ -23,8 +23,14 @@ export class MenuComponent implements OnInit {
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
 
+    if(!localStorage.getItem('userId')){
+      this.router.navigate(['/home']);
+    }
+
+  }
+
+  ngOnInit() {
     this.url = this.router.url;
-    console.log(this.url);
     if (this.url === '/wallet') {
       this.wallet();
     }
@@ -37,10 +43,6 @@ export class MenuComponent implements OnInit {
     if (this.url === '/profile') {
       this.profile();
     }
-
-  }
-
-  ngOnInit() {
   }
 
   dashboard() {

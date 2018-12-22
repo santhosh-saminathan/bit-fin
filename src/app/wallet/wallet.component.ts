@@ -313,7 +313,6 @@ export class WalletComponent implements OnInit {
     }, err => {
       this.waitingForResponse = false;
       this.toastr.error('Error while withdraw amount', 'Error!');
-      console.log(err);
     })
 
   }

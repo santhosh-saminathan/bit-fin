@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { ProfileComponent } from './profile/profile.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'wallet', component: WalletComponent },
   { path: 'transactions', component: TransactionsComponent },
-  { path: 'profile', component: ProfileComponent }
+  { path: 'profile', component: ProfileComponent },
+  { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({

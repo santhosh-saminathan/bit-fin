@@ -5,10 +5,10 @@
       <img src="assets/img/bit-fin-white.png" style="width: 20px;margin-right: 10px;">
       <b>BitFin</b>
     </a>
-    <a class="btn btn-link">About</a>
-    <a class="btn btn-link">How it works</a>
-    <a class="btn btn-link">Login</a>
-    <a class="btn btn-link">Sign In</a>
+    <a class="btn btn-link hide_in_mobile">About</a>
+    <a class="btn btn-link hide_in_mobile">How it works</a>
+    <a class="btn btn-link hide_in_mobile" (click)="redirectToLogin()">Login</a>
+    <a class="btn btn-link hide_in_mobile" (click)="redirectToLogin()">Sign In</a>
   </div>
 </nav>
 
@@ -23,7 +23,7 @@
         <img src="./../assets/img/bit-fin.png" width="250px">
 
       </div>
-      <div class="col-sm-4" style="text-align:left;color: #417af8;">
+      <div class="col-sm-8" style="text-align:left;color: #417af8;">
 
         <h4>BitFin was a smart Digital currency exchange.<br>
           <br>Our features include:<br>
@@ -32,8 +32,12 @@
           <br> 2. Send and Receive stellar payments around the world instantly!
           <br>
           <br> 3.Keep track of all your deposits and withdrawl easily</h4>
+          <br>
+          <br>
+          <button (click)="redirectToLogin()" class="btn home_btn btn-primary">Sign up Now!</button>
+
       </div>
-      <div class="col-sm-4">
+      <!-- <div class="col-sm-4">
         <div class="box">
           <h4>Sign In</h4>
           <div class="error_msg">{{invalidMobile}}</div>
@@ -76,7 +80,7 @@
 
 
         </div>
-      </div>
+      </div> -->
 
       <!-- <div class="col-xl-9 mx-auto">
         <h1 class="mb-5">Build a landing page for your business or project and generate more leads!</h1>
@@ -216,11 +220,6 @@
   </div>
 </section> -->
 
-<h1>Default Stripe Form</h1>
-
-{{message}}
-
-<button (click)="getToken()">Purchase</button>
 
 <!-- Footer -->
 <footer class="footer">
