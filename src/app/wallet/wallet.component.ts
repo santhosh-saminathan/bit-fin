@@ -1,14 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { WalletService } from './../services/wallet.service';
-// import { StripeService, Elements, Element as StripeElement, ElementsOptions } from "ngx-stripe";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ProfileService } from './../services/profile.service';
 import { CryptoService } from './../services/crypto.service';
 import { ToastrService } from 'ngx-toastr';
-
-// import { StripeInstance, StripeFactoryService } from "ngx-stripe";
-
-import { StripeService, StripeCardComponent, ElementOptions, ElementsOptions } from "ngx-stripe";
 
 @Component({
   selector: 'app-wallet',
@@ -31,6 +26,9 @@ export class WalletComponent implements OnInit {
   withdraw: any = {};
   withdrawBankDetails: any;
 
+  //deposit
+  cardData: any = {};
+
   //send
   sendTransactionTotal: any = 0;
   sendTransactionFee: any = 0;
@@ -49,46 +47,37 @@ export class WalletComponent implements OnInit {
   //deposit
   amountToDeposit: any = 0;
   uploadVerificationImage: any;
+  cardYear: any = [];
+  cardMonth: any = [];
 
-  @ViewChild(StripeCardComponent) card: StripeCardComponent;
 
-  cardOptions: ElementOptions = {
-    style: {
-      base: {
-        iconColor: '#666EE8',
-        color: '#31325F',
-        lineHeight: '40px',
-        fontWeight: 300,
-        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-        fontSize: '18px',
-        '::placeholder': {
-          color: '#CFD7E0'
-        }
-      }
-    }
-  };
+  constructor(public toastr: ToastrService, private walletService: WalletService, private fb: FormBuilder, private profileService: ProfileService, private cryptoService: CryptoService) { }
 
-  elementsOptions: ElementsOptions = {
-    locale: 'en'
-  };
 
-  stripeTest: FormGroup;
-
-  constructor(public toastr: ToastrService, private walletService: WalletService, private fb: FormBuilder, private stripeService: StripeService, private profileService: ProfileService, private cryptoService: CryptoService) { }
+  getBalance() {
+    this.profileService.getBalance().subscribe(data => {
+      this.availableBalance = data;
+    }, err => {
+      this.toastr.error('Failed to get user balance data', 'Error!');
+    });
+  }
 
   ngOnInit() {
 
+    let presentYear = new Date().getFullYear();
+
+    this.cardYear = [presentYear, presentYear + 1, presentYear + 2, presentYear + 3, presentYear + 4, presentYear + 5, presentYear + 6, presentYear + 7, presentYear + 8, presentYear + 9, presentYear + 10, presentYear + 11, presentYear + 12]
+    this.cardMonth = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+
+    this.cardData.cardNumber = 4242424242424242;
+    this.cardData.saveCard = false;
     this.withdraw.saveDetails = true;
     this.withdraw.routingNumber = '110000000';
     this.withdraw.accountNumber = '000123456789';
     this.withdraw.accountHolder = 'Jenny';
     this.withdraw.postalCode = '10001';
 
-    this.profileService.getBalance().subscribe(data => {
-      this.availableBalance = data;
-    }, err => {
-      this.toastr.error('Failed to get user balance data', 'Error!');
-    });
+    this.getBalance();
 
     this.profileService.getUserDetails().subscribe(data => {
       this.userDetails = data;
@@ -121,52 +110,16 @@ export class WalletComponent implements OnInit {
     this.walletService.userSavedCardDetails().subscribe(data => {
       this.savedCards = data;
     }, err => {
-      this.toastr.error('Failed to saved card details', 'Error!');
+      this.toastr.error('Failed to get saved card details', 'Error!');
     })
 
     this.walletService.savedWithdrawBankDetails().subscribe(data => {
       this.withdrawBankDetails = data;
     }, err => {
-      this.toastr.error('Failed to get ', 'Error!');
+      this.toastr.error('Failed to get saved withdraw bank details', 'Error!');
     })
 
-    this.stripeTest = this.fb.group({
-      name: ['', [Validators.required]]
-    });
-  }
 
-  createStripeToken() {
-    const name = this.stripeTest.get('name').value;
-    this.stripeService
-      .createToken(this.card.getCard(), { name })
-      .subscribe(result => {
-        if (result.token) {
-          if (this.amountToDeposit) {
-            let data = {
-              "stripeToken": result.token.id,
-              "amount": this.amountToDeposit.toFixed(2),
-              "user": localStorage.getItem('userId'),
-              "xlmAmount": (this.amountToDeposit * this.usd_xlm_conversion).toFixed(2),
-              "card": {
-                "number": "4242424242424242",
-                "holder": result.token.card.name,
-                "expiry": result.token.card.exp_month.toString() + '-' + result.token.card.exp_year.toString(),
-                "user": localStorage.getItem('userId'),
-              }
-            }
-            this.walletService.depositAmount(data).subscribe(data => {
-              this.toastr.success('Deposit amount successfully');
-              this.ngOnInit()
-            }, err => {
-              this.toastr.error('Failed to deposit amount', 'Error!');
-            })
-          } else {
-            this.toastr.error('Please enter deposit amount', 'Error!');
-          }
-        } else if (result.error) {
-          this.toastr.error('Invalid card details', 'Error!');
-        }
-      });
   }
 
   selectedCard(card) {
@@ -174,7 +127,57 @@ export class WalletComponent implements OnInit {
       element.selected = false;
     });
     card.selected = true;
+    this.cardData.cardHolder = card.holder
+    this.cardData.cardNumber = card.number
+    this.cardData.month = card.expiry.split('/')[0]
+    this.cardData.year = card.expiry.split('/')[1]
   }
+
+  createToken() {
+    if (this.amountToDeposit && this.cardData.cardHolder && this.cardData.cardNumber && this.cardData.month && this.cardData.year && this.cardData.cvv) {
+      this.waitingForResponse = true;
+      (<any>window).Stripe.card.createToken({
+        number: this.cardData.cardNumber,
+        exp_month: this.cardData.month,
+        exp_year: this.cardData.year,
+        cvc: this.cardData.cvv
+      }, (status: number, response: any) => {
+        if (response.id) {
+          let data = {
+            "stripeToken": response.id,
+            "saveCard": this.cardData.saveCard,
+            "amount": this.amountToDeposit.toFixed(2),
+            "user": localStorage.getItem('userId'),
+            "xlmAmount": (this.amountToDeposit * this.usd_xlm_conversion).toFixed(2),
+            "card": {
+              "number": this.cardData.cardNumber.toString(),
+              "holder": this.cardData.cardHolder,
+              "expiry": this.cardData.month + '-' + this.cardData.year,
+              "user": localStorage.getItem('userId'),
+            }
+          }
+          this.walletService.depositAmount(data).subscribe(data => {
+            this.toastr.success('Deposit amount successfully');
+            this.waitingForResponse = false;
+            this.amountToDeposit = 0;
+            this.getBalance();
+          }, err => {
+            this.waitingForResponse = false;
+            this.toastr.error('Failed to deposit amount', 'Error!');
+          })
+        } else {
+          this.waitingForResponse = false;
+          this.toastr.error('Invalid card details', 'Error!');
+        }
+      }, (err) => {
+        this.waitingForResponse = false;
+        this.toastr.error('Invalid card details', 'Error!');
+      });
+    } else {
+      this.toastr.error('Enter deposit amount and card details', 'Error!');
+    }
+  }
+
 
   getAutocompleteMobileNumbers() {
     this.walletService.autocompleteMobileNumber(this.receiverMobileNumber).subscribe((data) => {
@@ -210,6 +213,16 @@ export class WalletComponent implements OnInit {
 
   sendAmount() {
 
+    let count = 0;
+    let isNumberRegistered = false;
+
+    this.autocompleteNumbers.forEach(element => {
+      count++
+      if (element.mobile_number === this.receiverMobileNumber) {
+        isNumberRegistered = true;
+      }
+    });
+
     let data = {
       "sender": localStorage.getItem('userId'),
       "receiver": this.selectedReceiver ? this.selectedReceiver._id : null,
@@ -219,7 +232,10 @@ export class WalletComponent implements OnInit {
       "walletFee": this.sendWalletFee_USD
     }
 
-    if (data.sender == data.receiver) {
+    if (isNumberRegistered) {
+      this.toastr.error('This number is not registered', 'Error!');
+
+    } else if (data.sender == data.receiver) {
       this.toastr.error('Sender and Receiver cannot be same', 'Error!');
     } else if (data.sender && data.receiver && data.amount && data.fee && data.walletAmount && data.walletFee) {
       this.amountToSend = null;
@@ -228,7 +244,7 @@ export class WalletComponent implements OnInit {
         this.waitingForResponse = false;
         this.sendWalletAmount_USD = null;
         this.sendWalletFee_USD = null;
-        this.ngOnInit();
+        this.getBalance();
         this.toastr.success('Payment sent successfully');
       }, err => {
         this.waitingForResponse = false;
@@ -251,7 +267,7 @@ export class WalletComponent implements OnInit {
   }
 
   withdrawProof($event) {
-
+    this.waitingForResponse = true;
     let file = $event.target.files[0];
     const myReader: FileReader = new FileReader();
     myReader.onloadend = (loadEvent: any) => {
@@ -259,7 +275,11 @@ export class WalletComponent implements OnInit {
       this.profileService.uploadImage({ 'image': image }).subscribe(data => {
         this.uploadVerificationImage = data;
         if (this.uploadVerificationImage) {
+          this.waitingForResponse = false;
           this.withdraw.verificationFile = this.uploadVerificationImage.url;
+          this.toastr.success('Verification proof uploaded', 'Success!');
+        } else {
+          this.toastr.error('Error while uploading image', 'Error!');
         }
       }, err => {
         this.toastr.error('Error while uploading image', 'Error!');
@@ -289,7 +309,7 @@ export class WalletComponent implements OnInit {
       this.waitingForResponse = false;
       this.amountToWithdraw = null;
       this.toastr.success('Withdraw amount successfully');
-      this.ngOnInit();
+      this.getBalance();
     }, err => {
       this.waitingForResponse = false;
       this.toastr.error('Error while withdraw amount', 'Error!');
@@ -326,7 +346,7 @@ export class WalletComponent implements OnInit {
       this.walletService.withdrawFromAccount(this.withdraw).subscribe(data => {
         this.amountToWithdraw = null;
         this.toastr.success('Withdraw amount successfully');
-        this.ngOnInit()
+        this.getBalance()
         this.waitingForResponse = false;
       }, err => {
         this.waitingForResponse = false;

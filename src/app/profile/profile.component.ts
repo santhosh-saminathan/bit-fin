@@ -14,6 +14,10 @@ export class ProfileComponent implements OnInit {
   userProfileResponse: any;
   proofs: any = {};
   noContent: boolean = true;
+  uploadAddressVerificationImage: any;
+  uploadIdVerificationImage: any;
+  uploadProofVerificationImage: any;
+  waitingForResponse: boolean = false;
 
   constructor(public toastr: ToastrService, private profileService: ProfileService) { }
 
@@ -30,9 +34,6 @@ export class ProfileComponent implements OnInit {
     })
   }
 
-  documentUpload() {
-
-  }
 
   updateProfile() {
     this.profileService.updateProfile(this.profileDetails).subscribe((data) => {
@@ -58,32 +59,77 @@ export class ProfileComponent implements OnInit {
     })
   }
 
+
   addressProofUpdate($event) {
+    this.waitingForResponse = true;
     let file = $event.target.files[0];
     const myReader: FileReader = new FileReader();
     myReader.onloadend = (loadEvent: any) => {
-      this.profileDetails.proofs.addressProof = loadEvent.target.result;
-      this.proofs.addressProof = loadEvent.target.result;
+      let image = loadEvent.target.result.split('base64,')[1];
+
+      this.profileService.uploadImage({ 'image': image }).subscribe(data => {
+        this.uploadAddressVerificationImage = data;
+        if (this.uploadAddressVerificationImage) {
+          this.waitingForResponse = false;
+          this.profileDetails.proofs.addressProof = this.uploadAddressVerificationImage.url;
+          this.proofs.addressProof = this.uploadAddressVerificationImage.url;
+        } else {
+          this.toastr.error('Error while reading image', 'Error!');
+        }
+      }, err => {
+        this.toastr.error('Error while reading image', 'Error!');
+      })
+
+
     };
     myReader.readAsDataURL(file);
   }
 
   idProofUpdate($event) {
+    this.waitingForResponse = true;
     let file = $event.target.files[0];
     const myReader: FileReader = new FileReader();
     myReader.onloadend = (loadEvent: any) => {
-      this.profileDetails.proofs.idProof = loadEvent.target.result;
-      this.proofs.idProof = loadEvent.target.result;
+      let image = loadEvent.target.result.split('base64,')[1];
+
+      this.profileService.uploadImage({ 'image': image }).subscribe(data => {
+        this.uploadIdVerificationImage = data;
+        if (this.uploadIdVerificationImage) {
+          this.waitingForResponse = false;
+          this.profileDetails.proofs.idProof = this.uploadIdVerificationImage.url;
+          this.proofs.idProof = this.uploadIdVerificationImage.url;
+        } else {
+          this.toastr.error('Error while reading image', 'Error!');
+        }
+      }, err => {
+        this.toastr.error('Error while reading image', 'Error!');
+      })
+
+
     };
     myReader.readAsDataURL(file);
   }
 
   photoProofUpdate($event) {
+    this.waitingForResponse = true;
     let file = $event.target.files[0];
     const myReader: FileReader = new FileReader();
     myReader.onloadend = (loadEvent: any) => {
-      this.profileDetails.proofs.photoProof = loadEvent.target.result;
-      this.proofs.photoProof = loadEvent.target.result;
+      let image = loadEvent.target.result.split('base64,')[1];
+
+      this.profileService.uploadImage({ 'image': image }).subscribe(data => {
+        this.uploadProofVerificationImage = data;
+        if (this.uploadProofVerificationImage) {
+          this.waitingForResponse = false;
+          this.profileDetails.proofs.photoProof = this.uploadProofVerificationImage.url;
+          this.proofs.photoProof = this.uploadProofVerificationImage.url;
+        } else {
+          this.toastr.error('Error while reading image', 'Error!');
+        }
+      }, err => {
+        this.toastr.error('Error while reading image', 'Error!');
+      })
+
     };
     myReader.readAsDataURL(file);
   }

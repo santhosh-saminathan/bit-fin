@@ -138,7 +138,9 @@
     </div>
     <br>
     <div style="width:100%">
-      <button style="float:right;margin-right:20px" type="submit" class="btn btn-primary" (click)="uploadKyc()">Update KYC</button>
+        <button style="float:right;margin-right:20px" type="submit" class="btn btn-primary" [disabled]="waitingForResponse" (click)="uploadKyc()">Update KYC</button>
+
+     <span style="color:blue;float:right;margin-right:20px" *ngIf="waitingForResponse">Please wait ... Reading image on progress...</span> 
     </div>
 
   </div>

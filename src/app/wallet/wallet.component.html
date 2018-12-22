@@ -40,8 +40,7 @@
               <div>
                 <br>
                 <p class="text_align_left">
-                  Send money to other people who are registered on the app. A small transaction fee will apply above
-                  the amount you intend
+                  Send money to other people who are registered on the app. A small transaction fee will apply above the amount you intend
                   to send and it would be deducted from your balance.
                 </p>
                 <br>
@@ -49,8 +48,7 @@
 
                   <div class="form-group">
                     <label class="control-label col-sm-4" for="email">Available Balance:</label>
-                    <div *ngIf="availableBalance && availableBalance[0] && xlm_Usd_conversion" class="col-sm-8 text_align_left"
-                      style="margin-top:8px">
+                    <div *ngIf="availableBalance && availableBalance[0] && xlm_Usd_conversion" class="col-sm-8 text_align_left" style="margin-top:8px">
                       <b> $ {{availableBalance[0].balance * xlm_Usd_conversion}}</b>
                     </div>
                   </div>
@@ -58,11 +56,10 @@
                   <div class="form-group">
                     <label class="control-label col-sm-4" for="mobile">Receipient Mobile:</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" [(ngModel)]="receiverMobileNumber" id="mobile"
-                        placeholder="Recipient Mobile Number" name="mobile" (ngModelChange)="getAutocompleteMobileNumbers()">
+                      <input type="text" class="form-control" [(ngModel)]="receiverMobileNumber" id="mobile" placeholder="Recipient Mobile Number"
+                        name="mobile" (ngModelChange)="getAutocompleteMobileNumbers()">
                       <div *ngIf="autocompleteNumbers && autocompleteNumbers.length>0" class="autocomplete_numbers">
-                        <div class="number_div" *ngFor="let mobile of autocompleteNumbers" (click)="selectedMobileNumber(mobile)">{{mobile.mobile_number}}
-                          - {{mobile.firstName}}{{mobile.lastName}}</div>
+                        <div class="number_div" *ngFor="let mobile of autocompleteNumbers" (click)="selectedMobileNumber(mobile)">{{mobile.mobile_number}} - {{mobile.firstName}}{{mobile.lastName}}</div>
                       </div>
                     </div>
                   </div>
@@ -70,8 +67,8 @@
                   <div class="form-group">
                     <label class="control-label col-sm-4" for="amount">Amount to Send:</label>
                     <div class="col-sm-8">
-                      <input type="number" class="form-control" id="amount" placeholder="Enter the amount" [(ngModel)]="amountToSend"
-                        (ngModelChange)="calculateSendFee()" name="amount">
+                      <input type="number" class="form-control" id="amount" placeholder="Enter the amount" [(ngModel)]="amountToSend" (ngModelChange)="calculateSendFee()"
+                        name="amount">
                     </div>
                   </div>
 
@@ -109,8 +106,7 @@
               <div *ngIf="yourMobileNumber">
                 <br>
                 <p class="text_align_left">
-                  To receive money, the other person sending money has to scan the QR code or type your phone number
-                  displayed below. Only
+                  To receive money, the other person sending money has to scan the QR code or type your phone number displayed below. Only
                   users registered on the app can send you money.
                 </p>
                 <br>
@@ -141,20 +137,18 @@
                 <div class="form-group">
                   <label class="control-label col-sm-4" for="amountToAdd">Amount to Add:</label>
                   <div class="col-sm-8">
-                    <input type="number" class="form-control" id="amountToAdd" placeholder="Enter the amount"
-                      [(ngModel)]="amountToDeposit" name="amountToAdd">
+                    <input type="number" class="form-control" id="amountToAdd" placeholder="Enter the amount" [(ngModel)]="amountToDeposit" name="amountToAdd">
                     <span style="float:right;font-size: 12px;">* Transaction Fee Applies</span>
                   </div>
                 </div>
                 <br>
                 <br>
                 <div class="text_align_left">
-                  Tip: Keep sufficient balance in your wallet, a small transaction fee will be apply above the amount
-                  you plan to send.
+                  Tip: Keep sufficient balance in your wallet, a small transaction fee will be apply above the amount you plan to send.
                 </div>
               </div>
               <hr>
-              <!-- <div class="saved_card_section">
+              <div class="saved_card_section">
                 <h4 class="text_align_left">Saved Cards</h4>
                 <div *ngIf="savedCards" class="row">
                   <div [ngClass]="{'selected': card.selected}" (click)="selectedCard(card)" class="text_align_left col-xs-6 card" *ngFor="let card of savedCards">
@@ -182,7 +176,7 @@
                           Card Holder
                         </span>
                         <br>
-                        <span  *ngIf="card.holder" style="white-space:nowrap">{{card.holder.slice(0,10)}}
+                        <span *ngIf="card.holder" style="white-space:nowrap">{{card.holder.slice(0,10)}}
                           <span *ngIf="card.holder && card.holder.length>10">... </span>
                         </span>
                       </div>
@@ -191,19 +185,21 @@
                           CVV
                         </span>
                         <br>
+                        <span *ngIf="!card.selected">XXX</span>
+                        <input *ngIf="card.selected" [(ngModel)]="cardData.cvv" type="number" class="form-control custom_cvv" id="savedCardCvvNum">
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
-                    <button style="float:right" type="submit" class="btn btn-primary">Use This Card</button>
+                    <span style="color:blue;margin-right: 5px" *ngIf="waitingForResponse">Please wait...</span>
+                    <button [disabled]="waitingForResponse" style="float:right" type="submit" (click)="createToken()" class="btn btn-primary">Use This Card</button>
                   </div>
                 </div>
-              </div> -->
-
-
-              <!-- <div class="saved_card_section">
+              </div>
+              <hr>
+              <div class="saved_card_section">
                 <h4 class="text_align_left">New Card</h4>
                 <div class="row">
                   <div class="col-sm-6">
@@ -211,7 +207,7 @@
                       <label for="usrName">Name on Card
                         <span class="red">*</span>
                       </label>
-                      <input type="text" class="form-control" id="usrName">
+                      <input style="text-transform:uppercase" type="text" [(ngModel)]="cardData.cardHolder" class="form-control" id="usrName">
                     </div>
                   </div>
                   <div class="col-sm-6">
@@ -219,7 +215,7 @@
                       <label for="cardNum">Card Number
                         <span class="red">*</span>
                       </label>
-                      <input type="number" class="form-control" id="cardNum">
+                      <input type="number" [(ngModel)]="cardData.cardNumber" class="form-control" id="cardNum">
                     </div>
                   </div>
                 </div>
@@ -229,11 +225,8 @@
                       <label for="month">Month
                         <span class="red">*</span>
                       </label>
-                      <select class="form-control" id="month">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
+                      <select [(ngModel)]="cardData.month" class="form-control" id="month">
+                        <option *ngFor="let obj of cardMonth" [value]="obj">{{obj}}</option>
                       </select>
                     </div>
                   </div>
@@ -242,11 +235,9 @@
                       <label for="year">Year
                         <span class="red">*</span>
                       </label>
-                      <select class="form-control" id="year">
-                        <option>2020</option>
-                        <option>2021</option>
-                        <option>2022</option>
-                        <option>2023</option>
+
+                      <select [(ngModel)]="cardData.year" class="form-control" id="year">
+                        <option *ngFor="let obj of cardYear" [value]="obj">{{obj}}</option>
                       </select>
                     </div>
                   </div>
@@ -256,31 +247,40 @@
                       <label for="cvvNum">CVV Number
                         <span class="red">*</span>
                       </label>
-                      <input type="number" class="form-control" id="cvvNum">
+                      <input [(ngModel)]="cardData.cvv" type="number" class="form-control" id="cvvNum">
                     </div>
                   </div>
                 </div>
 
                 <div class="form-group">
+                  <div>
+                    <div class="form-group text_align_left">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" [(ngModel)]="cardData.saveCard" value="">Save this Card for future use</label>
+                      </div>
+                    </div>
+                  </div>
                   <div class="col-sm-offset-2 col-sm-10">
-                    <button style="float:right" type="submit" class="btn btn-primary">Add New Card</button>
+                    <span style="color:blue;margin-right: 5px" *ngIf="waitingForResponse">Please wait...</span>
+                    <button [disabled]="waitingForResponse" style="float:right" type="submit" (click)="createToken()" class="btn btn-primary">Add New Card</button>
                   </div>
                 </div>
-              </div> -->
+              </div>
 
-              <div class="saved_card_section">
+              <!-- <div class="saved_card_section">
                 <h4 class="text_align_left">New Card</h4>
                 <div style="width:60%">
                   <form style="border:1px solid grey;border-radius:3px;padding: 5px;" novalidate (ngSubmit)="createStripeToken($event)"
                     [formGroup]="stripeTest">
                     <input class="stripe_card_input" type="text" formControlName="name" placeholder="Card holder name">
-                    <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions"></ngx-stripe-card>
+                    <ngx-stripe-card (change)="test()" [options]="cardOptions" [elementsOptions]="elementsOptions"></ngx-stripe-card>
                     <button class="btn btn-primary" type="submit">
                       Submit
                     </button>
                   </form>
                 </div>
-              </div>
+              </div> -->
 
             </div>
           </div>
@@ -298,16 +298,15 @@
                 <form class="form-horizontal">
                   <div class="form-group">
                     <label class="control-label col-sm-4" for="email">Available Balance:</label>
-                    <div *ngIf="availableBalance && availableBalance[0] && xlm_Usd_conversion" class="col-sm-8 text_align_left"
-                      style="margin-top:8px">
+                    <div *ngIf="availableBalance && availableBalance[0] && xlm_Usd_conversion" class="col-sm-8 text_align_left" style="margin-top:8px">
                       <b> $ {{availableBalance[0].balance * xlm_Usd_conversion}}</b>
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="control-label col-sm-4" for="amountToWithdraw">Withdraw Amount:</label>
                     <div class="col-sm-8">
-                      <input type="number" class="form-control" id="amountToWithdraw" placeholder="Enter the amount"
-                        [(ngModel)]="amountToWithdraw" name="amountToWithdraw" (ngModelChange)="calculateWithdrawFee()">
+                      <input type="number" class="form-control" id="amountToWithdraw" placeholder="Enter the amount" [(ngModel)]="amountToWithdraw"
+                        name="amountToWithdraw" (ngModelChange)="calculateWithdrawFee()">
                       <span style="float:right;font-size: 12px;">* Transaction Fee Applies</span>
                     </div>
                   </div>
@@ -360,9 +359,8 @@
               </div>
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                  <span style="color:blue;margin-right: 5px" *ngIf="waitingForResponse">Please wait...</span> <button
-                    style="float:right" type="submit" (click)="withdrawToSelectedAccount()" [disabled]="waitingForResponse"
-                    class="btn btn-primary">Use this Account</button>
+                  <span style="color:blue;margin-right: 5px" *ngIf="waitingForResponse">Please wait...</span>
+                  <button style="float:right" type="submit" (click)="withdrawToSelectedAccount()" [disabled]="waitingForResponse" class="btn btn-primary">Use this Account</button>
                 </div>
               </div>
 
@@ -380,56 +378,49 @@
                   <div class="col-sm-6">
                     <div class="form-group text_align_left">
                       <label for="lName">Last Name </label>
-                      <input type="text" class="form-control" placeholder="Kennedy" [(ngModel)]="withdraw.lastName"
-                        name="lName">
+                      <input type="text" class="form-control" placeholder="Kennedy" [(ngModel)]="withdraw.lastName" name="lName">
                     </div>
                   </div>
 
                   <div class="col-sm-6">
                     <div class="form-group text_align_left">
                       <label for="address1">Address Line1 </label>
-                      <input type="text" class="form-control" placeholder="4, Leng Kee Road " [(ngModel)]="withdraw.line1"
-                        name="address1">
+                      <input type="text" class="form-control" placeholder="4, Leng Kee Road " [(ngModel)]="withdraw.line1" name="address1">
                     </div>
                   </div>
 
                   <div class="col-sm-6">
                     <div class="form-group text_align_left">
                       <label for="address2">Address Line2 </label>
-                      <input type="text" class="form-control" placeholder="Citilink Warehouse Complex" [(ngModel)]="withdraw.line2"
-                        name="address2">
+                      <input type="text" class="form-control" placeholder="Citilink Warehouse Complex" [(ngModel)]="withdraw.line2" name="address2">
                     </div>
                   </div>
 
                   <div class="col-sm-6">
                     <div class="form-group text_align_left">
                       <label for="state">State </label>
-                      <input type="text" class="form-control" placeholder="California" [(ngModel)]="withdraw.state"
-                        name="state">
+                      <input type="text" class="form-control" placeholder="California" [(ngModel)]="withdraw.state" name="state">
                     </div>
                   </div>
 
                   <div class="col-sm-6">
                     <div class="form-group text_align_left">
                       <label for="city">City </label>
-                      <input type="text" class="form-control" placeholder="Los Angeles" [(ngModel)]="withdraw.city"
-                        name="city">
+                      <input type="text" class="form-control" placeholder="Los Angeles" [(ngModel)]="withdraw.city" name="city">
                     </div>
                   </div>
 
                   <div class="col-sm-6">
                     <div class="form-group text_align_left">
                       <label for="zipcode">Zip Code </label>
-                      <input type="text" class="form-control" placeholder="90001" [(ngModel)]="withdraw.postalCode"
-                        name="zipcode">
+                      <input type="text" class="form-control" placeholder="90001" [(ngModel)]="withdraw.postalCode" name="zipcode">
                     </div>
                   </div>
 
                   <div class="col-sm-6">
                     <div class="form-group text_align_left">
                       <label for="mobile">Mobile Number </label>
-                      <input type="number" class="form-control" placeholder="213-509-6995" [(ngModel)]="withdraw.phoneNumber"
-                        name="mobile">
+                      <input type="number" class="form-control" placeholder="213-509-6995" [(ngModel)]="withdraw.phoneNumber" name="mobile">
                     </div>
                   </div>
 
@@ -443,40 +434,37 @@
                   <div class="col-sm-6">
                     <div class="form-group text_align_left">
                       <label for="dob">Date of Birth </label>
-                      <input type="date" class="form-control profile" placeholder="15-04-1996" [(ngModel)]="withdraw.dob"
-                        name="dob">
+                      <input type="date" class="form-control profile" placeholder="15-04-1996" [(ngModel)]="withdraw.dob" name="dob">
                     </div>
                   </div>
 
                   <div class="col-sm-6">
                     <div class="form-group text_align_left">
                       <label for="accNum">Account Number</label>
-                      <input type="text" class="form-control" placeholder="000987466364" [(ngModel)]="withdraw.accountNumber"
-                        maxlength="10" size="10" name="accNum">
+                      <input type="text" class="form-control" placeholder="000987466364" [(ngModel)]="withdraw.accountNumber" maxlength="10" size="10"
+                        name="accNum">
                     </div>
                   </div>
 
                   <div class="col-sm-6">
                     <div class="form-group text_align_left">
                       <label for="accholderName">Account Holder Name </label>
-                      <input type="text" class="form-control" placeholder="Jenny" [(ngModel)]="withdraw.accountHolder"
-                        name="accholderName">
+                      <input type="text" class="form-control" placeholder="Jenny" [(ngModel)]="withdraw.accountHolder" name="accholderName">
                     </div>
                   </div>
 
                   <div class="col-sm-6">
                     <div class="form-group text_align_left">
                       <label for="routing">Routing Number </label>
-                      <input type="text" class="form-control" placeholder="00399883477848" [(ngModel)]="withdraw.routingNumber"
-                        maxlength="10" size="10" name="routing">
+                      <input type="text" class="form-control" placeholder="00399883477848" [(ngModel)]="withdraw.routingNumber" maxlength="10"
+                        size="10" name="routing">
                     </div>
                   </div>
 
                   <div class="col-sm-6">
                     <div class="form-group text_align_left">
                       <label for="proof">Upload Proof </label>
-                      <input type="file" accept="image/*" id="withdrawProof" name="withdrawProof" class="form-control"
-                        (change)="withdrawProof($event)">
+                      <input type="file" accept="image/*" id="withdrawProof" name="withdrawProof" class="form-control" (change)="withdrawProof($event)">
                     </div>
                   </div>
 
@@ -491,8 +479,8 @@
 
 
                   <div style="width:100%">
-                    <span style="color:blue;margin-right: 5px" *ngIf="waitingForResponse">Please wait...</span> <button
-                      style="float:right;margin-right:20px" type="submit" (click)="withdrawToNewAmount()" [disabled]="waitingForResponse"
+                    <span style="color:blue;margin-right: 5px" *ngIf="waitingForResponse">Please wait...</span>
+                    <button style="float:right;margin-right:20px" type="submit" (click)="withdrawToNewAmount()" [disabled]="waitingForResponse"
                       class="btn btn-primary">Submit</button>
                   </div>
 

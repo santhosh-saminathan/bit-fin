@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { SigningService } from './../services/signing.service';
+// import { REACTIVE_FORM_DIRECTIVES } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,7 @@ export class HomeComponent implements OnInit {
   loginResponse: any;
   otpScreen: boolean = false;
   otp: any;
+  message:any;
 
   constructor(private router: Router, private signingService: SigningService) { }
 
@@ -78,6 +80,38 @@ export class HomeComponent implements OnInit {
     } else {
       this.invalidMobile = "OTP Mismatch"
     }
+  }
+
+
+  openCheckout() {
+    var handler = (<any>window).StripeCheckout.configure({
+      key: 'pk_test_oi0sKPJYLGjdvOXOM8tE8cMa',
+      locale: 'auto',
+      token: function (token: any) {
+        // You can access the token ID with `token.id`.
+        // Get the token ID to your server-side code for use.
+      }
+    });
+
+    handler.open({
+      name: 'Demo Site',
+      description: '2 widgets',
+      amount: 2000
+    });
+
+  }
+
+  getToken() {
+    this.message = 'Loading...';
+
+    (<any>window).Stripe.card.createToken({
+      number: '4242 4242 4242 4242',
+      exp_month: '03',
+      exp_year: '2024',
+      cvc: '456'
+    }, (status: number, response: any) => {
+      console.log(response);
+    });
   }
 
 }
