@@ -44,14 +44,18 @@ nav a {
     text-decoration: underline;
 }
 
+
+
+ */
+
+ .error_msg {
+    color: red;
+    text-align: center;
+}
+
 #partitioned {
-    letter-spacing: 30px;
+    letter-spacing: 50px;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid grey;
 }
-
-.error_msg {
-    color: red;
-    text-align: center;
-} */

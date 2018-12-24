@@ -61,7 +61,6 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/dashboard']);
           localStorage.setItem('userId', this.loginResponse.user._id)
         } else if (this.loginResponse.otp) {
-          window.alert("otp screen");
           this.otpScreen = true;
           localStorage.setItem('userId', this.loginResponse._id)
         }

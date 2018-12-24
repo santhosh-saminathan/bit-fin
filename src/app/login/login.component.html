@@ -200,41 +200,60 @@
                 <div class="contact-container">
                     <div class="contact-sub-container main-dark-background-2">
                         <form class="contact-form main-dark-background">
-                            <div>{{invalidMobile}}</div>
-                            <div>
-                                <label class="main-gradient-bg text-transparent" for="name">Mobile Number</label>
-                                <!-- <int-phone-prefix class="blue-light-background" [locale]="'hi'" id="mobileNumber" (change)="countryCode($event)" defaultCountry="in" [(ngModel)]="login.phone"></int-phone-prefix> -->
-                                <div *ngIf="callingCodes"> 
-                                    <select style="width: 20%;
-                                    color: white;
-                                    padding: 0.6rem 1rem 0.75rem 1rem;
-                                    border-top-left-radius: 10px;
-                                    border-bottom-left-radius: 10px;
-                                    border: none;"
-                                        class="blue-light-background" [(ngModel)]="login.country_code" name="code" >
-                                        <option *ngFor="let code of callingCodes" [selected]="code.callingCodes[0]== '91'"  [value]="code.callingCodes[0]">+{{code.callingCodes[0]}} - {{code.name}} </option>
-                                    </select>
+                                <div class="error_msg">{{invalidMobile}}</div>
+                            <div *ngIf="!otpScreen">
+                                
+                                <div>
+                                    <label class="main-gradient-bg text-transparent" for="name">Mobile Number</label>
+                                    <div *ngIf="callingCodes">
+                                        <select style="width: 20%;color: white; padding: 0.6rem 1rem 0.75rem 1rem;border-top-left-radius: 10px; border-bottom-left-radius: 10px; border: none;"
+                                            class="blue-light-background" [(ngModel)]="login.country_code" name="code">
+                                            <option *ngFor="let code of callingCodes" [selected]="code.callingCodes[0]== '91'"
+                                                [value]="code.callingCodes[0]">+{{code.callingCodes[0]}} -
+                                                {{code.name}} </option>
+                                        </select>
 
 
-                                    <input style="width: 80%; border-top-left-radius: 0px;border-bottom-left-radius: 0px;"
-                                        class="blue-light-background" type="text" [(ngModel)]="login.phone" name="name"
-                                        id="name" required>
+                                        <input style="width: 80%; border-top-left-radius: 0px;border-bottom-left-radius: 0px;"
+                                            class="blue-light-background" type="text" [(ngModel)]="login.phone" name="name"
+                                            id="name" required>
+                                    </div>
+
                                 </div>
+                                <div>
+                                    <label class="main-gradient-bg text-transparent" for="password">Password</label>
+                                    <input class="blue-light-background" type="password" [(ngModel)]="login.password"
+                                        name="password" id="password" required>
+                                </div>
+                                <a href="#">FORGOT PASSWORD ?</a>
+                                <label class="checkbox-container">Remember me
+                                    <input type="checkbox" checked="checked">
+                                    <span class="check-mark"></span>
+                                </label>
+                                <small>Please fill all the details</small>
+                                <button id="contact-submit-btn" class="main-gradient-bg contact-submit-btn" (click)="loginUser()"
+                                    type="submit">Sign
+                                    in</button>
+                            </div>
 
+                            <div *ngIf="otpScreen">
+                                    <div style="font-size: 12px;text-align:left;color:white">
+                                            * For demo purpose, OTP will be displayed here
+                                            <b style="font-size: 16px"> {{loginResponse.otp}}</b>
+                                          </div>
+                                          <br>
+                                          <div style="color:white">
+                                            Enter the verification code sent to your registered mobile number {{loginResponse.code}} {{loginResponse.mobile_number}}
+                                          </div>
+                                          <br>
+                                          <div style="text-align:center">
+                                            <input type="text" id="partitioned" class="blue-light-background" maxlength="4" name="otpCode" [(ngModel)]="otp" />
+                                          </div>
+                                          <br>
+                                
+                                          <button type="submit" class="main-gradient-bg contact-submit-btn"  (click)="verifyOTP()">Submit</button>
                             </div>
-                            <div>
-                                <label class="main-gradient-bg text-transparent" for="password">Password</label>
-                                <input class="blue-light-background" type="password"  [(ngModel)]="login.password" name="password" id="password"
-                                    required>
-                            </div>
-                            <a href="#">FORGOT PASSWORD ?</a>
-                            <label class="checkbox-container">Remember me
-                                <input type="checkbox" checked="checked">
-                                <span class="check-mark"></span>
-                            </label>
-                            <small>Please fill all the details</small>
-                            <button id="contact-submit-btn" class="main-gradient-bg contact-submit-btn" (click)="loginUser()" type="submit">Sign
-                                in</button>
+
                         </form>
                         <div class="sign-up-btn">
                             <a class="blue-light-background hover-up" href="sign-up.html">Or create a new account</a>
