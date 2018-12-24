@@ -41,10 +41,45 @@
     border-radius: 3px;
     background: #f2eefe;
 }
-h4{
+
+h4 {
     font-size: 18px;
 }
 
-h3{
+h3 {
     font-size: 24px;
+}
+
+i {
+    color: #000422;
+}
+
+.card {
+    width: 80%;
+    border: 1px solid lightgrey;
+    margin: 15px auto;
+    padding: 15px;
+    background:  #151935;;
+}
+
+.right-float {
+    float: right;
+}
+
+.card-details {
+    font-size: 18px;
+    color: blue;
+    padding: 10px 0px;
+}
+
+.small-font {
+    font-size: 12px;
+}
+
+.view-more {
+    color: #151935;
+    text-align: right;
+    cursor: pointer;
+    width: 90%;
+    text-decoration: underline;
 }

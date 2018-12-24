@@ -3,6 +3,7 @@ import { CryptoService } from './../services/crypto.service';
 import { ProfileService } from './../services/profile.service';
 import { TransactionService } from './../services/transaction.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,9 +21,9 @@ export class DashboardComponent implements OnInit {
   rateFlow: any;
   sentTransactions: any;
   noContent: boolean = true;
+  depositTransactions:any;
 
-  constructor(public toastr: ToastrService, private transactionService: TransactionService, private cryptoService: CryptoService, private profileService: ProfileService) { }
-
+  constructor(private router: Router, private activatedRoute: ActivatedRoute,public toastr: ToastrService, private transactionService: TransactionService, private cryptoService: CryptoService, private profileService: ProfileService) { }
   public lineChartOptions: any = {
     responsive: true,
     scales: {
@@ -74,6 +75,13 @@ export class DashboardComponent implements OnInit {
       this.toastr.error('Failed to get user transactiona', 'Error!');
     })
 
+    this.transactionService.depositTransactions().subscribe(data => {
+      this.depositTransactions = data;
+    }, err => {
+      this.toastr.error('Failed to get deposit transaction data', 'Error!');
+    })
+
+
     this.cryptoService.getRateFlow().subscribe(data => {
       this.rateFlow = data;
       if (this.rateFlow.Response === "Success") {
@@ -82,7 +90,7 @@ export class DashboardComponent implements OnInit {
           {
             backgroundColor: '#f2efff',
             borderColor: '#151935',
-            pointBackgroundColor: 'rgb(71, 71, 243)',
+            pointBackgroundColor: '#151935',
             pointBorderColor: '#151935',
             pointHoverBackgroundColor: '#fff',
             pointHoverBorderColor: 'rgba(148,159,177,0.8)',
