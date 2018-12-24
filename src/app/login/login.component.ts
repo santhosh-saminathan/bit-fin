@@ -16,13 +16,26 @@ export class LoginComponent implements OnInit {
   otpScreen: boolean = false;
   otp: any;
   message:any;
+  callingCodes:any;
 
   constructor(private router: Router, private signingService: SigningService) { }
 
   ngOnInit() {
-    this.login.phone = "+919900887766"
+    this.login.phone = "9900887766"
     this.login.password = "00000"
-    this.country_code = '+91'
+    this.login.country_code = '91';
+
+
+    this.signingService.getCountryCodes().subscribe(data=>{
+      console.log(data);
+      this.callingCodes = data;
+
+      this.callingCodes.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)); 
+
+
+    },err=>{
+      console.log(err);
+    })
   }
 
   newLogin() {
@@ -33,12 +46,14 @@ export class LoginComponent implements OnInit {
 
   loginUser() {
 
+    console.log(this.login);
+
     this.invalidMobile = null;
-    if (this.login.phone && this.login.password && this.country_code) {
+    if (this.login.phone && this.login.password && this.login.country_code) {
       let data = {
-        "mobile_number": this.login.phone.split(this.country_code)[1],
+        "mobile_number": this.login.phone,
         "password": this.login.password,
-        "code": this.country_code
+        "code": '+'+this.login.country_code
       }
       this.signingService.login(data).subscribe((data) => {
         this.loginResponse = data;
@@ -46,13 +61,11 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/dashboard']);
           localStorage.setItem('userId', this.loginResponse.user._id)
         } else if (this.loginResponse.otp) {
+          window.alert("otp screen");
           this.otpScreen = true;
           localStorage.setItem('userId', this.loginResponse._id)
         }
       }, err => {
-
-        // localStorage.setItem('userId', '5c0e1e4360b89e4138df36bf');
-        // this.router.navigate(['/dashboard']);
         this.invalidMobile = "Incorrect Password";
       })
     } else {
@@ -84,6 +97,8 @@ export class LoginComponent implements OnInit {
       this.invalidMobile = "OTP Mismatch"
     }
   }
+
+  
 
 }
 

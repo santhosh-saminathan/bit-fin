@@ -1,4 +1,4 @@
-<nav class="navbar navbar-light header static-top">
+<!-- <nav class="navbar navbar-light header static-top">
     <div class="container">
       <a (click)="redirectToHome()" class="navbar-brand custom_width">
         <img src="assets/img/bit-fin-white.png" style="width: 20px;margin-right: 10px;display: -webkit-inline-box">
@@ -24,7 +24,6 @@
           <div class="form-group">
             <label class="normal_font_weight">Password</label>
             <input type="password" class="form-control form-white" placeholder="Password" name="password" [(ngModel)]="login.password">
-            <!-- <a class="forgot_pass_option" (click)="forgotPasswordScreen()">Forgot Password?</a> -->
           </div>
           <button type="submit" class="btn btn-submit login_btn" (click)="loginUser()">Login</button>
           <div style="font-size: 12px;text-align:left;padding-top:4px">* For demo purpose mobile number and password are prefilled. For this for
@@ -59,4 +58,249 @@
     </div>
   </div>
 
-</section>
+</section> -->
+
+
+
+
+<div class="page container other-pages">
+
+    <!--div to scroll to top-->
+    <div class="top-div" data-scroll-index="0"></div>
+
+    <!-- Start Nav Section-->
+    <div class="nav-container">
+        <nav class="navbar navbar-expand-lg main-navbar navbar-light">
+            <div class="container blue-light-background">
+                <!--Nav Logo on small screens Only-->
+                <div class="small-screens-logo nav-logo d-block d-sm-block d-lg-none">
+                    <a class="navbar-brand" data-scroll-nav="1" href="#">
+                        <img class="img-fluid" src="assets/images/svg/site-logo-dark.svg" alt="Website Logo">
+                    </a>
+                </div>
+                <div class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-label="navbarSupportedContent">
+                    <a class="very_small_hamburger" id="hamburger-menu">
+                        <svg viewBox="0 0 800 600">
+                            <path d="M300,220 C300,220 520,220 540,220 C740,220 640,540 520,420 C440,340 300,200 300,200"
+                                class="top"></path>
+                            <path d="M300,320 L540,320" class="middle"></path>
+                            <path d="M300,210 C300,210 520,210 540,210 C740,210 640,530 520,410 C440,330 300,190 300,190"
+                                class="bottom" transform="translate(480, 320) scale(1, -1) translate(-480, -318) "></path>
+                        </svg>
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!--Nav Logo on small screens Only-->
+                    <div class="small-screens-logo nav-logo d-block d-sm-block d-lg-none">
+                        <a class="navbar-brand" data-scroll-nav="1" href="#">
+                            <img class="img-fluid" src="assets/images/svg/site-logo-dark.svg" alt="Website Logo">
+                        </a>
+                    </div>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item nav-link-scroll waves-effect">
+                            <a class="nav-link" href="index-style-2-dark.html">Home</a>
+                        </li>
+                        <li class="nav-item nav-link-scroll waves-effect">
+                            <a class="nav-link" href="index-style-2-dark.html">About</a>
+                        </li>
+                        <li class="nav-item nav-link-scroll waves-effect">
+                            <a class="nav-link" href="index-style-2-dark.html">Projects</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect" href="#" id="blogDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Blog
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="blogDropdown">
+                                <a class="dropdown-item waves-effect" href="index-style-2-dark.html">Blog Page</a>
+                                <a class="dropdown-item waves-effect" href="index-style-2-dark.html">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item waves-effect" href="index-style-2-dark.html">Something else
+                                    here</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <!--Nav Logo on Big Screens Only-->
+                    <div class="nav-logo d-none d-lg-block">
+                        <a class="navbar-brand" data-scroll-nav="1" href="#">
+                            <img class="img-fluid" src="assets/images/svg/site-logo-dark.svg" alt="Website Logo">
+                        </a>
+                    </div>
+                    <!--Subscribe Button-->
+                    <div class="nav-buttons">
+                        <button id="navbar-subscribe-btn" type="button" data-toggle="modal" data-target="#subscribe-modal"
+                            class="btn hoverable main-gradient-bg waves-effect waves-button nav-subscribe-btn">
+                            Subscribe
+                        </button>
+                        <div class="btn hoverable main-dark-background waves-effect waves-button nav-subscribe-btn">
+                            <a href="sign-in.html">Sign In</a>
+                        </div>
+                        <div class="language-dropdown">
+                            <a class="dropdown-toggle waves-effect" href="#" id="languageDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                En
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="languageDropdown">
+                                <a class="dropdown-item nav-link-scroll waves-effect waves-light" data-scroll-nav="9"
+                                    href="#">Fr</a>
+                                <a class="dropdown-item waves-effect" href="#">Ru</a>
+                                <a class="dropdown-item waves-effect" href="#">Du</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal for Subscribe form-->
+                    <div class="modal fade" id="subscribe-modal" tabindex="-1" role="dialog" aria-labelledby="navbar-subscribe-btn"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2>Subscribe Now</h2>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <!--Alert message-->
+                                    <div class="col s12 alert-message p-t-2" id="form-output-global-nav">
+                                        <p>&nbsp;</p>
+                                    </div>
+                                    <!-- Subscription Form CHANGE THE ACTION PROP IN THE FORM WITH YOUR MAILCHIMP URL - PLEASE FIND STEPS IN DOCUMENTATION-->
+                                    <form name="subscribe-form" class="subscribe-form form-group" data-form-output="form-output-global-nav"
+                                        action="https://ezyro.us15.list-manage.com/subscribe/post?u=d70f2fe680c1d1ba5bef24ab7&amp;id=9ed360ebd1"
+                                        method="post">
+                                        <!-- Email Field -->
+                                        <input class="form-control" name="subscribe-email" type="email" required
+                                            autocomplete="email" placeholder="Your email">
+                                        <small class="form-text">We'll never share your email with anyone else. <i
+                                                class="fas fa-heart"></i></small>
+                                        <!-- Submit Button -->
+                                        <button type="submit" class="subscribe-submit btn hoverable main-gradient-bg main-gradient-main-btn waves-effect waves-button">
+                                            <span class="btn-text">Subscribe</span>
+                                            <span class="first-span"><img src="assets/images/svg/Line%2011.svg" alt=""></span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- End Nav Section-->
+
+    <!-- Start Sign in Section-->
+    <div class="main-contact-faq main-section blue-light-background">
+        <div class="content">
+            <div class="sign-forms">
+                <div class="header-title" data-aos="fade-in" data-aos-delay="100">
+                    <h2>Sign In <span class="text-reflection">sign in</span></h2>
+                </div>
+                <div class="contact-container">
+                    <div class="contact-sub-container main-dark-background-2">
+                        <form class="contact-form main-dark-background">
+                            <div>{{invalidMobile}}</div>
+                            <div>
+                                <label class="main-gradient-bg text-transparent" for="name">Mobile Number</label>
+                                <!-- <int-phone-prefix class="blue-light-background" [locale]="'hi'" id="mobileNumber" (change)="countryCode($event)" defaultCountry="in" [(ngModel)]="login.phone"></int-phone-prefix> -->
+                                <div *ngIf="callingCodes"> 
+                                    <select style="width: 20%;
+                                    color: white;
+                                    padding: 0.6rem 1rem 0.75rem 1rem;
+                                    border-top-left-radius: 10px;
+                                    border-bottom-left-radius: 10px;
+                                    border: none;"
+                                        class="blue-light-background" [(ngModel)]="login.country_code" name="code" >
+                                        <option *ngFor="let code of callingCodes" [selected]="code.callingCodes[0]== '91'"  [value]="code.callingCodes[0]">+{{code.callingCodes[0]}} - {{code.name}} </option>
+                                    </select>
+
+
+                                    <input style="width: 80%; border-top-left-radius: 0px;border-bottom-left-radius: 0px;"
+                                        class="blue-light-background" type="text" [(ngModel)]="login.phone" name="name"
+                                        id="name" required>
+                                </div>
+
+                            </div>
+                            <div>
+                                <label class="main-gradient-bg text-transparent" for="password">Password</label>
+                                <input class="blue-light-background" type="password"  [(ngModel)]="login.password" name="password" id="password"
+                                    required>
+                            </div>
+                            <a href="#">FORGOT PASSWORD ?</a>
+                            <label class="checkbox-container">Remember me
+                                <input type="checkbox" checked="checked">
+                                <span class="check-mark"></span>
+                            </label>
+                            <small>Please fill all the details</small>
+                            <button id="contact-submit-btn" class="main-gradient-bg contact-submit-btn" (click)="loginUser()" type="submit">Sign
+                                in</button>
+                        </form>
+                        <div class="sign-up-btn">
+                            <a class="blue-light-background hover-up" href="sign-up.html">Or create a new account</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="subscribe-container">
+                <!--Alert message-->
+                <div class="col s12 alert-message p-t-2" id="subscribe-form">
+                    <p>&nbsp;</p>
+                </div>
+                <!-- Subscription Form CHANGE THE ACTION PROP IN THE FORM WITH YOUR MAILCHIMP URL - PLEASE FIND STEPS IN DOCUMENTATION-->
+                <form name="subscribe-form" class="subscribe-form main-gradient-bg" data-form-output="subscribe-form"
+                    action="https://ezyro.us15.list-manage.com/subscribe/post?u=d70f2fe680c1d1ba5bef24ab7&amp;id=9ed360ebd1"
+                    method="post">
+                    <!-- Email Field -->
+                    <input class="main-dark-background" name="subscribe-email" type="email" required autocomplete="email"
+                        placeholder="Your email">
+                    <!-- Submit Button -->
+                    <button type="submit" class="subscribe-submit btn">
+                        <span class="btn-text">Subscribe</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- End Sign in Section-->
+
+    <!-- Start Footer Section-->
+    <div class="main-footer">
+        <div class="content">
+            <img class="img-fluid" src="assets/images/icons/big-logo.png" alt="site-logo">
+            <p>
+                <a href="#"><i class="fas fa-rss"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-google-plus-g"></i></a>
+            </p>
+        </div>
+    </div>
+    <!-- End Footer Section-->
+
+    <!-- Start Copyright Section-->
+    <div class="main-copyright blue-light-background">
+        <p>Designed and coded with &nbsp;<i class="fas fa-heart"></i>&nbsp; by PerleTheme</p>
+        <div class="copyright-nav">
+            <a class="nav-link" data-scroll-nav="0" href="#">Home</a>
+            <a class="nav-link" data-scroll-nav="3" href="#">About</a>
+            <a class="nav-link" data-scroll-nav="5" href="#">Projects</a>
+            <a class="nav-link" data-scroll-nav="8" href="#">News</a>
+        </div>
+    </div>
+    <!-- End Copyright Section-->
+
+    <!--Back to top button-->
+    <a href="#0" class="cd-top js-cd-top waves-effect waves-circle"><i class="fas fa-chevron-up"></i></a>
+
+    <span data-aos="zoom-out-left" data-aos-delay="100" class="shapes" style="background: url('assets/images/svg/circle.svg');"></span>
+    <span data-aos="zoom-out-right" data-aos-delay="100" class="shapes" style="background: url('assets/images/svg/circle.svg');"></span>
+    <span data-aos="zoom-out-left" data-aos-delay="100" class="shapes" style="background: url('assets/images/svg/circle.svg');"></span>
+    <span data-aos="zoom-out-right" data-aos-delay="100" class="shapes" style="background: url('assets/images/svg/circle.svg');"></span>
+    <span data-aos="fade-up" data-aos-delay="100" class="shapes" style="background: url('assets/images/svg/square.svg') no-repeat;"></span>
+    <span data-aos="fade-up" data-aos-delay="100" class="shapes" style="background: url('assets/images/svg/square.svg') no-repeat;"></span>
+    <span data-aos="fade-up" data-aos-delay="100" class="shapes" style="background: url('assets/images/svg/square.svg') no-repeat;"></span>
+    <span data-aos="fade-up" data-aos-delay="100" class="shapes" style="background: url('assets/images/svg/square.svg') no-repeat;"></span>
+
+</div>

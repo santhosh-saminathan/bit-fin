@@ -16,5 +16,9 @@ export class SigningService {
     signup(data) {
         return this.http.post(url + "user", data);
     }
+
+    getCountryCodes(){
+        return this.http.get(url + "code");
+    }
  
 }

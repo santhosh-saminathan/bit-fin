@@ -3,25 +3,22 @@
 }
 
 .balance_section {
-    /* border: 1px solid red; */
     margin: 15px;
 }
 
 .graph_section {
-    /* border: 1px solid red; */
     margin: 15px;
 }
 
 .recent_activities_section {
-    /* border: 1px solid red; */
     margin: 15px;
 }
 
 .outer_box {
-    border: 1px solid rgb(49, 49, 241);
+    border: 1px solid #151935;
     padding: 10px;
     border-radius: 4px;
-    background: #457df7;
+    background: #151935;
     color: white;
     text-align: center;
     margin: 10px;
@@ -43,4 +40,11 @@
     margin: 10px;
     border-radius: 3px;
     background: #f2eefe;
+}
+h4{
+    font-size: 18px;
+}
+
+h3{
+    font-size: 24px;
 }

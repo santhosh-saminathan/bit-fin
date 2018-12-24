@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./../transactions/bootstrap.css','./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
   profileDetails: any = {};

@@ -1,5 +1,5 @@
 .header {
-    background: #417af8;
+    background: #000422;
     position: fixed;
     width: 100%;
     z-index: 1;
@@ -12,9 +12,16 @@ nav a {
     font-size: 16px;
 }
 
+.btn-link:hover{
+    color:white !important;
+    font-size: 17px;
+}
+
 .highlight {
-    font-weight: bold;
+    font-size: 18px !important;
     border-bottom: 2px solid white;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
 
 .custom_width {
@@ -45,7 +52,7 @@ nav a {
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #417af8;
+    background-color: #151935;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;

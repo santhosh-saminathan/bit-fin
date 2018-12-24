@@ -6,26 +6,25 @@
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
     font-weight: bold;
     border: none;
-    border-bottom: 2px solid #417af8;
+    border-bottom: 2px solid #151935;
 }
 
 a {
-    color: #417af8
+    color: #151935;
+}
+
+a:hover {
+    /* font-size: 18px; */
+    color: #151935!important;
 }
 
 .nav-tabs {
-    border-bottom: none;
+    /* border-bottom: none; */
     padding-top: 10px;
 }
 
 .bg_color {
     background: white;
-    /* height:calc(100vh - 60px); */
-    /* background-image: url("./../../assets/img/bit-fin.png");
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-position: center left; 
-    background-size: 60px 90px; */
 }
 
 .container {
@@ -35,7 +34,7 @@ a {
 }
 
 .internal_section {
-    padding: 10px;
+    padding: 0px;
 }
 
 .center_align {
@@ -75,4 +74,27 @@ th {
 .no_transactions {
     color: red;
     font-size: 16px;
+}
+
+p{
+    color: black;
+}
+h4{
+    padding: 15px 0px 0px 0px;
+}
+i {
+    color: #000422;
+}
+
+.control-label {
+    margin-top: 12px;
+    color: #000422;
+}
+
+p {
+    color: black;
+}
+
+input:focus, input:hover {
+    background: none !important;
 }

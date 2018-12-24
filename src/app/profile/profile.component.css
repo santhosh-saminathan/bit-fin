@@ -34,10 +34,25 @@ img {
   margin: 10px;
 }
 
-.control-label {
-  margin-top: 15px;
-}
 
 .kyc {
   padding-left: 15px;
 }
+
+i {
+  color: #000422;
+}
+
+.control-label {
+  margin-top: 12px;
+  color: #000422;
+}
+
+p {
+  color: black;
+}
+
+input:focus, input:hover {
+  background: none !important;
+}
+

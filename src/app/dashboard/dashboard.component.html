@@ -1,5 +1,5 @@
 <app-menu></app-menu>
-<section class="top_custom_height">
+<section class="top_custom_height bg_white">
 
   <div class="loading_content" *ngIf="noContent">
     <i class="fas fa-spinner fa-spin"></i><br>
@@ -8,12 +8,12 @@
 
   <div *ngIf="!noContent" class="container dashboard_section">
     <div class="balance_section">
-      <h4 class="font_bold">Your Account Balance</h4>
+      <h4 class="font_bold color_black">Your Account Balance</h4>
       <div class="row" *ngIf="userBalance && usd_Xlm && xlm_Usd">
         <div class="col-sm-4">
           <div class="outer_box">
-            <h4 class="font_bold">Available Balance - USD</h4>
-            <h3 class="font_bold">$ {{userBalance * xlm_Usd.USD}}</h3>
+            <h4 class="font_bold color_white">Available Balance - USD</h4>
+            <h3 class="font_bold">$ {{userBalance * xlm_Usd.USD | number : '1.2-2'}}</h3>
           </div>
         </div>
         <div class="col-sm-4">
@@ -24,15 +24,16 @@
         </div>
         <div class="col-sm-4">
           <div class="outer_box">
-            <div *ngIf="xlm_Usd" class="conversion_rate">1 XLM = {{xlm_Usd.USD}} USD</div>
-            <div *ngIf="usd_Xlm" class="conversion_rate">1 USD = {{usd_Xlm.XLM}} XLM</div>
+              <h4 *ngIf="xlm_Usd" class="font_bold">1 XLM = {{xlm_Usd.USD}} USD</h4>
+                <h3 *ngIf="usd_Xlm" class="font_bold">1 USD = {{usd_Xlm.XLM}} XLM</h3>
           </div>
         </div>
       </div>
     </div>
 
     <div class="graph_section">
-      <h4 class="font_bold">XLM Rate Flow</h4>
+      <h4 class="font_bold color_black">XLM Rate Flow</h4>
+      <br>
       <div style="display: block;" *ngIf="lineChartData && lineChartLabels">
         <canvas baseChart width="300" height="80" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
           [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
@@ -40,7 +41,7 @@
     </div>
 
     <div class="recent_activities_section">
-      <h4 class="font_bold">Recent sent Transactions</h4>
+      <h4 class="font_bold color_black">Recent sent Transactions</h4>
       <div class="row">
         <div class="col-sm-10">
           <div class="recent_transactions_card" *ngFor="let transaction of sentTransactions | slice:0:10">

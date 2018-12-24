@@ -81,9 +81,9 @@ export class DashboardComponent implements OnInit {
         this.lineChartColors = [
           {
             backgroundColor: '#f2efff',
-            borderColor: '#417af8',
+            borderColor: '#151935',
             pointBackgroundColor: 'rgb(71, 71, 243)',
-            pointBorderColor: 'blue',
+            pointBorderColor: '#151935',
             pointHoverBackgroundColor: '#fff',
             pointHoverBorderColor: 'rgba(148,159,177,0.8)',
             fill: false,

@@ -32,14 +32,10 @@
             <div class="text_align_center center_align">
               <h4>Sent Transaction Details</h4>
               <div>
-                <br>
-                <p class="text_align_left">
+               <br>
+                <p class="text_align_left color_black">
                   All the transactions that you have sent to other users are listed below.
                 </p>
-                <br>
-
-
-
                 <div *ngIf="sentTransactions" class="table-responsive">
                   <div *ngIf="sentTransactions.length == 0">
                     <p class="no_transactions">Sorry , No transactions found</p>
@@ -84,8 +80,6 @@
                 <p class="text_align_left">
                   All the transactions that other users have sent to you are listed below.
                 </p>
-                <br>
-
                 <div *ngIf="receivedTransactions" class="table-responsive">
                   <div *ngIf="receivedTransactions.length == 0">
                     <p class="no_transactions">Sorry , No transactions found</p>
@@ -128,8 +122,6 @@
                 <p class="text_align_left">
                   All the details of your deposit transactions are listed below.
                 </p>
-                <br>
-
                 <div *ngIf="depositTransactions" class="table-responsive">
                   <div *ngIf="depositTransactions.length == 0">
                     <p class="no_transactions">Sorry , No transactions found</p>
@@ -171,7 +163,6 @@
                 <p class="text_align_left">
                   All the details of the withdrawl requests by you are listed below.
                 </p>
-                <br>
                 <div *ngIf="withdrawTransactions" class="table-responsive">
                   <div *ngIf="withdrawTransactions.length == 0">
                     <p class="no_transactions">Sorry , No transactions found</p>

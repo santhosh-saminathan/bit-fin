@@ -1,4 +1,4 @@
-.page{
+/* .page{
     width: 100%;
     height: 100vh;
     display: table;
@@ -30,7 +30,6 @@ nav a {
 .custom_width {
     width: 100%;
     cursor: pointer;
-    /* display: inline-flex; */
 }
 .login_btn {
     background: #417af8;
@@ -55,4 +54,4 @@ nav a {
 .error_msg {
     color: red;
     text-align: center;
-}
+} */

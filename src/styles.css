@@ -1,9 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 
+.bg_white {
+    background: white;
+}
 
 .top_custom_height {
     position: relative;
     top: 60px;
+}
+
+.color_black {
+    color: black !important;
+}
+
+.color_white {
+    color: white !important;
 }
 
 .text_align_center {
@@ -11,26 +22,43 @@
 }
 
 .btn-primary {
-    background-color: #417af8;
-    border-color: #417af8;
+    background-color: #020838 !important;
+    border-color: #010522 !important;
 }
 
 .btn-primary:focus, .btn-primary:hover {
-    background-color: #0b56fd;
-    border-color: #417af8;
+    background-color: #010313 !important;
+    border-color: #000422 !important;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
     display: none;
-}
+} */
 
 .fa-spinner {
     font-size: 24px;
     text-align: center;
-    color: #417af8;
+    color: #000422;
 }
 
 .loading_content {
     text-align: center;
     padding: 25px;
+}
+
+i {
+    color: #000422;
+}
+
+.control-label {
+    margin-top: 12px;
+    color: #000422;
+}
+
+p {
+    color: black;
+}
+
+input:focus, input:hover {
+    background: none !important;
 }

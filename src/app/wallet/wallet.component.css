@@ -6,15 +6,20 @@
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
     font-weight: bold;
     border: none;
-    border-bottom: 2px solid #417af8;
+    border-bottom: 2px solid #151935;
 }
 
-a, .theme_color {
-    color: #417af8
+a {
+    color: #151935;
+}
+
+a:hover {
+    /* font-size: 18px; */
+    color: #151935!important;
 }
 
 .nav-tabs {
-    border-bottom: none;
+    /* border-bottom: none; */
     padding-top: 10px;
 }
 
@@ -84,7 +89,7 @@ td {
 
 .card {
     margin: 10px;
-    height: 135px;
+    height: 150px;
     width: 340px !important;
     cursor: pointer;
     border: 1px solid #d8d8fd;
@@ -141,4 +146,29 @@ td {
 
 .form-control:focus{
     border:none
+}
+
+i {
+    color: #000422;
+}
+
+.control-label {
+    margin-top: 0px;
+    color: #000422;
+}
+
+p {
+    color: black;
+}
+
+input:focus, input:hover {
+    background: none !important;
+}
+span{
+    color: black;
+}
+
+label{
+    font-weight: 500;
+    color: black;
 }

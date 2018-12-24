@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-wallet',
   templateUrl: './wallet.component.html',
-  styleUrls: ['./wallet.component.css']
+  styleUrls: ['./../transactions/bootstrap.css','./wallet.component.css']
 })
 export class WalletComponent implements OnInit {
   yourMobileNumber: any;
