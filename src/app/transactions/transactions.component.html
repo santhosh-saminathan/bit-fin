@@ -48,6 +48,7 @@
                         <th>Amount - USD</th>
                         <!-- <th>Amount - XLM</th> -->
                         <th>Transaction ID</th>
+                        <th>Date</th>
                         <th>Time</th>
                         <th>Status</th>
                       </tr>
@@ -59,7 +60,8 @@
                         <td>$ {{transaction.walletAmount}}</td>
                         <!-- <td>{{transaction.amount}} XLM</td> -->
                         <td>{{transaction._id}}</td>
-                        <td>{{transaction.createdTs | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+                        <td>{{transaction.createdTs | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{transaction.createdTs | date: 'HH:mm:ss'}}</td>
                         <td>Success</td>
                       </tr>
                     </tbody>
@@ -91,6 +93,7 @@
                         <th>Sent From</th>
                         <th>Amount</th>
                         <th>Transaction ID</th>
+                        <th>Date</th>
                         <th>Time</th>
                         <th>Status</th>
                       </tr>
@@ -102,7 +105,8 @@
                         <td>$ {{transaction.walletAmount}}</td>
                         <!-- <td>{{transaction.amount}} XLM</td> -->
                         <td>{{transaction._id}}</td>
-                        <td>{{transaction.createdTs | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+                        <td>{{transaction.createdTs | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{transaction.createdTs | date: 'HH:mm:ss'}}</td>
                         <td>Success</td>
                       </tr>
                     </tbody>
@@ -132,6 +136,7 @@
                         <th>S.No</th>
                         <th>USD Amount</th>
                         <th>Transaction ID</th>
+                        <th>Date</th>
                         <th>Time</th>
                         <th>Status</th>
                       </tr>
@@ -143,7 +148,8 @@
                         <td>$ {{transaction.amount}}</td>
                         <!-- <td>{{transaction.amount}} XLM</td> -->
                         <td>{{transaction._id}}</td>
-                        <td>{{transaction.createdTs | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+                        <td>{{transaction.createdTs | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{transaction.createdTs | date: 'HH:mm:ss'}}</td>
                         <td>Success</td>
                       </tr>
                     </tbody>
@@ -173,6 +179,7 @@
                         <th>S.No</th>
                         <th>USD Amount</th>
                         <th>Transaction ID</th>
+                        <th>Date</th>
                         <th>Time</th>
                         <th>Status</th>
                       </tr>
@@ -183,7 +190,8 @@
                         <td>$ {{transaction.received}}</td>
                         <!-- <td>{{transaction.amount}} XLM</td> -->
                         <td>{{transaction._id}}</td>
-                        <td>{{transaction.createdTs | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+                        <td>{{transaction.createdTs | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{transaction.createdTs | date: 'HH:mm:ss'}}</td>
                         <td>Success</td>
                       </tr>
                     </tbody>

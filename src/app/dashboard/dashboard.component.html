@@ -66,7 +66,7 @@
         <div class="col-md-6">
           <h4 class="font_bold color_black text_align_center">Recent sent Transactions</h4>
           <br>
-          <div class="card" *ngFor="let transaction of sentTransactions | slice:0:10">
+          <div class="card" *ngFor="let transaction of sentTransactions | slice:0:4">
             <div class="small-font">
               <span>Sent to</span>
               <span class="right-float">{{transaction.createdTs | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
@@ -81,14 +81,14 @@
             </div>
           </div>
 
-          <div (click)="viewMore()" class="view-more">View more</div>
+          <div (click)="redirectToTransactionPage()" class="view-more">View more</div>
         </div>
 
         <div class="col-md-6">
           <h4 class="font_bold color_black text_align_center">Recent Deposit Transactions</h4>
           <br>
 
-          <div class="card" *ngFor="let transaction of depositTransactions | slice:0:10">
+          <div class="card" *ngFor="let transaction of depositTransactions | slice:0:4">
             <div class="small-font">
               <span>Amount Deposited</span>
               <span class="right-float">{{transaction.createdTs | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
@@ -102,7 +102,7 @@
               <span style="color:green" class="right-float">Success</span>
             </div>
           </div>
-          <div (click)="viewMore()" class="view-more">View more</div>
+          <div (click)="redirectToTransactionPage()" class="view-more">View more</div>
         </div>
       </div>
     </div>

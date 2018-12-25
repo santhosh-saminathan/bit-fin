@@ -81,66 +81,74 @@
       <p>Note: Please make sure that you upload a High Resolution image. Photo should be clear & readable</p>
 
       <br>
-      <div class="row">
+      <div class="row" style="display:-webkit-inline-box">
         <div class="col-sm-4">
-          <h4>Address Proof</h4>
-          <p>Document which contains your full address.</p>
-          <br>
-          <div class="">
-            <label for="addressproof" class="custom_file_input">
-              <i class="fas fa-edit"></i>
-            </label>
-            <input (change)="addressProofUpdate($event)" name="addressproof" id="addressproof" type="file" accept=".png, .jpg, .jpeg">
-            <img *ngIf="profileDetails && profileDetails.proofs && profileDetails.proofs.addressProof" src={{profileDetails.proofs.addressProof}}>
-            <img *ngIf="!profileDetails || !profileDetails.proofs || !profileDetails.proofs.addressProof" src="./../../assets/img/idproof_default.png">
-            <!-- <div *ngIf="picDetails">New Pic:
+          <div class="custom_width">
+
+
+            <h4>Address Proof</h4>
+            <p>Document which contains your full address.</p>
+            <br>
+            <div class="">
+              <label for="addressproof" class="custom_file_input">
+                <i class="fas fa-edit"></i>
+              </label>
+              <input (change)="addressProofUpdate($event)" name="addressproof" id="addressproof" type="file" accept=".png, .jpg, .jpeg">
+              <img *ngIf="profileDetails && profileDetails.proofs && profileDetails.proofs.addressProof" src={{profileDetails.proofs.addressProof}}>
+              <img *ngIf="!profileDetails || !profileDetails.proofs || !profileDetails.proofs.addressProof" src="./../../assets/img/idproof_default.png">
+              <!-- <div *ngIf="picDetails">New Pic:
               <b>{{picDetails.name}}</b> , Size: {{picDetails.size}} bytes</div>
             <div class="size_exceed_error" *ngIf="maxSizeExceed">Maximum file size should be 1.5 Mb</div> -->
+            </div>
           </div>
         </div>
-        <div class="col-sm-4">
-          <h4>Id Proof</h4>
-          <p>Any government Id proof of you.</p>
-          <br>
-          <div class="">
-            <label for="idproof" class="custom_file_input">
-              <i class="fas fa-edit"></i>
-            </label>
-            <input (change)="idProofUpdate($event)" name="idproof" id="idproof" type="file" accept=".png, .jpg, .jpeg">
-            <img *ngIf="profileDetails && profileDetails.proofs && profileDetails.proofs.idProof" src={{profileDetails.proofs.idProof}}>
-            <img *ngIf="!profileDetails || !profileDetails.proofs || !profileDetails.proofs.idProof" src="./../../assets/img/idproof_default.png">
+        <div class="col-sm-4 custom_width">
+          <div class="custom_width">
+            <h4>Id Proof</h4>
+            <p>Any government Id proof of you.</p>
+            <br>
+            <div class="">
+              <label for="idproof" class="custom_file_input">
+                <i class="fas fa-edit"></i>
+              </label>
+              <input (change)="idProofUpdate($event)" name="idproof" id="idproof" type="file" accept=".png, .jpg, .jpeg">
+              <img *ngIf="profileDetails && profileDetails.proofs && profileDetails.proofs.idProof" src={{profileDetails.proofs.idProof}}>
+              <img *ngIf="!profileDetails || !profileDetails.proofs || !profileDetails.proofs.idProof" src="./../../assets/img/idproof_default.png">
 
-            <!-- <div *ngIf="picDetails">New Pic:
+              <!-- <div *ngIf="picDetails">New Pic:
               <b>{{picDetails.name}}</b> , Size: {{picDetails.size}} bytes</div>
             <div class="size_exceed_error" *ngIf="maxSizeExceed">Maximum file size should be 1.5 Mb</div> -->
+            </div>
           </div>
         </div>
-        <div class="col-sm-4">
-          <h4>Profile Proof</h4>
-          <p>Photo of you holding Id proof document.</p>
-          <br>
-          <div class="">
-            <label for="profileproof" class="custom_file_input">
-              <i class="fas fa-edit"></i>
-            </label>
-            <input type="file" accept="image/*" id="profileproof" name="profileproof" class="btn btn-sm image_input_style" (change)="photoProofUpdate($event)"
-            />
+        <div class="col-sm-4 custom_width">
+          <div class="custom_width">
+            <h4>Profile Proof</h4>
+            <p>Photo of you holding Id proof document.</p>
+            <br>
+            <div class="">
+              <label for="profileproof" class="custom_file_input">
+                <i class="fas fa-edit"></i>
+              </label>
+              <input type="file" accept="image/*" id="profileproof" name="profileproof" class="btn btn-sm image_input_style" (change)="photoProofUpdate($event)"
+              />
 
-            <img *ngIf="profileDetails && profileDetails.proofs && profileDetails.proofs.photoProof" src={{profileDetails.proofs.photoProof}}>
-            <img *ngIf="!profileDetails || !profileDetails.proofs || !profileDetails.proofs.photoProof" src="./../../assets/img/idproof_default.png">
+              <img *ngIf="profileDetails && profileDetails.proofs && profileDetails.proofs.photoProof" src={{profileDetails.proofs.photoProof}}>
+              <img *ngIf="!profileDetails || !profileDetails.proofs || !profileDetails.proofs.photoProof" src="./../../assets/img/idproof_default.png">
 
-            <!-- <div *ngIf="picDetails">New Pic:
+              <!-- <div *ngIf="picDetails">New Pic:
               <b>{{picDetails.name}}</b> , Size: {{picDetails.size}} bytes</div>
             <div class="size_exceed_error" *ngIf="maxSizeExceed">Maximum file size should be 1.5 Mb</div> -->
+            </div>
           </div>
         </div>
       </div>
     </div>
     <br>
     <div style="width:100%">
-        <button style="float:right;margin-right:20px" type="submit" class="btn btn-primary" [disabled]="waitingForResponse" (click)="uploadKyc()">Update KYC</button>
+      <button style="float:right;margin-right:20px" type="submit" class="btn btn-primary" [disabled]="waitingForResponse" (click)="uploadKyc()">Update KYC</button>
 
-     <span style="color:blue;float:right;margin-right:20px" *ngIf="waitingForResponse">Please wait ... Reading image on progress...</span> 
+      <span style="color:blue;float:right;margin-right:20px" *ngIf="waitingForResponse">Please wait ... Reading image on progress...</span>
     </div>
 
   </div>

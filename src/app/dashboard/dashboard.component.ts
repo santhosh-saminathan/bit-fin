@@ -115,4 +115,8 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  redirectToTransactionPage(){
+    this.router.navigate(['/transactions'])
+  }
+
 }

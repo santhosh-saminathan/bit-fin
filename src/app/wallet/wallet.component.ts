@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-wallet',
   templateUrl: './wallet.component.html',
-  styleUrls: ['./../transactions/bootstrap.css','./wallet.component.css']
+  styleUrls: ['./../transactions/bootstrap.css', './wallet.component.css']
 })
 export class WalletComponent implements OnInit {
   yourMobileNumber: any;
@@ -25,6 +25,7 @@ export class WalletComponent implements OnInit {
   userDetails: any;
   withdraw: any = {};
   withdrawBankDetails: any;
+  noContent: boolean = true;
 
   //deposit
   cardData: any = {};
@@ -49,6 +50,8 @@ export class WalletComponent implements OnInit {
   uploadVerificationImage: any;
   cardYear: any = [];
   cardMonth: any = [];
+  showFailureAlert: boolean = false;
+  showSuccessAlert: boolean = false;
 
 
   constructor(public toastr: ToastrService, private walletService: WalletService, private fb: FormBuilder, private profileService: ProfileService, private cryptoService: CryptoService) { }
@@ -57,6 +60,7 @@ export class WalletComponent implements OnInit {
   getBalance() {
     this.profileService.getBalance().subscribe(data => {
       this.availableBalance = data;
+      this.noContent = false;
     }, err => {
       this.toastr.error('Failed to get user balance data', 'Error!');
     });
@@ -107,8 +111,15 @@ export class WalletComponent implements OnInit {
       this.toastr.error('Failed to get xlm to usd conversion details', 'Error!');
     })
 
+    this.savedDetails();
+
+
+  }
+
+  savedDetails() {
     this.walletService.userSavedCardDetails().subscribe(data => {
       this.savedCards = data;
+      console.log(this.savedCards);
     }, err => {
       this.toastr.error('Failed to get saved card details', 'Error!');
     })
@@ -118,24 +129,28 @@ export class WalletComponent implements OnInit {
     }, err => {
       this.toastr.error('Failed to get saved withdraw bank details', 'Error!');
     })
-
-
   }
 
   selectedCard(card) {
     this.savedCards.forEach(element => {
       element.selected = false;
+
     });
+    this.cardData.cvv = null;
     card.selected = true;
     this.cardData.cardHolder = card.holder
     this.cardData.cardNumber = card.number
-    this.cardData.month = card.expiry.split('/')[0]
-    this.cardData.year = card.expiry.split('/')[1]
+    this.cardData.month = card.expiry.split('/')[0] ? card.expiry.split('/')[0] : card.expiry.split('-')[0]
+    this.cardData.year = card.expiry.split('/')[1] ? card.expiry.split('/')[1] : card.expiry.split('-')[1]
   }
 
   createToken() {
-    if (this.amountToDeposit && this.cardData.cardHolder && this.cardData.cardNumber && this.cardData.month && this.cardData.year && this.cardData.cvv) {
+    this.showSuccessAlert = false;
+    this.showFailureAlert = false;
+
+    if (this.amountToDeposit > 0 && this.cardData.cardHolder && this.cardData.cardNumber && this.cardData.month && this.cardData.year && this.cardData.cvv) {
       this.waitingForResponse = true;
+      let that = this;
       (<any>window).Stripe.card.createToken({
         number: this.cardData.cardNumber,
         exp_month: this.cardData.month,
@@ -145,29 +160,44 @@ export class WalletComponent implements OnInit {
         if (response.id) {
           let data = {
             "stripeToken": response.id,
-            "saveCard": this.cardData.saveCard.toString(),
+            "saveCard": this.cardData.saveCard,
             "amount": this.amountToDeposit.toFixed(2),
             "user": localStorage.getItem('userId'),
             "xlmAmount": (this.amountToDeposit * this.usd_xlm_conversion).toFixed(2),
             "card": {
               "number": this.cardData.cardNumber.toString(),
               "holder": this.cardData.cardHolder,
-              "expiry": this.cardData.month + '-' + this.cardData.year,
+              "expiry": this.cardData.month + '/' + this.cardData.year,
               "user": localStorage.getItem('userId'),
             }
           }
+
           this.walletService.depositAmount(data).subscribe(data => {
-            this.toastr.success('Deposit amount successfully');
+            this.toastr.success('Deposit amount successfully', '', {
+              timeOut: 100
+            });
             this.waitingForResponse = false;
             this.amountToDeposit = 0;
+            this.showSuccessAlert = true;
+            this.cardData = {};
+            window.scroll(0, 0);
             this.getBalance();
+            this.savedDetails();
           }, err => {
-            this.waitingForResponse = false;
             this.toastr.error('Failed to deposit amount', 'Error!');
+           
+            this.cardData = {};
+            this.waitingForResponse = false;
+            window.scroll(0, 0);
+            this.showFailureAlert = true;
           })
+
         } else {
+          this.toastr.error('Invalid card details', 'Error!', {
+            timeOut: 100
+          });
           this.waitingForResponse = false;
-          this.toastr.error('Invalid card details', 'Error!');
+          this.cardData = {};
         }
       }, (err) => {
         this.waitingForResponse = false;
@@ -177,6 +207,10 @@ export class WalletComponent implements OnInit {
       this.toastr.error('Enter deposit amount and card details', 'Error!');
     }
   }
+
+  // depositAmount(data) {
+
+  // }
 
 
   getAutocompleteMobileNumbers() {
@@ -195,18 +229,26 @@ export class WalletComponent implements OnInit {
 
   calculateSendFee() {
 
-    let xlmAmount = parseFloat(this.amountToSend) * parseFloat(this.usd_xlm_conversion);
-    this.sendTransactionTotal = xlmAmount + ((xlmAmount * this.adminDetails.sendTransactionFee) / 100);
-    this.sendTransactionFee = (xlmAmount * this.adminDetails.sendTransactionFee) / 100
+    if (this.amountToSend < 0) {
+      this.toastr.error('Negative values not accepted', 'Error!');
+    } else {
+      this.amountToSend ? this.amountToSend : this.amountToSend = 0;
 
-    this.sendWalletAmount_USD = this.sendTransactionTotal * parseFloat(this.xlm_Usd_conversion);
-    this.sendWalletFee_USD = this.sendTransactionFee * parseFloat(this.xlm_Usd_conversion);
+      let xlmAmount = parseFloat(this.amountToSend) * parseFloat(this.usd_xlm_conversion);
+      this.sendTransactionTotal = xlmAmount + ((xlmAmount * this.adminDetails.sendTransactionFee) / 100);
+      this.sendTransactionFee = (xlmAmount * this.adminDetails.sendTransactionFee) / 100
 
-    this.sendTransactionTotal = this.sendTransactionTotal.toFixed(2);
-    this.sendTransactionFee = this.sendTransactionFee.toFixed(2);
+      this.sendWalletAmount_USD = this.sendTransactionTotal * parseFloat(this.xlm_Usd_conversion);
+      this.sendWalletFee_USD = this.sendTransactionFee * parseFloat(this.xlm_Usd_conversion);
 
-    this.sendWalletAmount_USD = this.sendWalletAmount_USD.toFixed(2);
-    this.sendWalletFee_USD = this.sendWalletFee_USD.toFixed(2);
+      this.sendTransactionTotal = this.sendTransactionTotal.toFixed(2);
+      this.sendTransactionFee = this.sendTransactionFee.toFixed(2);
+
+      this.sendWalletAmount_USD = this.sendWalletAmount_USD.toFixed(2);
+      this.sendWalletFee_USD = this.sendWalletFee_USD.toFixed(2);
+
+    }
+
 
 
   }
@@ -216,12 +258,16 @@ export class WalletComponent implements OnInit {
     let count = 0;
     let isNumberRegistered = false;
 
-    this.autocompleteNumbers.forEach(element => {
-      count++
-      if (element.mobile_number === this.receiverMobileNumber) {
-        isNumberRegistered = true;
-      }
-    });
+    if (this.autocompleteNumbers) {
+      this.autocompleteNumbers.forEach(element => {
+        count++
+        if (element.mobile_number === this.receiverMobileNumber) {
+          isNumberRegistered = true;
+        }
+      });
+    }
+
+
 
     let data = {
       "sender": localStorage.getItem('userId'),
@@ -234,18 +280,21 @@ export class WalletComponent implements OnInit {
 
     if (isNumberRegistered) {
       this.toastr.error('This number is not registered', 'Error!');
-
+    } else if (parseFloat(this.sendWalletAmount_USD) > (parseFloat(this.availableBalance[0].balance) * parseFloat(this.xlm_Usd_conversion))) {
+      this.toastr.error('Total amount should be less than your balance', 'Error!');
     } else if (data.sender == data.receiver) {
       this.toastr.error('Sender and Receiver cannot be same', 'Error!');
-    } else if (data.sender && data.receiver && data.amount && data.fee && data.walletAmount && data.walletFee) {
-      this.amountToSend = null;
+    } else if (this.amountToSend > 0 && data.sender && data.receiver && data.amount && data.fee && data.walletAmount && data.walletFee) {
+
       this.waitingForResponse = true;
       this.walletService.makePayment(data).subscribe(data => {
         this.waitingForResponse = false;
-        this.sendWalletAmount_USD = null;
-        this.sendWalletFee_USD = null;
-        this.getBalance();
+        this.amountToSend = 0;
+        this.sendWalletAmount_USD = 0;
+        this.sendWalletFee_USD = 0;
+
         this.toastr.success('Payment sent successfully');
+        this.getBalance();
       }, err => {
         this.waitingForResponse = false;
         this.toastr.error('Error while sending payment', 'Error!');
@@ -298,28 +347,62 @@ export class WalletComponent implements OnInit {
 
   withdrawToSelectedAccount() {
 
-    this.selectedWithdrawAccount.usd = this.amountToWithdraw.toFixed(2);
-    this.selectedWithdrawAccount.xlm = this.withdrawAmount_xlm.toFixed(2)
-    this.selectedWithdrawAccount.fee = this.withdrawFee.toFixed(2);
-    this.selectedWithdrawAccount.rate = this.withdrawRate.toFixed(2);
-    this.selectedWithdrawAccount.walletFee = this.withdrawTransactionFee.toFixed(2);
+    if (this.amountToWithdraw > 0 && this.selectedWithdrawAccount) {
+      this.selectedWithdrawAccount.usd = this.amountToWithdraw.toFixed(2);
+      this.selectedWithdrawAccount.xlm = this.withdrawAmount_xlm.toFixed(2)
+      this.selectedWithdrawAccount.fee = this.withdrawFee.toFixed(2);
+      this.selectedWithdrawAccount.rate = this.withdrawRate.toFixed(2);
+      this.selectedWithdrawAccount.walletFee = this.withdrawTransactionFee.toFixed(2);
 
-    this.waitingForResponse = true;
-    this.walletService.withdrawFromAccount(this.selectedWithdrawAccount).subscribe(data => {
-      this.waitingForResponse = false;
-      this.amountToWithdraw = null;
-      this.toastr.success('Withdraw amount successfully');
-      this.getBalance();
-    }, err => {
-      this.waitingForResponse = false;
-      this.toastr.error('Error while withdraw amount', 'Error!');
-    })
+      this.waitingForResponse = true;
+      this.walletService.withdrawFromAccount(this.selectedWithdrawAccount).subscribe(data => {
+        this.waitingForResponse = false;
+        this.amountToWithdraw = null;
+        this.toastr.success('Withdraw amount successfully');
+        this.getBalance();
+      }, err => {
+        this.waitingForResponse = false;
+        this.toastr.error('Error while withdraw amount', 'Error!');
+      })
+    } else {
+      this.toastr.error('Enter withdraw Amount and Select Bank', 'Error!');
+    }
+
+
 
   }
 
   withdrawToNewAmount() {
 
-    if (this.amountToWithdraw && this.withdraw.routingNumber && this.withdraw.accountNumber && this.withdraw.phoneNumber
+    let validMobile = false;
+    let validSSN = false;
+    let validDOB = false;
+
+
+    if (this.withdraw.phoneNumber.length == 10) {
+      validMobile = true;
+    } else {
+      this.toastr.error('Mobile number should be 10 digits', 'Error!');
+    }
+
+    if (this.withdraw.ssn.length == 4) {
+      validSSN = true;
+    } else {
+      this.toastr.error('SSN number should be 4 digits', 'Error!');
+    }
+
+    // var enteredDate = document.getElementById('sampleDate').value;
+    // Below one is the single line logic to calculate the no. of years...
+    var years = new Date(new Date() - new Date(this.withdraw.dob)).getFullYear() - 1970;
+    console.log(years);
+
+    if (years > 18 && years < 100) {
+      validDOB = true;
+    } else {
+      this.toastr.error('Age should be more than 18 years', 'Error!');
+    }
+
+    if (validMobile && validSSN && validDOB && this.amountToWithdraw > 0 && this.withdraw.routingNumber && this.withdraw.accountNumber && this.withdraw.phoneNumber
       && this.withdraw.accountHolder) {
 
       this.withdraw.day = new Date(this.withdraw.dob.toString()).getDate();
@@ -330,7 +413,7 @@ export class WalletComponent implements OnInit {
       this.withdraw.accountNumber = this.withdraw.accountNumber.toString();
       this.withdraw.month = this.withdraw.month.toString();
       this.withdraw.phoneNumber = this.withdraw.phoneNumber.toString();
-      this.withdraw.saveDetails = this.withdraw.saveDetails.toString();
+      this.withdraw.saveDetails = this.withdraw.saveDetails;
       this.withdraw.ssn = this.withdraw.ssn.toString();
       this.withdraw.year = this.withdraw.year.toString();
 
@@ -343,9 +426,10 @@ export class WalletComponent implements OnInit {
 
       this.waitingForResponse = true;
       this.walletService.withdrawFromAccount(this.withdraw).subscribe(data => {
-        this.amountToWithdraw = null;
+        this.amountToWithdraw = 0;
         this.toastr.success('Withdraw amount successfully');
-        this.getBalance()
+        this.getBalance();
+        this.savedDetails();
         this.waitingForResponse = false;
       }, err => {
         this.waitingForResponse = false;

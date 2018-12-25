@@ -62,3 +62,7 @@ p {
 input:focus, input:hover {
     background: none !important;
 }
+
+.pleaseWaitOption{
+    color: #000422;
+}

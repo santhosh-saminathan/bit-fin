@@ -57,6 +57,7 @@ input:focus, input:hover {
   background: none !important;
 }
 
-.row{
+.custom_width{
   width: 98%;
 }
+
