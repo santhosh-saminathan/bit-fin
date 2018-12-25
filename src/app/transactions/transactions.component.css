@@ -76,12 +76,14 @@ th {
     font-size: 16px;
 }
 
-p{
+p {
     color: black;
 }
-h4{
+
+h4 {
     padding: 15px 0px 0px 0px;
 }
+
 i {
     color: #000422;
 }
@@ -98,3 +100,10 @@ p {
 input:focus, input:hover {
     background: none !important;
 }
+
+.my-pagination /deep/ .ngx-pagination .current {
+    background: #010922 !important;
+    border-radius: 3px;
+    color: #151935;
+}
+  

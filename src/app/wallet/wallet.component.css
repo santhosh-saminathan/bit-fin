@@ -176,3 +176,7 @@ label{
     font-weight: 500;
     color: black;
 }
+
+.col-xs-4{
+    width: 32.33333%
+}

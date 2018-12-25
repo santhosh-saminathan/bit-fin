@@ -32,7 +32,7 @@
             <div class="text_align_center center_align">
               <h4>Sent Transaction Details</h4>
               <div>
-               <br>
+                <br>
                 <p class="text_align_left color_black">
                   All the transactions that you have sent to other users are listed below.
                 </p>
@@ -54,7 +54,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let transaction of sentTransactions;let i = index">
+                      <tr (click)="modalData(transaction,'Sent Transaction Detail')" data-toggle="modal" data-target="#myModal" *ngFor="let transaction of sentTransactions | paginate: { itemsPerPage: 10, currentPage: pageNo1 ,id:'sent' };let i = index;">
                         <td>{{i+1}}</td>
                         <td>{{transaction.receiver.firstName}} {{transaction.receiver.lastName}}</td>
                         <td>$ {{transaction.walletAmount}}</td>
@@ -66,6 +66,7 @@
                       </tr>
                     </tbody>
                   </table>
+                  <pagination-controls id="sent" class="my-pagination" (pageChange)="pageNo1 = $event"></pagination-controls>
                 </div>
 
               </div>
@@ -99,7 +100,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let transaction of receivedTransactions;let i = index">
+                      <tr (click)="modalData(transaction,'Received Transaction Detail')" data-toggle="modal" data-target="#myModal" *ngFor="let transaction of receivedTransactions | paginate: { itemsPerPage: 10, currentPage: pageNo2 ,id:'received' };let i = index">
                         <td>{{i+1}}</td>
                         <td>{{transaction.sender.firstName}} {{transaction.sender.lastName}}</td>
                         <td>$ {{transaction.walletAmount}}</td>
@@ -111,6 +112,8 @@
                       </tr>
                     </tbody>
                   </table>
+                  <pagination-controls id="received" class="my-pagination" (pageChange)="pageNo2 = $event"></pagination-controls>
+
                 </div>
 
               </div>
@@ -143,7 +146,7 @@
                     </thead>
                     <tbody>
 
-                      <tr *ngFor="let transaction of depositTransactions;let i = index">
+                      <tr (click)="modalData(transaction,'Deposit Transaction Detail')" data-toggle="modal" data-target="#myModal" *ngFor="let transaction of depositTransactions | paginate: { itemsPerPage: 10, currentPage: pageNo3 ,id:'deposit' };let i = index">
                         <td>{{i+1}}</td>
                         <td>$ {{transaction.amount}}</td>
                         <!-- <td>{{transaction.amount}} XLM</td> -->
@@ -154,6 +157,8 @@
                       </tr>
                     </tbody>
                   </table>
+                  <pagination-controls id="deposit" class="my-pagination" (pageChange)="pageNo3 = $event"></pagination-controls>
+
                 </div>
 
               </div>
@@ -185,7 +190,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let transaction of withdrawTransactions;let i = index">
+                      <tr (click)="modalData(transaction,'Withdraw Transaction Detail')" data-toggle="modal" data-target="#myModal" *ngFor="let transaction of withdrawTransactions | paginate: { itemsPerPage: 10, currentPage: pageNo4 ,id:'withdraw' };let i = index">
                         <td>{{i+1}}</td>
                         <td>$ {{transaction.received}}</td>
                         <!-- <td>{{transaction.amount}} XLM</td> -->
@@ -196,12 +201,78 @@
                       </tr>
                     </tbody>
                   </table>
+                  <pagination-controls id="withdraw" class="my-pagination" (pageChange)="pageNo4 = $event"></pagination-controls>
+
                 </div>
 
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+          <div style="text-align:center" class="modal-header">
+            <h4>{{modal.title}}</h4>
+          </div>
+          <div class="modal-body">
+            <div class="modal-highlight">
+
+            </div>
+            <div class="modal-details">
+              <table>
+                <tbody>
+                  <tr>
+                    <td>
+                      <b>Sent to</b>
+                    </td>
+                    <td>{{modal.receiver}}</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <b>Status</b>
+                    </td>
+                    <td>Success</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <hr>
+            <div class="modal-amount">
+              <tbody>
+                <tr>
+                  <td>Amount Sent</td>
+                  <td>$ {{modal.amount}}</td>
+                </tr>
+                <tr>
+                  <td>Transaction Fee</td>
+                  <td>$ {{modal.fee}}</td>
+                </tr>
+              </tbody>
+              <hr>
+              <tbody>
+                <tr>
+                  <td>Amount Sent</td>
+                  <td>$ {{modal.amount + modal.fee}}</td>
+                </tr>
+              </tbody>
+              <hr>
+            </div>
+            createdTime : {{modal.createdTime}}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
       </div>
     </div>
 

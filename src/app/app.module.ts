@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { MenuComponent } from './menu/menu.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -43,6 +44,7 @@ import { LoginComponent } from './login/login.component';
   ],
   imports: [
     BrowserModule,
+    NgxPaginationModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
@@ -52,7 +54,7 @@ import { LoginComponent } from './login/login.component';
     HttpClientJsonpModule,
     InternationalPhoneModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot() 
+    ToastrModule.forRoot()
     // NgxStripeModule.forRoot('pk_test_uzFnOtl3tNwStqKIi5Vflq61')
   ],
   providers: [SigningService, ProfileService, CryptoService, WalletService, TransactionService],

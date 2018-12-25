@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
-  styleUrls: ['./bootstrap.css','./transactions.component.css']
+  styleUrls: ['./bootstrap.css', './transactions.component.css']
 })
 export class TransactionsComponent implements OnInit {
 
@@ -15,6 +15,11 @@ export class TransactionsComponent implements OnInit {
   depositTransactions: any;
   withdrawTransactions: any;
   noContent: boolean = true;
+  modal: any = {};
+  pageNo1: any = 1;
+  pageNo2: any = 1;
+  pageNo3: any = 1;
+  pageNo4: any = 1;
 
   constructor(public toastr: ToastrService, private transactionService: TransactionService) { }
 
@@ -23,6 +28,7 @@ export class TransactionsComponent implements OnInit {
 
     this.transactionService.sentTransactions().subscribe(data => {
       this.sentTransactions = data;
+      console.log(this.sentTransactions);
       this.noContent = false;
     }, err => {
       this.toastr.error('Failed to get sent transaction data', 'Error!');
@@ -45,6 +51,15 @@ export class TransactionsComponent implements OnInit {
     }, err => {
       this.toastr.error('Failed to get withdraw transaction data', 'Error!');
     })
+  }
+
+
+  modalData(data, title) {
+    this.modal.title = title;
+    this.modal.createdTime = data.createdTs;
+    this.modal.receiver = data.receiver.firstName + data.receiver.lastName;
+    this.modal.amount = data.walletAmount;
+    this.modal.fee = data.walletFee;
   }
 
 }
