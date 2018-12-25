@@ -15,7 +15,8 @@ const routes: Routes = [
   { path: 'wallet', component: WalletComponent },
   { path: 'transactions', component: TransactionsComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: '**', component: HomeComponent }
 ];
 
 @NgModule({

@@ -53,9 +53,17 @@ nav a {
     text-align: center;
 }
 
+.main-section{
+    padding: 0px 0px;
+}
+
 #partitioned {
     letter-spacing: 50px;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid grey;
+}
+
+input:hover ,input:focus{
+    background: #151935 !important;
 }

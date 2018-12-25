@@ -46,8 +46,6 @@ export class LoginComponent implements OnInit {
 
   loginUser() {
 
-    console.log(this.login);
-
     this.invalidMobile = null;
     if (this.login.phone && this.login.password && this.login.country_code) {
       let data = {

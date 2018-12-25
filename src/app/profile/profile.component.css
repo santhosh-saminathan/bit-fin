@@ -57,3 +57,6 @@ input:focus, input:hover {
   background: none !important;
 }
 
+.row{
+  width: 98%;
+}
