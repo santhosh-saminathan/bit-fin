@@ -379,13 +379,13 @@ export class WalletComponent implements OnInit {
     let validDOB = false;
 
 
-    if (this.withdraw.phoneNumber.length == 10) {
+    if (this.withdraw.phoneNumber && this.withdraw.phoneNumber.length == 10) {
       validMobile = true;
     } else {
       this.toastr.error('Mobile number should be 10 digits', 'Error!');
     }
 
-    if (this.withdraw.ssn.length == 4) {
+    if (this.withdraw.ssn && this.withdraw.ssn.length == 4) {
       validSSN = true;
     } else {
       this.toastr.error('SSN number should be 4 digits', 'Error!');
@@ -393,8 +393,14 @@ export class WalletComponent implements OnInit {
 
     // var enteredDate = document.getElementById('sampleDate').value;
     // Below one is the single line logic to calculate the no. of years...
-    var years = new Date(new Date() - new Date(this.withdraw.dob)).getFullYear() - 1970;
-    console.log(years);
+    // let years = Math.abs(new Date().getFullYear() - new Date(this.withdraw.dob).getFullYear()) - 1970;
+
+    
+    let years = Math.abs(new Date().getFullYear() - new Date(this.withdraw.dob).getFullYear());
+
+    
+
+    console.log(years );
 
     if (years > 18 && years < 100) {
       validDOB = true;
