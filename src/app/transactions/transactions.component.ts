@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionService } from './../services/transaction.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router, ActivatedRoute } from '@angular/router';
 
+declare var jquery:any;
+declare var $ :any;
 
 @Component({
   selector: 'app-transactions',
@@ -21,14 +24,17 @@ export class TransactionsComponent implements OnInit {
   pageNo3: any = 1;
   pageNo4: any = 1;
 
-  constructor(public toastr: ToastrService, private transactionService: TransactionService) { }
+  constructor(private route: ActivatedRoute,public toastr: ToastrService, private transactionService: TransactionService) { }
 
 
   ngOnInit() {
 
+    console.log(this.route.snapshot.queryParams['type']);
+
+  
+
     this.transactionService.sentTransactions().subscribe(data => {
       this.sentTransactions = data;
-      console.log(this.sentTransactions);
       this.noContent = false;
     }, err => {
       this.toastr.error('Failed to get sent transaction data', 'Error!');
@@ -42,6 +48,12 @@ export class TransactionsComponent implements OnInit {
 
     this.transactionService.depositTransactions().subscribe(data => {
       this.depositTransactions = data;
+
+      if(this.route.snapshot.queryParams['type'] && this.route.snapshot.queryParams['type']=="deposit" ){
+        console.log("called");
+       this.showDepositTransaction();
+      }
+      
     }, err => {
       this.toastr.error('Failed to get deposit transaction data', 'Error!');
     })
@@ -53,13 +65,54 @@ export class TransactionsComponent implements OnInit {
     })
   }
 
+  showDepositTransaction(){
+    $("#depositTab").addClass('active');
+    $("#sendTab").removeClass('active');
+
+    $("#deposit").addClass('in active');
+    $("#send").removeClass('in active');
+
+  }
 
   modalData(data, title) {
-    this.modal.title = title;
-    this.modal.createdTime = data.createdTs;
-    this.modal.receiver = data.receiver.firstName + data.receiver.lastName;
-    this.modal.amount = data.walletAmount;
-    this.modal.fee = data.walletFee;
+    if(title == 'Sent Transaction Detail'){
+      this.modal.type="sent"
+      this.modal.title = title;
+      this.modal.createdTime = data.createdTs;
+      this.modal.receiver = data.receiver.firstName + data.receiver.lastName;
+      this.modal.amount = data.walletAmount;
+      this.modal.fee = data.walletFee;
+      this.modal.total = parseFloat(data.walletAmount)+parseFloat(data.walletFee);
+    }
+    if(title == 'Received Transaction Detail'){
+      this.modal.type="received"
+      this.modal.title = title;
+      this.modal.createdTime = data.createdTs;
+      this.modal.receiver = data.sender.firstName + data.sender.lastName;
+      this.modal.fee = null;
+      this.modal.amount = data.walletAmount;
+      this.modal.total =  data.walletAmount;
+    }
+
+    if(title == 'Deposit Transaction Detail'){
+      this.modal.type="deposited"
+      this.modal.title = title;
+      this.modal.createdTime = data.createdTs;
+      this.modal.receiver = null;
+      this.modal.fee = null;
+      this.modal.amount = data.amount;
+      this.modal.total =  data.amount;
+    }
+    if(title == 'Withdraw Transaction Detail'){
+      this.modal.type="withdrawn"
+      this.modal.title = title;
+      this.modal.createdTime = data.createdTs;
+      this.modal.receiver =null;
+      this.modal.fee = null;
+      this.modal.amount = data.received;
+      this.modal.total =  data.received;
+    }
+   
   }
 
 }

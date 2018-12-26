@@ -347,7 +347,7 @@ export class WalletComponent implements OnInit {
 
   withdrawToSelectedAccount() {
 
-    if (this.amountToWithdraw > 0 && this.selectedWithdrawAccount) {
+    if (this.amountToWithdraw > 0 && this.selectedWithdrawAccount && this.amountToWithdraw < (parseFloat(this.availableBalance[0].balance) * parseFloat(this.xlm_Usd_conversion))) {
       this.selectedWithdrawAccount.usd = this.amountToWithdraw.toFixed(2);
       this.selectedWithdrawAccount.xlm = this.withdrawAmount_xlm.toFixed(2)
       this.selectedWithdrawAccount.fee = this.withdrawFee.toFixed(2);
@@ -365,7 +365,7 @@ export class WalletComponent implements OnInit {
         this.toastr.error('Error while withdraw amount', 'Error!');
       })
     } else {
-      this.toastr.error('Enter withdraw Amount and Select Bank', 'Error!');
+      this.toastr.error('Enter Proper withdraw Amount and Select Bank', 'Error!');
     }
 
 
@@ -377,7 +377,7 @@ export class WalletComponent implements OnInit {
     let validMobile = false;
     let validSSN = false;
     let validDOB = false;
-
+    let validWithdrawAmount = false;
 
     if (this.withdraw.phoneNumber && this.withdraw.phoneNumber.length == 10) {
       validMobile = true;
@@ -390,17 +390,8 @@ export class WalletComponent implements OnInit {
     } else {
       this.toastr.error('SSN number should be 4 digits', 'Error!');
     }
-
-    // var enteredDate = document.getElementById('sampleDate').value;
-    // Below one is the single line logic to calculate the no. of years...
-    // let years = Math.abs(new Date().getFullYear() - new Date(this.withdraw.dob).getFullYear()) - 1970;
-
-    
+  
     let years = Math.abs(new Date().getFullYear() - new Date(this.withdraw.dob).getFullYear());
-
-    
-
-    console.log(years );
 
     if (years > 18 && years < 100) {
       validDOB = true;
@@ -408,8 +399,14 @@ export class WalletComponent implements OnInit {
       this.toastr.error('Age should be more than 18 years', 'Error!');
     }
 
-    if (validMobile && validSSN && validDOB && this.amountToWithdraw > 0 && this.withdraw.routingNumber && this.withdraw.accountNumber && this.withdraw.phoneNumber
-      && this.withdraw.accountHolder) {
+    if(this.amountToWithdraw < (parseFloat(this.availableBalance[0].balance) * parseFloat(this.xlm_Usd_conversion))){
+      validWithdrawAmount = true;
+    }
+
+    if (validWithdrawAmount && validMobile && validSSN && validDOB && this.amountToWithdraw > 0  && 
+      this.withdraw.routingNumber && this.withdraw.accountNumber && this.withdraw.phoneNumber && this.withdraw.accountHolder
+      &&  this.withdraw.firstName && this.withdraw.lastName && this.withdraw.line1 && this.withdraw.line2 
+      && this.withdraw.state && this.withdraw.city && this.withdraw.postalCode && this.withdraw.ssn ) {
 
       this.withdraw.day = new Date(this.withdraw.dob.toString()).getDate();
       this.withdraw.month = new Date(this.withdraw.dob.toString()).getMonth() + 1;

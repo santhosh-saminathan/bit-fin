@@ -107,3 +107,26 @@ input:focus, input:hover {
     color: #151935;
 }
   
+.right_align{
+    float: right;
+}
+.modal-content{
+    background:  #000422;
+    color:white;
+}
+.modal-table{
+    width: 100%;
+}
+.btn-default{
+    background: #000422;
+    color: white;
+}
+
+.btn-default:hover{
+    background: #000422;
+    color: white;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}

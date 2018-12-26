@@ -10,10 +10,10 @@
                 <!--Nav Logo on small screens Only-->
                 <div class="small-screens-logo nav-logo d-block d-sm-block d-lg-none">
                     <a class="navbar-brand" data-scroll-nav="1">
-                            <img src="assets/img/bit-fin-white.png" style="width: 22px;
+                        <img src="assets/img/bit-fin-white.png" style="width: 22px;
                             margin-right: 10px;
                             height: 24px;">
-                <b class="color_white">BitFin</b>
+                        <b class="color_white">BitFin</b>
                         <!-- <img class="img-fluid" src="assets/images/svg/site-logo-dark.svg" alt="Website Logo"> -->
                     </a>
                 </div>
@@ -21,9 +21,11 @@
                     aria-label="navbarSupportedContent">
                     <a class="very_small_hamburger" id="hamburger-menu">
                         <svg viewBox="0 0 800 600">
-                            <path d="M300,220 C300,220 520,220 540,220 C740,220 640,540 520,420 C440,340 300,200 300,200" class="top"></path>
+                            <path d="M300,220 C300,220 520,220 540,220 C740,220 640,540 520,420 C440,340 300,200 300,200"
+                                class="top"></path>
                             <path d="M300,320 L540,320" class="middle"></path>
-                            <path d="M300,210 C300,210 520,210 540,210 C740,210 640,530 520,410 C440,330 300,190 300,190" class="bottom" transform="translate(480, 320) scale(1, -1) translate(-480, -318) "></path>
+                            <path d="M300,210 C300,210 520,210 540,210 C740,210 640,530 520,410 C440,330 300,190 300,190"
+                                class="bottom" transform="translate(480, 320) scale(1, -1) translate(-480, -318) "></path>
                         </svg>
                     </a>
                 </div>
@@ -43,10 +45,10 @@
                             <a class="nav-link" (click)="redirectToHome()">Home</a>
                         </li>
                         <li class="nav-item nav-link-scroll waves-effect">
-                            <a class="nav-link" >About</a>
+                            <a class="nav-link">About</a>
                         </li>
                         <li class="nav-item nav-link-scroll waves-effect">
-                            <a class="nav-link" >Projects</a>
+                            <a class="nav-link">Projects</a>
                         </li>
                         <!-- <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect"  id="blogDropdown" role="button"
@@ -74,14 +76,16 @@
                     </div>
                     <!--Subscribe Button-->
                     <div class="nav-buttons">
-                        <button id="navbar-subscribe-btn" type="button" data-toggle="modal" data-target="#subscribe-modal" class="btn hoverable main-gradient-bg waves-effect waves-button nav-subscribe-btn">
+                        <button id="navbar-subscribe-btn" type="button" data-toggle="modal" data-target="#subscribe-modal"
+                            class="btn hoverable main-gradient-bg waves-effect waves-button nav-subscribe-btn">
                             Subscribe
                         </button>
                         <div class="btn hoverable main-dark-background waves-effect waves-button nav-subscribe-btn">
                             <a>Sign In</a>
                         </div>
                         <div class="language-dropdown">
-                            <a class="dropdown-toggle waves-effect" id="languageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="dropdown-toggle waves-effect" id="languageDropdown" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
                                 En
                             </a>
                             <div class="dropdown-menu" aria-labelledby="languageDropdown">
@@ -92,7 +96,8 @@
                         </div>
                     </div>
                     <!-- Modal for Subscribe form-->
-                    <div class="modal fade" id="subscribe-modal" tabindex="-1" role="dialog" aria-labelledby="navbar-subscribe-btn" aria-hidden="true">
+                    <div class="modal fade" id="subscribe-modal" tabindex="-1" role="dialog" aria-labelledby="navbar-subscribe-btn"
+                        aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -107,10 +112,12 @@
                                         <p>&nbsp;</p>
                                     </div>
                                     <!-- Subscription Form CHANGE THE ACTION PROP IN THE FORM WITH YOUR MAILCHIMP URL - PLEASE FIND STEPS IN DOCUMENTATION-->
-                                    <form name="subscribe-form" class="subscribe-form form-group" data-form-output="form-output-global-nav" action="https://ezyro.us15.list-manage.com/subscribe/post?u=d70f2fe680c1d1ba5bef24ab7&amp;id=9ed360ebd1"
+                                    <form name="subscribe-form" class="subscribe-form form-group" data-form-output="form-output-global-nav"
+                                        action="https://ezyro.us15.list-manage.com/subscribe/post?u=d70f2fe680c1d1ba5bef24ab7&amp;id=9ed360ebd1"
                                         method="post">
                                         <!-- Email Field -->
-                                        <input class="form-control" name="subscribe-email" type="email" required autocomplete="email" placeholder="Your email">
+                                        <input class="form-control" name="subscribe-email" type="email" required
+                                            autocomplete="email" placeholder="Your email">
                                         <small class="form-text">We'll never share your email with anyone else.
                                             <i class="fas fa-heart"></i>
                                         </small>
@@ -130,9 +137,8 @@
             </div>
         </nav>
     </div>
-    <!-- End Nav Section-->
 
-    <!-- Start Sign in Section-->
+
     <div class="main-contact-faq main-section blue-light-background">
         <div class="content">
             <div class="sign-forms">
@@ -143,25 +149,24 @@
                     <div class="contact-sub-container main-dark-background-2">
                         <form class="contact-form main-dark-background">
                             <div class="error_msg">{{invalidMobile}}</div>
-                            <div *ngIf="!otpScreen">
-
+                            <div *ngIf="showLogin">
                                 <div>
                                     <label class="main-gradient-bg text-transparent" for="name">Mobile Number</label>
                                     <div *ngIf="callingCodes">
                                         <select style="width: 20%;color: white; padding: 0.6rem 1rem 0.75rem 1rem;border-top-left-radius: 10px; border-bottom-left-radius: 10px; border: none;"
                                             class="blue-light-background" [(ngModel)]="login.country_code" name="code">
-                                            <option *ngFor="let code of callingCodes" [selected]="code.callingCodes[0]== '91'" [value]="code.callingCodes[0]">+{{code.callingCodes[0]}}</option>
+                                            <option *ngFor="let code of callingCodes" [selected]="code.callingCodes[0]== '91'"
+                                                [value]="code.callingCodes[0]">+{{code.callingCodes[0]}}</option>
                                         </select>
-
-
-                                        <input style="width: 80%; border-top-left-radius: 0px;border-bottom-left-radius: 0px;" class="blue-light-background" type="text"
-                                            [(ngModel)]="login.phone" name="name" id="name" required>
+                                        <input style="width: 80%; border-top-left-radius: 0px;border-bottom-left-radius: 0px;"
+                                            class="blue-light-background" type="text" [(ngModel)]="login.phone" name="name"
+                                            id="name" required>
                                     </div>
-
                                 </div>
                                 <div>
                                     <label class="main-gradient-bg text-transparent" for="password">Password</label>
-                                    <input class="blue-light-background" type="password" [(ngModel)]="login.password" name="password" id="password" required>
+                                    <input class="blue-light-background" type="password" [(ngModel)]="login.password"
+                                        name="password" id="password" required>
                                 </div>
                                 <!-- <a >FORGOT PASSWORD ?</a> -->
                                 <label class="checkbox-container">Remember me
@@ -169,46 +174,105 @@
                                     <span class="check-mark"></span>
                                 </label>
                                 <small>Please fill all the details</small>
-                                <button id="contact-submit-btn" class="main-gradient-bg contact-submit-btn" (click)="loginUser()" type="submit">Sign in
+                                <button id="contact-submit-btn" class="main-gradient-bg contact-submit-btn" (click)="loginUser()"
+                                    type="submit">Sign in
                                 </button>
                             </div>
 
-                            <div *ngIf="otpScreen">
+                            <div *ngIf="showOtp">
                                 <div style="font-size: 12px;text-align:left;color:white">
                                     * For demo purpose, OTP will be displayed here
                                     <b style="font-size: 16px"> {{loginResponse.otp}}</b>
                                 </div>
                                 <br>
                                 <div style="color:white">
-                                    Enter the verification code sent to your registered mobile number {{loginResponse.code}} {{loginResponse.mobile_number}}
+                                    Enter the verification code sent to your registered mobile number
+                                    {{loginResponse.code}} {{loginResponse.mobile_number}}
                                 </div>
                                 <br>
                                 <div style="text-align:center">
-                                    <input type="text" id="partitioned" class="blue-light-background" maxlength="4" name="otpCode" [(ngModel)]="otp" />
+                                    <input type="text" id="partitioned" class="blue-light-background" maxlength="4"
+                                        name="otpCode" [(ngModel)]="otp" />
                                 </div>
                                 <br>
-
                                 <button type="submit" class="main-gradient-bg contact-submit-btn" (click)="verifyOTP()">Submit</button>
+                            </div>
+
+
+                            <div *ngIf="showProfile">
+                                    <label class="main-gradient-bg text-transparent" for="fname">First Name</label>
+                                     <input class="blue-light-background" placeholder=""  type="text" [(ngModel)]="profile.firstName"
+                                    name="fname" id="fname" required>
+                                    
+                                    <label class="main-gradient-bg text-transparent" for="lname">Last Name</label>
+                                    <input class="blue-light-background" type="text" placeholder=""  [(ngModel)]="profile.lastName"
+                                    name="lname" id="lname" required>
+                                    
+                                    <label class="main-gradient-bg text-transparent"  for="email">Email</label>
+                                    <input class="blue-light-background" type="text" placeholder="" [(ngModel)]="profile.email"
+                                    name="email" id="email" required>
+                                    
+                                    
+                                    <label class="main-gradient-bg text-transparent" for="dob">Date of Birth</label>
+                                    <input class="blue-light-background" type="date" [(ngModel)]="profile.dob"
+                                    name="dob" id="dob" required>
+                                    
+                                    
+                                    <label class="main-gradient-bg text-transparent" for="address">Address</label>
+                                    <input class="blue-light-background" type="text" placeholder="" [(ngModel)]="profile.address"
+                                    name="address" id="address" required>
+
+                                    <label class="main-gradient-bg text-transparent" for="postal">Postal Code</label>
+                                    <input class="blue-light-background" type="text" placeholder="" [(ngModel)]="profile.postal"
+                                    name="postal" id="postal" required>
+
+
+                                    <small>Please fill all the details</small>
+                                    <button style="float:left;width:48%" id="contact-submit-btn" class="main-gradient-bg contact-submit-btn" (click)="skipProfile()"
+                                    type="submit">Skip</button>
+
+                                    <button style="width:48%" id="contact-submit-btn" class="main-gradient-bg contact-submit-btn" (click)="updateProfile()"
+                                        type="submit">Save </button>
+                                  
+                            </div>
+
+                            <div *ngIf="showKyc">
+                                    <label class="main-gradient-bg text-transparent" for="fname">Address Proof</label>
+                                     <input class="blue-light-background" (change)="addressProofUpdate($event)" name="addressproof" id="addressproof" type="file" accept=".png, .jpg, .jpeg" required>
+                                    
+                                    <label class="main-gradient-bg text-transparent" for="lname">Id Proof</label>
+                                    <input class="blue-light-background" (change)="idProofUpdate($event)" name="idproof" id="idproof" type="file" accept=".png, .jpg, .jpeg" required>
+                                    
+                                    <label class="main-gradient-bg text-transparent"  for="email">Photo Proof</label>
+                                    <input class="blue-light-background" type="file" accept="image/*" id="profileproof" name="profileproof" (change)="photoProofUpdate($event)" required>
+
+                                    <span style="color:white;" *ngIf="waitingForResponse">Please wait ... Reading image on progress...</span>
+                                    <small *ngIf="!waitingForResponse">Please fill all the details</small>
+                                    <button style="float:left;width:48%" id="contact-submit-btn" class="main-gradient-bg contact-submit-btn" (click)="skipKyc()"
+                                    type="submit">Skip</button>
+
+                                    <button style="width:48%" id="contact-submit-btn" class="main-gradient-bg contact-submit-btn" (click)="uploadKyc()"
+                                        type="submit" [disabled]="waitingForResponse" >Save </button>
+                                  
                             </div>
 
                         </form>
                         <div class="sign-up-btn" (click)="newLogin()">
-                            <a style="color:white;cursor:pointer" class="blue-light-background hover-up">Or create a new account</a>
+                            <a style="color:white;cursor:pointer" class="blue-light-background hover-up">Or create a
+                                new account</a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="subscribe-container">
-                <!--Alert message-->
                 <div class="col s12 alert-message p-t-2" id="subscribe-form">
                     <p>&nbsp;</p>
                 </div>
-                <!-- Subscription Form CHANGE THE ACTION PROP IN THE FORM WITH YOUR MAILCHIMP URL - PLEASE FIND STEPS IN DOCUMENTATION-->
-                <form name="subscribe-form" class="subscribe-form main-gradient-bg" data-form-output="subscribe-form" action="https://ezyro.us15.list-manage.com/subscribe/post?u=d70f2fe680c1d1ba5bef24ab7&amp;id=9ed360ebd1"
+                <form name="subscribe-form" class="subscribe-form main-gradient-bg" data-form-output="subscribe-form"
+                    action="https://ezyro.us15.list-manage.com/subscribe/post?u=d70f2fe680c1d1ba5bef24ab7&amp;id=9ed360ebd1"
                     method="post">
-                    <!-- Email Field -->
-                    <input class="main-dark-background" name="subscribe-email" type="email" required autocomplete="email" placeholder="Your email">
-                    <!-- Submit Button -->
+                    <input class="main-dark-background" name="subscribe-email" type="email" required autocomplete="email"
+                        placeholder="Your email">
                     <button type="submit" class="subscribe-submit btn">
                         <span class="btn-text">Subscribe</span>
                     </button>
@@ -216,9 +280,7 @@
             </div>
         </div>
     </div>
-    <!-- End Sign in Section-->
 
-    <!-- Start Footer Section-->
     <div class="main-footer">
         <div class="content">
             <img class="img-fluid" style="width:150px" src="assets/img/bit-fin-white.png" alt="site-logo"><br>
@@ -242,13 +304,10 @@
             </p>
         </div>
     </div>
-    <!-- End Footer Section-->
 
-    <!-- Start Copyright Section-->
     <div class="main-copyright blue-light-background">
         <p>© bitfin 2018. All Rights Reserved.</p>
-        <!-- <p>Designed and coded with &nbsp;
-            <i class="fas fa-heart"></i>&nbsp; by PerleTheme</p> -->
+
         <div class="copyright-nav">
             <a class="nav-link color_white" data-scroll-nav="0">Home</a>
             <a class="nav-link color_white" data-scroll-nav="3">About</a>
@@ -256,9 +315,7 @@
             <a class="nav-link color_white" data-scroll-nav="8">News</a>
         </div>
     </div>
-    <!-- End Copyright Section-->
 
-    <!--Back to top button-->
     <a href="" class="cd-top js-cd-top waves-effect waves-circle">
         <i class="fas fa-chevron-up"></i>
     </a>

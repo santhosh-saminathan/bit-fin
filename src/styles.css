@@ -66,3 +66,6 @@ input:focus, input:hover {
 .pleaseWaitOption{
     color: #000422;
 }
+b{
+    font-weight: 500;
+}

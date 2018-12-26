@@ -180,3 +180,11 @@ label{
 .col-xs-4{
     width: 32.33333%
 }
+.col-xs-6{
+    width: 49%;
+}
+.no_transactions {
+    color: red;
+    font-size: 16px;
+    text-align: center;
+}

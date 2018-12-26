@@ -8,16 +8,15 @@
       <b>Please wait...</b>
     </div>
 
-
     <div *ngIf="!noContent" class="container">
       <ul class="nav nav-tabs">
-        <li class="active">
+        <li id="sendTab" class="active">
           <a data-toggle="tab" href="#send">SEND</a>
         </li>
         <li>
           <a data-toggle="tab" href="#receive">RECEIVE</a>
         </li>
-        <li>
+        <li id="depositTab">
           <a data-toggle="tab" href="#deposit">DEPOSIT</a>
         </li>
         <li>
@@ -54,7 +53,8 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr (click)="modalData(transaction,'Sent Transaction Detail')" data-toggle="modal" data-target="#myModal" *ngFor="let transaction of sentTransactions | paginate: { itemsPerPage: 10, currentPage: pageNo1 ,id:'sent' };let i = index;">
+                      <tr class="cursor-pointer" (click)="modalData(transaction,'Sent Transaction Detail')" data-toggle="modal" data-target="#myModal"
+                        *ngFor="let transaction of sentTransactions | paginate: { itemsPerPage: 10, currentPage: pageNo1 ,id:'sent' };let i = index;">
                         <td>{{i+1}}</td>
                         <td>{{transaction.receiver.firstName}} {{transaction.receiver.lastName}}</td>
                         <td>$ {{transaction.walletAmount}}</td>
@@ -100,7 +100,8 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr (click)="modalData(transaction,'Received Transaction Detail')" data-toggle="modal" data-target="#myModal" *ngFor="let transaction of receivedTransactions | paginate: { itemsPerPage: 10, currentPage: pageNo2 ,id:'received' };let i = index">
+                      <tr class="cursor-pointer" (click)="modalData(transaction,'Received Transaction Detail')" data-toggle="modal"
+                        data-target="#myModal" *ngFor="let transaction of receivedTransactions | paginate: { itemsPerPage: 10, currentPage: pageNo2 ,id:'received' };let i = index">
                         <td>{{i+1}}</td>
                         <td>{{transaction.sender.firstName}} {{transaction.sender.lastName}}</td>
                         <td>$ {{transaction.walletAmount}}</td>
@@ -146,7 +147,8 @@
                     </thead>
                     <tbody>
 
-                      <tr (click)="modalData(transaction,'Deposit Transaction Detail')" data-toggle="modal" data-target="#myModal" *ngFor="let transaction of depositTransactions | paginate: { itemsPerPage: 10, currentPage: pageNo3 ,id:'deposit' };let i = index">
+                      <tr class="cursor-pointer" (click)="modalData(transaction,'Deposit Transaction Detail')" data-toggle="modal" data-target="#myModal"
+                        *ngFor="let transaction of depositTransactions | paginate: { itemsPerPage: 10, currentPage: pageNo3 ,id:'deposit' };let i = index">
                         <td>{{i+1}}</td>
                         <td>$ {{transaction.amount}}</td>
                         <!-- <td>{{transaction.amount}} XLM</td> -->
@@ -190,7 +192,8 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr (click)="modalData(transaction,'Withdraw Transaction Detail')" data-toggle="modal" data-target="#myModal" *ngFor="let transaction of withdrawTransactions | paginate: { itemsPerPage: 10, currentPage: pageNo4 ,id:'withdraw' };let i = index">
+                      <tr class="cursor-pointer" (click)="modalData(transaction,'Withdraw Transaction Detail')" data-toggle="modal"
+                        data-target="#myModal" *ngFor="let transaction of withdrawTransactions | paginate: { itemsPerPage: 10, currentPage: pageNo4 ,id:'withdraw' };let i = index">
                         <td>{{i+1}}</td>
                         <td>$ {{transaction.received}}</td>
                         <!-- <td>{{transaction.amount}} XLM</td> -->
@@ -213,66 +216,67 @@
     </div>
 
 
-    <!-- Modal -->
+  
     <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-
-          <div style="text-align:center" class="modal-header">
+         <div class="modal-content">
+            <div style="text-align:center" class="modal-header">
             <h4>{{modal.title}}</h4>
           </div>
+          <h4 style="text-align:center">You have {{modal.type}} <span style="font-size:22px; font-weight: 500;">{{modal.amount}}
+              USD</span> </h4>
           <div class="modal-body">
-            <div class="modal-highlight">
-
-            </div>
             <div class="modal-details">
-              <table>
+              <table class="modal-table">
                 <tbody>
                   <tr>
-                    <td>
-                      <b>Sent to</b>
+                    <td *ngIf="modal.receiver">
+                      <b style="font-weight:500" *ngIf="modal.type=='sent'">Sent to</b>
+                      <b  *ngIf="modal.type=='received'">Received from</b>
                     </td>
-                    <td>{{modal.receiver}}</td>
+                    <td class="right_align">{{modal.receiver}}</td>
                   </tr>
                   <tr>
                     <td>
-                      <b>Status</b>
+                      <b style="font-weight:500">Status</b>
                     </td>
-                    <td>Success</td>
+                    <td class="right_align" style="color:green">Success</td>
                   </tr>
                 </tbody>
               </table>
             </div>
             <hr>
             <div class="modal-amount">
-              <tbody>
-                <tr>
-                  <td>Amount Sent</td>
-                  <td>$ {{modal.amount}}</td>
-                </tr>
-                <tr>
-                  <td>Transaction Fee</td>
-                  <td>$ {{modal.fee}}</td>
-                </tr>
-              </tbody>
-              <hr>
-              <tbody>
-                <tr>
-                  <td>Amount Sent</td>
-                  <td>$ {{modal.amount + modal.fee}}</td>
-                </tr>
-              </tbody>
-              <hr>
+              <table class="modal-table">
+                <tbody>
+                  <tr>
+                    <td style="text-transform:capitalize">Amount {{modal.type}}</td>
+                    <td class="right_align">${{modal.amount}}</td>
+                  </tr>
+                  <tr *ngIf="modal.fee">
+                    <td>Transaction Fee</td>
+                    <td class="right_align">${{modal.fee}}</td>
+                  </tr>
+                  <tr>
+                    <td>Total Amount</td>
+                    <td class="right_align">$ {{modal.total | number : '1.2-2'}}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            createdTime : {{modal.createdTime}}
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <table class="modal-table">
+              <tbody>
+                <tr>
+                  <td><span>Time: {{modal.createdTime | date: 'dd/MM/yyyy'}} & {{modal.createdTime | date: 'HH:mm:ss'}}</span>
+                  </td>
+                  <td class="right_align"> <button type="button" class="btn btn-default" data-dismiss="modal">Done</button></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-
       </div>
     </div>
 

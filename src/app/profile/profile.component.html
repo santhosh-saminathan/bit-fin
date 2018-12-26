@@ -10,6 +10,25 @@
 
     <div class="profile">
       <h3>Profile Details</h3>
+      <!-- <div class="row">
+        <div class="col-sm-6">
+            <div class="custom_width">
+                <h4>Profile Picture</h4>
+                <br>
+                <div class="">
+                  <label for="profileproof" class="custom_file_input">
+                    <i class="fas fa-edit"></i>
+                  </label>
+                  <input type="file" accept="image/*" id="profileproof" name="profileproof" class="btn btn-sm image_input_style" (change)="photoProofUpdate($event)"
+                  />
+    
+                  <img *ngIf="profileDetails && profileDetails.proofs && profileDetails.proofs.photoProof" src={{profileDetails.proofs.photoProof}}>
+    
+                </div>
+              </div>
+        </div>
+         
+      </div> -->
       <div class="row">
 
         <div class="col-sm-6">
@@ -148,7 +167,7 @@
     <div style="width:100%">
       <button style="float:right;margin-right:20px" type="submit" class="btn btn-primary" [disabled]="waitingForResponse" (click)="uploadKyc()">Update KYC</button>
 
-      <span style="color:blue;float:right;margin-right:20px" *ngIf="waitingForResponse">Please wait ... Reading image on progress...</span>
+      <span style="color:black;float:right;margin-right:20px" *ngIf="waitingForResponse">Please wait ... Reading image on progress...</span>
     </div>
 
   </div>
