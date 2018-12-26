@@ -1,108 +1,112 @@
 <app-menu></app-menu>
 <section class="top_custom_height bg_white">
 
-  <div class="loading_content" *ngIf="noContent">
-    <i class="fas fa-spinner fa-spin"></i>
-    <br>
-    <b>Please wait...</b>
-  </div>
-
-  <div *ngIf="!noContent" class="container dashboard_section">
-    <div class="balance_section">
-      <h4 class="font_bold color_black">Your Account Balance</h4>
-      <div style="display:-webkit-box" class="row" *ngIf="userBalance && usd_Xlm && xlm_Usd">
-        <div class="col-sm-4">
-          <div class="outer_box">
-            <h4 class="font_bold color_white">Available Balance - USD</h4>
-            <h3 class="font_bold">$ {{userBalance * xlm_Usd.USD | number : '1.2-2'}}</h3>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="outer_box">
-            <h4 class="font_bold">Available Balance - XLM</h4>
-            <h3 class="font_bold"> {{userBalance}} XLM</h3>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="outer_box">
-            <h4 *ngIf="xlm_Usd" class="font_bold">1 XLM = {{xlm_Usd.USD}} USD</h4>
-            <h3 *ngIf="usd_Xlm" class="font_bold">1 USD = {{usd_Xlm.XLM}} XLM</h3>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <hr>
-
-    <div *ngIf="lineChartData && lineChartLabels" class="graph_section">
-      <h4 class="font_bold color_black">XLM Rate Flow</h4>
+  <div style="min-height:calc(100vh - 120px) ">
+    <div class="loading_content" *ngIf="noContent">
+      <i class="fas fa-spinner fa-spin"></i>
       <br>
-      <div style="display: block;" *ngIf="lineChartData && lineChartLabels">
-        <canvas baseChart width="300" height="80" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
-          [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
-      </div>
+      <b>Please wait...</b>
     </div>
 
-
-    <hr>
-
-    <div class="recent_activities_section">
-      <div class="row" style="display:-webkit-box">
-        <div class="col-md-6">
-          <h4 class="font_bold color_black text_align_center">Recent sent Transactions</h4>
-          <br>
-          <div class="card" (click)="modalData(transaction,'Sent Transaction Detail')" data-toggle="modal" data-target="#myModal" *ngFor="let transaction of sentTransactions | slice:0:4">
-            <div class="small-font">
-              <span>Sent to</span>
-              <span class="right-float">{{transaction.createdTs | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
-            </div>
-            <div class="card-details">
-              <span>{{transaction.receiver.firstName}} {{transaction.receiver.lastName}}</span>
-              <span class="right-float"> {{transaction.walletAmount}} USD</span>
-            </div>
-            <div class="small-font">
-              <span>Transaction ID: {{transaction._id}}</span>
-              <span style="color:green" class="right-float">Success</span>
+    <div *ngIf="!noContent" class="container dashboard_section">
+      <div class="balance_section">
+        <h4 class="font_bold color_black">Your Account Balance</h4>
+        <div style="display:-webkit-box" class="row" *ngIf="userBalance && usd_Xlm && xlm_Usd">
+          <div class="col-xs-12 col-sm-4">
+            <div class="outer_box">
+              <h4 class="font_bold color_white">Available Balance - USD</h4>
+              <h3 class="font_bold">$ {{userBalance * xlm_Usd.USD | number : '1.2-2'}}</h3>
             </div>
           </div>
-
-          <div  *ngIf="sentTransactions.length > 0" (click)="redirectToTransactionPage()" class="view-more">View more</div>
-        </div>
-
-        <div class="col-md-6">
-          <h4 class="font_bold color_black text_align_center">Recent Deposit Transactions</h4>
-          <br>
-
-
-          <div class="card" (click)="modalData(transaction,'Deposit Transaction Detail')" data-toggle="modal" data-target="#myModal" *ngFor="let transaction of depositTransactions | slice:0:4">
-            <div class="small-font">
-              <span>Amount Deposited</span>
-              <span class="right-float">{{transaction.createdTs | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
-            </div>
-            <div class="card-details">
-              <span>{{transaction.amount}} USD</span>
-              <span class="right-float"> {{transaction.received | number:'1.2-2'}} XLM</span>
-            </div>
-            <div class="small-font">
-              <span>Transaction ID: {{transaction._id}}</span>
-              <span style="color:green" class="right-float">Success</span>
+          <div class="col-xs-12 col-sm-4">
+            <div class="outer_box">
+              <h4 class="font_bold">Available Balance - XLM</h4>
+              <h3 class="font_bold"> {{userBalance}} XLM</h3>
             </div>
           </div>
-          <div *ngIf="depositTransactions.length > 0" (click)="redirectToTransactionPageDeposit()" class="view-more">View more</div>
+          <div class="col-xs-12 col-sm-4">
+            <div class="outer_box">
+              <h4 *ngIf="xlm_Usd" class="font_bold">1 XLM = {{xlm_Usd.USD}} USD</h4>
+              <h3 *ngIf="usd_Xlm" class="font_bold">1 USD = {{usd_Xlm.XLM}} XLM</h3>
+            </div>
+          </div>
         </div>
       </div>
+
+      <hr>
+
+      <div *ngIf="lineChartData && lineChartLabels" class="graph_section">
+        <h4 class="font_bold color_black">XLM Rate Flow</h4>
+        <br>
+        <div style="display: block;" *ngIf="lineChartData && lineChartLabels">
+          <canvas baseChart width="300" height="80" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+            [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
+        </div>
+      </div>
+
+
+      <hr>
+
+      <div class="recent_activities_section">
+        <div class="row" style="display:-webkit-box">
+          <div class="col-md-6">
+            <h4 class="font_bold color_black text_align_center">Recent sent Transactions</h4>
+            <br>
+            <div class="card" (click)="modalData(transaction,'Sent Transaction Detail')" data-toggle="modal" data-target="#myModal" *ngFor="let transaction of sentTransactions | slice:0:4">
+              <div class="small-font">
+                <span>Sent to</span>
+                <span class="right-float">{{transaction.createdTs | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
+              </div>
+              <div class="card-details">
+                <span>{{transaction.receiver.firstName}} {{transaction.receiver.lastName}}</span>
+                <span class="right-float"> {{transaction.walletAmount}} USD</span>
+              </div>
+              <div class="small-font">
+                <span>Transaction ID: {{transaction._id}}</span>
+                <span style="color:green" class="right-float">Success</span>
+              </div>
+            </div>
+
+            <div *ngIf="sentTransactions && sentTransactions.length > 0" (click)="redirectToTransactionPage()" class="view-more">View more</div>
+          </div>
+
+          <div class="col-md-6">
+            <h4 class="font_bold color_black text_align_center">Recent Deposit Transactions</h4>
+            <br>
+
+
+            <div class="card" (click)="modalData(transaction,'Deposit Transaction Detail')" data-toggle="modal" data-target="#myModal"
+              *ngFor="let transaction of depositTransactions | slice:0:4">
+              <div class="small-font">
+                <span>Amount Deposited</span>
+                <span class="right-float">{{transaction.createdTs | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
+              </div>
+              <div class="card-details">
+                <span>{{transaction.amount}} USD</span>
+                <span class="right-float"> {{transaction.received | number:'1.2-2'}} XLM</span>
+              </div>
+              <div class="small-font">
+                <span>Transaction ID: {{transaction._id}}</span>
+                <span style="color:green" class="right-float">Success</span>
+              </div>
+            </div>
+            <div *ngIf="depositTransactions && depositTransactions.length > 0" (click)="redirectToTransactionPageDeposit()" class="view-more">View more</div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-  </div>
-
-  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog">
-         <div class="modal-content">
-            <div style="text-align:center" class="modal-header">
+        <div class="modal-content">
+          <div style="text-align:center" class="modal-header">
             <h4>{{modal.title}}</h4>
           </div>
-          <h4 style="text-align:center">You have {{modal.type}} <span style="font-size:22px; font-weight: 500;">{{modal.amount}}
-              USD</span> </h4>
+          <h4 style="text-align:center">You have {{modal.type}}
+            <span style="font-size:22px; font-weight: 500;">{{modal.amount}} USD
+            </span>
+          </h4>
           <div class="modal-body">
             <div class="modal-details">
               <table class="modal-table">
@@ -110,7 +114,7 @@
                   <tr>
                     <td *ngIf="modal.receiver">
                       <b style="font-weight:500" *ngIf="modal.type=='sent'">Sent to</b>
-                      <b  *ngIf="modal.type=='received'">Received from</b>
+                      <b *ngIf="modal.type=='received'">Received from</b>
                     </td>
                     <td class="right_align">{{modal.receiver}}</td>
                   </tr>
@@ -147,9 +151,12 @@
             <table class="modal-table">
               <tbody>
                 <tr>
-                  <td><span>Time: {{modal.createdTime | date: 'dd/MM/yyyy'}} & {{modal.createdTime | date: 'HH:mm:ss'}}</span>
+                  <td>
+                    <span>Time: {{modal.createdTime | date: 'dd/MM/yyyy'}} & {{modal.createdTime | date: 'HH:mm:ss'}}</span>
                   </td>
-                  <td class="right_align"> <button type="button" class="btn btn-default" data-dismiss="modal">Done</button></td>
+                  <td class="right_align">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -157,6 +164,9 @@
         </div>
       </div>
     </div>
+  </div>
+
+
 
   <app-footer></app-footer>
 </section>

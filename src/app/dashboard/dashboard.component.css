@@ -120,3 +120,12 @@ td {
 .col-md-6{
     width: 49%;
 }
+
+@media only screen and (max-width: 769px) {
+    /* .col-sm-4{
+        width: 99%
+    }
+    .col-md-6{
+        width: 99%;
+    } */
+}
