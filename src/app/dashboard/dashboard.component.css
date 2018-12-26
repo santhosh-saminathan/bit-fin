@@ -112,3 +112,10 @@ td {
     /* text-align: left; */
     padding: 10px !important;
 }
+
+.col-xs-4{
+    width: 32.33333%
+}
+.col-xs-6{
+    width: 49%;
+}
