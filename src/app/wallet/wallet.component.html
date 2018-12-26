@@ -161,7 +161,7 @@
                 <div *ngIf="savedCards" class="row">
 
 
-                  <div *ngIf="savedCards.length == 0" style="text-align:center;width:100%">
+                  <div *ngIf="savedCards && savedCards.length == 0" style="text-align:center;width:100%">
                     <p class="no_transactions">Sorry , No Saved Card Details</p>
                   </div>
 
@@ -213,7 +213,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <div class="col-sm-offset-2 col-sm-10" *ngIf="savedCards.length > 0">
+                  <div class="col-sm-offset-2 col-sm-10" *ngIf="savedCards && savedCards.length > 0">
                     <span class="pleaseWaitOption" style="margin-right: 5px" *ngIf="waitingForResponse">
                       <i class="fas fa-spinner fa-spin"></i> Please wait...</span>
                     <button [disabled]="waitingForResponse" style="float:right" type="submit" (click)="createToken()" class="btn btn-primary">Use This Card</button>
@@ -331,7 +331,7 @@
               <div class="saved_card_section">
                 <h4 class="text_align_left">Saved Details</h4>
                 <div class="row">
-                  <div *ngIf="withdrawBankDetails.length == 0" style="text-align:center;width:100%">
+                  <div *ngIf="withdrawBankDetails && withdrawBankDetails.length == 0" style="text-align:center;width:100%">
                     <p class="no_transactions">Sorry , No Saved Details</p>
                   </div>
                   <div [ngClass]="{'selected': card.selected}" (click)="selectedWithdrawBankDetails(card)" class="text_align_left col-xs-6 card"
@@ -360,7 +360,7 @@
                         </span>
                         <br>
                         <span style="white-space:nowrap">{{card.accountHolder.slice(0,10)}}
-                          <span *ngIf="card.accountHolder.length>10">... </span>
+                          <span *ngIf="card.accountHolder && card.accountHolder.length>10">... </span>
                         </span>
                       </div>
                       <div class="col-xs-6">
@@ -375,7 +375,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10" *ngIf="withdrawBankDetails.length > 0">
+                <div class="col-sm-offset-2 col-sm-10" *ngIf="withdrawBankDetails && withdrawBankDetails.length > 0">
                   <span class="pleaseWaitOption" style="margin-right: 5px" *ngIf="waitingForResponse">
                     <i class="fas fa-spinner fa-spin"></i>Please wait...</span>
                   <button style="float:right" type="submit" (click)="withdrawToSelectedAccount()" [disabled]="waitingForResponse" class="btn btn-primary">Use this Account</button>

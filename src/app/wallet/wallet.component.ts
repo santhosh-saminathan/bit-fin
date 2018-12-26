@@ -119,7 +119,6 @@ export class WalletComponent implements OnInit {
   savedDetails() {
     this.walletService.userSavedCardDetails().subscribe(data => {
       this.savedCards = data;
-      console.log(this.savedCards);
     }, err => {
       this.toastr.error('Failed to get saved card details', 'Error!');
     })
