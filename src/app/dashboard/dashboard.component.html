@@ -10,7 +10,7 @@
   <div *ngIf="!noContent" class="container dashboard_section">
     <div class="balance_section">
       <h4 class="font_bold color_black">Your Account Balance</h4>
-      <div class="row" *ngIf="userBalance && usd_Xlm && xlm_Usd">
+      <div style="display:-webkit-box" class="row" *ngIf="userBalance && usd_Xlm && xlm_Usd">
         <div class="col-sm-4">
           <div class="outer_box">
             <h4 class="font_bold color_white">Available Balance - USD</h4>
@@ -47,7 +47,7 @@
     <hr>
 
     <div class="recent_activities_section">
-      <div class="row" >
+      <div class="row" style="display:-webkit-box">
         <div class="col-md-6">
           <h4 class="font_bold color_black text_align_center">Recent sent Transactions</h4>
           <br>
