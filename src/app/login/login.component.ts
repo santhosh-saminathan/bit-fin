@@ -1,8 +1,8 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { SigningService } from './../services/signing.service';
 import { ProfileService } from './../services/profile.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -30,13 +30,26 @@ export class LoginComponent implements OnInit {
   showLogin: boolean = false;
   showProfile: boolean = false;
   showKyc: boolean = false;
+  url: any;
 
-  constructor(public toastr: ToastrService, private profileService: ProfileService, private router: Router, private signingService: SigningService) { }
+  constructor(private route: ActivatedRoute, public toastr: ToastrService, private profileService: ProfileService, private router: Router, private signingService: SigningService) { }
 
   ngOnInit() {
-    this.login.phone = "9900887766"
-    this.login.password = "00000"
-    this.login.country_code = '91';
+
+
+    if (this.router.url == '/signup') {
+      this.url = "signup";
+      this.login.phone = null
+      this.login.password = null
+
+    } else {
+      this.login.phone = "9900887766"
+      this.login.password = "00000"
+      this.login.country_code = '91';
+
+      this.url = "signin";
+    }
+
 
     this.showLoginScreen();
 

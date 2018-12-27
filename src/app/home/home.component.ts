@@ -9,16 +9,20 @@ import { SigningService } from './../services/signing.service';
 })
 
 export class HomeComponent implements OnInit {
-  
+
 
   constructor(private router: Router, private signingService: SigningService) { }
 
   ngOnInit() {
-  
+
   }
 
-  redirectToLogin(){
+  redirectToLogin() {
     this.router.navigate(['/login']);
+  }
+
+  redirectToSignup() {
+    this.router.navigate(['/signup']);
   }
 
 

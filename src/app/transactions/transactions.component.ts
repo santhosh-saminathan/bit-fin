@@ -29,7 +29,7 @@ export class TransactionsComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log(this.route.snapshot.queryParams['type']);
+    // console.log(this.route.snapshot.queryParams['type']);
 
   
 
