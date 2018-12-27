@@ -4,8 +4,8 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ProfileService } from './../services/profile.service';
 import { CryptoService } from './../services/crypto.service';
 import { ToastrService } from 'ngx-toastr';
-declare var jQuery:any;
-declare var $ :any;
+declare var jQuery: any;
+declare var $: any;
 
 @Component({
   selector: 'app-wallet',
@@ -69,23 +69,6 @@ export class WalletComponent implements OnInit {
   }
 
   ngOnInit() {
-
-
-
-    var datefield = document.createElement("input")
-    datefield.setAttribute("type", "date")
-    if (datefield.type != "date") { //if browser doesn't support input type="date", load files for jQuery UI Date Picker
-      document.write('<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />\n')
-      document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"><\/script>\n')
-      document.write('<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"><\/script>\n')
-    }
-
-    if (datefield.type != "date") { //if browser doesn't support input type="date", initialize date picker widget:
-      jQuery(function ($) { //on document.ready
-        $('#birthday').datepicker();
-      }); 
-    }
-
 
 
     let presentYear = new Date().getFullYear();
@@ -411,56 +394,68 @@ export class WalletComponent implements OnInit {
       this.toastr.error('SSN number should be 4 digits', 'Error!');
     }
 
-    let years = Math.abs(new Date().getFullYear() - new Date(this.withdraw.dob).getFullYear());
-    console.log(years);
-    if (years > 18 && years < 100) {
-      validDOB = true;
+    console.log(this.withdraw.dob);
+
+    if (this.withdraw.dob.split('-')[0] <= 12 && this.withdraw.dob.split('-')[1] <= 31 && this.withdraw.dob.split('-')[2] < new Date().getFullYear() && this.withdraw.dob.split('-')[2] > 1900) {
+      let years = Math.abs(new Date().getFullYear() - new Date(this.withdraw.dob).getFullYear());
+      console.log(years);
+      if (years > 18 && years < 100) {
+        validDOB = true;
+      } else {
+        this.toastr.error('Age should be more than 18 years', 'Error!');
+      }
     } else {
-      this.toastr.error('Age should be more than 18 years', 'Error!');
+      this.toastr.error('Invalid Date format', 'Error!');
     }
+
+
 
     if (this.amountToWithdraw < (parseFloat(this.availableBalance[0].balance) * parseFloat(this.xlm_Usd_conversion))) {
       validWithdrawAmount = true;
     }
 
-    if (validWithdrawAmount && validMobile && validSSN && validDOB && this.amountToWithdraw > 0 &&
-      this.withdraw.routingNumber && this.withdraw.accountNumber && this.withdraw.phoneNumber && this.withdraw.accountHolder
-      && this.withdraw.firstName && this.withdraw.lastName && this.withdraw.line1 && this.withdraw.line2
-      && this.withdraw.state && this.withdraw.city && this.withdraw.postalCode && this.withdraw.ssn) {
+    if (validWithdrawAmount && validMobile && validSSN && validDOB) {
+      if (this.amountToWithdraw > 0 &&
+        this.withdraw.routingNumber && this.withdraw.accountNumber && this.withdraw.phoneNumber && this.withdraw.accountHolder
+        && this.withdraw.firstName && this.withdraw.lastName && this.withdraw.line1 && this.withdraw.line2
+        && this.withdraw.state && this.withdraw.city && this.withdraw.postalCode && this.withdraw.ssn) {
 
-      this.withdraw.day = new Date(this.withdraw.dob.toString()).getDate();
-      this.withdraw.month = new Date(this.withdraw.dob.toString()).getMonth() + 1;
-      this.withdraw.year = new Date(this.withdraw.dob.toString()).getFullYear();
+        this.withdraw.day = new Date(this.withdraw.dob.toString()).getDate();
+        this.withdraw.month = new Date(this.withdraw.dob.toString()).getMonth() + 1;
+        this.withdraw.year = new Date(this.withdraw.dob.toString()).getFullYear();
 
-      this.withdraw.day = this.withdraw.day.toString();
-      this.withdraw.accountNumber = this.withdraw.accountNumber.toString();
-      this.withdraw.month = this.withdraw.month.toString();
-      this.withdraw.phoneNumber = this.withdraw.phoneNumber.toString();
-      this.withdraw.saveDetails = this.withdraw.saveDetails;
-      this.withdraw.ssn = this.withdraw.ssn.toString();
-      this.withdraw.year = this.withdraw.year.toString();
+        this.withdraw.day = this.withdraw.day.toString();
+        this.withdraw.accountNumber = this.withdraw.accountNumber.toString();
+        this.withdraw.month = this.withdraw.month.toString();
+        this.withdraw.phoneNumber = this.withdraw.phoneNumber.toString();
+        this.withdraw.saveDetails = this.withdraw.saveDetails;
+        this.withdraw.ssn = this.withdraw.ssn.toString();
+        this.withdraw.year = this.withdraw.year.toString();
 
-      this.withdraw.usd = this.amountToWithdraw.toFixed(2);
-      this.withdraw.xlm = this.withdrawAmount_xlm.toFixed(2)
-      this.withdraw.fee = this.withdrawFee.toFixed(2);
-      this.withdraw.rate = this.withdrawRate.toFixed(2);
-      this.withdraw.walletFee = this.withdrawTransactionFee.toFixed(2);
+        this.withdraw.usd = this.amountToWithdraw.toFixed(2);
+        this.withdraw.xlm = this.withdrawAmount_xlm.toFixed(2)
+        this.withdraw.fee = this.withdrawFee.toFixed(2);
+        this.withdraw.rate = this.withdrawRate.toFixed(2);
+        this.withdraw.walletFee = this.withdrawTransactionFee.toFixed(2);
 
 
-      this.waitingForResponse = true;
-      this.walletService.withdrawFromAccount(this.withdraw).subscribe(data => {
-        this.amountToWithdraw = 0;
-        this.toastr.success('Withdraw amount successfully');
-        this.getBalance();
-        this.savedDetails();
-        this.waitingForResponse = false;
-      }, err => {
-        this.waitingForResponse = false;
-        this.toastr.error('Error while withdraw amount', 'Error!');
-      })
-    } else {
-      this.toastr.error('Some fileds are missing', 'Error!');
+        this.waitingForResponse = true;
+        this.walletService.withdrawFromAccount(this.withdraw).subscribe(data => {
+          this.amountToWithdraw = 0;
+          this.toastr.success('Withdraw amount successfully');
+          this.getBalance();
+          this.savedDetails();
+          this.waitingForResponse = false;
+        }, err => {
+          this.waitingForResponse = false;
+          this.toastr.error('Error while withdraw amount', 'Error!');
+        })
+      } else {
+        this.toastr.error('Some fileds are missing', 'Error!');
+      }
     }
+
+
 
   }
 
