@@ -398,9 +398,11 @@ export class WalletComponent implements OnInit {
 
     if (this.withdraw.dob.split('-')[0] <= 12 && this.withdraw.dob.split('-')[1] <= 31 && this.withdraw.dob.split('-')[2] < new Date().getFullYear() && this.withdraw.dob.split('-')[2] > 1900) {
       console.log(new Date().getFullYear());
-      console.log(new Date(this.withdraw.dob).getFullYear());
-      
-      let years = Math.abs(new Date().getFullYear() - new Date(this.withdraw.dob).getFullYear());
+      console.log(parseInt(this.withdraw.dob.split('-')[2]));
+
+
+
+      let years = new Date().getFullYear() - parseInt(this.withdraw.dob.split('-')[2]);
       console.log(years);
       if (years >= 18 && years <= 100) {
         validDOB = true;
