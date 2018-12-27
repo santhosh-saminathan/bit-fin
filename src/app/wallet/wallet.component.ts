@@ -160,7 +160,7 @@ export class WalletComponent implements OnInit {
         if (response.id) {
           let data = {
             "stripeToken": response.id,
-            "saveCard": this.cardData.saveCard?this.cardData.saveCard.toString():'false',
+            "saveCard": this.cardData.saveCard?this.cardData.saveCard:false,
             "amount": this.amountToDeposit.toFixed(2),
             "user": localStorage.getItem('userId'),
             "xlmAmount": (this.amountToDeposit * this.usd_xlm_conversion).toFixed(2),
