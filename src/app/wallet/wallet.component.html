@@ -291,7 +291,7 @@
                   <div class="col-sm-offset-2 col-sm-10">
                     <span class="pleaseWaitOption" style="margin-right: 5px" *ngIf="waitingForResponse">
                       <i class="fas fa-spinner fa-spin"></i> Please wait...</span>
-                    <button [disabled]="waitingForResponse" style="float:right" type="submit" (click)="createToken()" class="btn btn-primary">Add New Card</button>
+                    <button [disabled]="waitingForResponse" style="float:right" type="submit" (click)="createToken()" class="btn btn-primary">Add New Card and Proceed</button>
                   </div>
                 </div>
               </div>
@@ -464,7 +464,7 @@
                   <div class="col-sm-6">
                     <div class="form-group text_align_left">
                       <label for="dob">Date of Birth </label>
-                      <input type="date" id="birthday" class="form-control profile" placeholder="MM-DD-YYYY" [(ngModel)]="withdraw.dob" name="dob">
+                      <input type="text" id="birthday" class="form-control profile" placeholder="MM-DD-YYYY" [(ngModel)]="withdraw.dob" name="dob">
                     </div>
                   </div>
 

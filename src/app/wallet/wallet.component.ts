@@ -399,7 +399,7 @@ export class WalletComponent implements OnInit {
     if (this.withdraw.dob.split('-')[0] <= 12 && this.withdraw.dob.split('-')[1] <= 31 && this.withdraw.dob.split('-')[2] < new Date().getFullYear() && this.withdraw.dob.split('-')[2] > 1900) {
       let years = Math.abs(new Date().getFullYear() - new Date(this.withdraw.dob).getFullYear());
       console.log(years);
-      if (years > 18 && years < 100) {
+      if (years >= 18 && years <= 100) {
         validDOB = true;
       } else {
         this.toastr.error('Age should be more than 18 years', 'Error!');
@@ -408,6 +408,13 @@ export class WalletComponent implements OnInit {
       this.toastr.error('Invalid Date format', 'Error!');
     }
 
+    // let years = Math.abs(new Date().getFullYear() - new Date(this.withdraw.dob).getFullYear());
+
+    // if (years > 18 && years < 100) {
+    //   validDOB = true;
+    // } else {
+    //   this.toastr.error('Age should be more than 18 years', 'Error!');
+    // }
 
 
     if (this.amountToWithdraw < (parseFloat(this.availableBalance[0].balance) * parseFloat(this.xlm_Usd_conversion))) {
