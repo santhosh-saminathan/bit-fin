@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ProfileService } from './../services/profile.service';
 import { CryptoService } from './../services/crypto.service';
 import { ToastrService } from 'ngx-toastr';
+declare var jQuery:any;
+declare var $ :any;
 
 @Component({
   selector: 'app-wallet',
@@ -68,6 +70,24 @@ export class WalletComponent implements OnInit {
 
   ngOnInit() {
 
+
+
+    var datefield = document.createElement("input")
+    datefield.setAttribute("type", "date")
+    if (datefield.type != "date") { //if browser doesn't support input type="date", load files for jQuery UI Date Picker
+      document.write('<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />\n')
+      document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"><\/script>\n')
+      document.write('<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"><\/script>\n')
+    }
+
+    if (datefield.type != "date") { //if browser doesn't support input type="date", initialize date picker widget:
+      jQuery(function ($) { //on document.ready
+        $('#birthday').datepicker();
+      }); 
+    }
+
+
+
     let presentYear = new Date().getFullYear();
 
     this.cardYear = [presentYear, presentYear + 1, presentYear + 2, presentYear + 3, presentYear + 4, presentYear + 5, presentYear + 6, presentYear + 7, presentYear + 8, presentYear + 9, presentYear + 10, presentYear + 11, presentYear + 12]
@@ -75,7 +95,7 @@ export class WalletComponent implements OnInit {
 
     this.cardData.cardNumber = 4242424242424242;
     this.cardData.saveCard = false;
-    this.withdraw.saveDetails = true;
+    this.withdraw.saveDetails = false;
     this.withdraw.routingNumber = '110000000';
     this.withdraw.accountNumber = '000123456789';
     this.withdraw.accountHolder = 'Jenny';
@@ -160,7 +180,7 @@ export class WalletComponent implements OnInit {
         if (response.id) {
           let data = {
             "stripeToken": response.id,
-            "saveCard": this.cardData.saveCard?this.cardData.saveCard:false,
+            "saveCard": this.cardData.saveCard ? this.cardData.saveCard : false,
             "amount": this.amountToDeposit.toFixed(2),
             "user": localStorage.getItem('userId'),
             "xlmAmount": (this.amountToDeposit * this.usd_xlm_conversion).toFixed(2),
@@ -185,7 +205,7 @@ export class WalletComponent implements OnInit {
             this.savedDetails();
           }, err => {
             this.toastr.error('Failed to deposit amount', 'Error!');
-           
+
             this.cardData = {};
             this.waitingForResponse = false;
             window.scroll(0, 0);
@@ -390,23 +410,23 @@ export class WalletComponent implements OnInit {
     } else {
       this.toastr.error('SSN number should be 4 digits', 'Error!');
     }
-  
-    let years = Math.abs(new Date().getFullYear() - new Date(this.withdraw.dob).getFullYear());
 
+    let years = Math.abs(new Date().getFullYear() - new Date(this.withdraw.dob).getFullYear());
+    console.log(years);
     if (years > 18 && years < 100) {
       validDOB = true;
     } else {
       this.toastr.error('Age should be more than 18 years', 'Error!');
     }
 
-    if(this.amountToWithdraw < (parseFloat(this.availableBalance[0].balance) * parseFloat(this.xlm_Usd_conversion))){
+    if (this.amountToWithdraw < (parseFloat(this.availableBalance[0].balance) * parseFloat(this.xlm_Usd_conversion))) {
       validWithdrawAmount = true;
     }
 
-    if (validWithdrawAmount && validMobile && validSSN && validDOB && this.amountToWithdraw > 0  && 
+    if (validWithdrawAmount && validMobile && validSSN && validDOB && this.amountToWithdraw > 0 &&
       this.withdraw.routingNumber && this.withdraw.accountNumber && this.withdraw.phoneNumber && this.withdraw.accountHolder
-      &&  this.withdraw.firstName && this.withdraw.lastName && this.withdraw.line1 && this.withdraw.line2 
-      && this.withdraw.state && this.withdraw.city && this.withdraw.postalCode && this.withdraw.ssn ) {
+      && this.withdraw.firstName && this.withdraw.lastName && this.withdraw.line1 && this.withdraw.line2
+      && this.withdraw.state && this.withdraw.city && this.withdraw.postalCode && this.withdraw.ssn) {
 
       this.withdraw.day = new Date(this.withdraw.dob.toString()).getDate();
       this.withdraw.month = new Date(this.withdraw.dob.toString()).getMonth() + 1;

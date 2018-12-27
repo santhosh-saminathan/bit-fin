@@ -1,7 +1,8 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ProfileService } from './../services/profile.service';
 import { ToastrService } from 'ngx-toastr';
-
+declare var jquery:any;
+declare var $ :any;
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -22,6 +23,8 @@ export class ProfileComponent implements OnInit {
   constructor(public toastr: ToastrService, private profileService: ProfileService) { }
 
   ngOnInit() {
+
+
     this.profileService.getUserDetails().subscribe((data) => {
       this.noContent = false;
       this.userProfileResponse = data;
