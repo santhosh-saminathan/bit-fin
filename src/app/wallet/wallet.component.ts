@@ -135,12 +135,13 @@ export class WalletComponent implements OnInit {
       element.selected = false;
 
     });
+    console.log(card);
     this.cardData.cvv = null;
     card.selected = true;
     this.cardData.cardHolder = card.holder
     this.cardData.cardNumber = card.number
-    this.cardData.month = card.expiry.split('/')[0] ? card.expiry.split('/')[0] : card.expiry.split('-')[0]
-    this.cardData.year = card.expiry.split('/')[1] ? card.expiry.split('/')[1] : card.expiry.split('-')[1]
+    this.cardData.month = card.expiry.includes('/') ? card.expiry.split('/')[0] : card.expiry.split('-')[0]
+    this.cardData.year = card.expiry.includes('/') ? card.expiry.split('/')[1] : card.expiry.split('-')[1]
   }
 
   createToken() {
@@ -159,14 +160,14 @@ export class WalletComponent implements OnInit {
         if (response.id) {
           let data = {
             "stripeToken": response.id,
-            "saveCard": this.cardData.saveCard,
+            "saveCard": this.cardData.saveCard?this.cardData.saveCard.toString():'false',
             "amount": this.amountToDeposit.toFixed(2),
             "user": localStorage.getItem('userId'),
             "xlmAmount": (this.amountToDeposit * this.usd_xlm_conversion).toFixed(2),
             "card": {
               "number": this.cardData.cardNumber.toString(),
               "holder": this.cardData.cardHolder,
-              "expiry": this.cardData.month + '/' + this.cardData.year,
+              "expiry": this.cardData.month + '-' + this.cardData.year,
               "user": localStorage.getItem('userId'),
             }
           }
