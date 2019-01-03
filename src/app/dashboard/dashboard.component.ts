@@ -8,7 +8,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./../transactions/bootstrap.css','./dashboard.component.css']
+  styleUrls: ['./../transactions/bootstrap.css', './dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
   lineChartData: any;
@@ -21,10 +21,10 @@ export class DashboardComponent implements OnInit {
   rateFlow: any;
   sentTransactions: any;
   noContent: boolean = true;
-  depositTransactions:any;
-  modal:any = {};
+  depositTransactions: any;
+  modal: any = {};
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute,public toastr: ToastrService, private transactionService: TransactionService, private cryptoService: CryptoService, private profileService: ProfileService) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, public toastr: ToastrService, private transactionService: TransactionService, private cryptoService: CryptoService, private profileService: ProfileService) { }
   public lineChartOptions: any = {
     responsive: true,
     scales: {
@@ -116,42 +116,52 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  redirectToTransactionPage(){
+  redirectToTransactionPage() {
     this.router.navigate(['/transactions'])
-
-
-   
-
   }
 
-  redirectToTransactionPageDeposit(){
+  redirectToTransactionPageDeposit() {
     this.router.navigate(['/transactions'], { queryParams: { type: 'deposit' } });
   }
 
+  // wallet page
+  redirectToWalletPage() {
+    this.router.navigate(['/wallet']);
+  }
+
+  redirectToWalletPageDeposit() {
+    this.router.navigate(['/wallet'], { queryParams: { type: 'deposit' } });
+  }
+
+  redirectToWalletPageReceive() {
+    this.router.navigate(['/wallet'], { queryParams: { type: 'receive' } });
+  }
+
+
 
   modalData(data, title) {
-    if(title == 'Sent Transaction Detail'){
-      this.modal.type="sent"
+    if (title == 'Sent Transaction Detail') {
+      this.modal.type = "sent"
       this.modal.title = title;
       this.modal.createdTime = data.createdTs;
       this.modal.receiver = data.receiver.firstName + data.receiver.lastName;
       this.modal.amount = data.walletAmount;
       this.modal.fee = data.walletFee;
-      this.modal.total = parseFloat(data.walletAmount)+parseFloat(data.walletFee);
+      this.modal.total = parseFloat(data.walletAmount) + parseFloat(data.walletFee);
     }
- 
 
-    if(title == 'Deposit Transaction Detail'){
-      this.modal.type="deposited"
+
+    if (title == 'Deposit Transaction Detail') {
+      this.modal.type = "deposited"
       this.modal.title = title;
       this.modal.createdTime = data.createdTs;
       this.modal.receiver = null;
       this.modal.fee = null;
       this.modal.amount = data.amount;
-      this.modal.total =  data.amount;
+      this.modal.total = data.amount;
     }
 
-   
+
   }
 
 

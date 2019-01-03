@@ -3,23 +3,19 @@
 <section class="top_custom_height">
   <div style="min-height:calc(100vh - 120px) " class="bg_color">
 
-    <div class="loading_content" *ngIf="noContent">
-      <i class="fas fa-spinner fa-spin"></i>
-      <br>
-      <b>Please wait...</b>
-    </div>
 
 
-    <div class="container" *ngIf="!noContent">
+
+    <div class="container">
 
       <ul class="nav nav-tabs">
-        <li class="active">
+        <li id="sendTab" class="active">
           <a data-toggle="tab" href="#send">SEND</a>
         </li>
-        <li>
+        <li id="receiveTab">
           <a data-toggle="tab" href="#receive">RECEIVE</a>
         </li>
-        <li>
+        <li id="depositTab">
           <a data-toggle="tab" href="#deposit">DEPOSIT</a>
         </li>
         <li>
@@ -29,15 +25,22 @@
 
       <div class="tab-content">
 
+        <!-- <button (click)="showReceive()">tets</button> -->
+
         <div id="send" class="tab-pane fade in active">
-          <div class="internal_section">
+          <div class="loading_content" *ngIf="noContent">
+            <i class="fas fa-spinner fa-spin"></i>
+            <br>
+            <b>Please wait...</b>
+          </div>
+          <div *ngIf="!noContent" class="internal_section">
             <div class="text_align_center width_60">
               <h4 style="text-align:left">Send Money</h4>
               <div>
                 <br>
                 <p class="text_align_left">
-                 <img src="./../../assets/img/help.png" title="help" style="height:15px;width:15px;margin-top:-5px"> Send money to other people who are registered on the app. A small transaction fee will apply above the amount you intend
-                  to send and it would be deducted from your balance.
+                  <img src="./../../assets/img/help.png" title="help" style="height:15px;width:15px;margin-top:-5px"> Send money to other people who are registered on the app. A small transaction fee will apply above the
+                  amount you intend to send and it would be deducted from your balance.
                 </p>
                 <br>
                 <form class="form-horizontal">
@@ -97,14 +100,19 @@
           </div>
         </div>
         <div id="receive" class="tab-pane fade">
-          <div class="internal_section">
+          <div class="loading_content" *ngIf="noContent">
+            <i class="fas fa-spinner fa-spin"></i>
+            <br>
+            <b>Please wait...</b>
+          </div>
+          <div *ngIf="!noContent" class="internal_section">
             <div class="text_align_center width_60">
               <h4 style="text-align:left">Receive Money</h4>
               <div *ngIf="yourMobileNumber">
                 <br>
                 <p class="text_align_left">
-                  <img src="./../../assets/img/help.png" title="help" style="height:15px;width:15px;margin-top:-5px"> To receive money, the other person sending money has to scan the QR code or type your phone number displayed below. Only
-                  users registered on the app can send you money.
+                  <img src="./../../assets/img/help.png" title="help" style="height:15px;width:15px;margin-top:-5px"> To receive money, the other person sending money has to scan the QR code or type your phone number displayed
+                  below. Only users registered on the app can send you money.
                 </p>
                 <br>
                 <div style="margin-left: calc(100% - 60%);">
@@ -122,7 +130,12 @@
           </div>
         </div>
         <div id="deposit" class="tab-pane fade ">
-          <div class="internal_section">
+          <div class="loading_content" *ngIf="noContent">
+            <i class="fas fa-spinner fa-spin"></i>
+            <br>
+            <b>Please wait...</b>
+          </div>
+          <div *ngIf="!noContent" class="internal_section">
             <div class="text_align_center width_80">
               <h4 class="text_align_left">Add Money</h4>
               <div>
@@ -300,7 +313,12 @@
           </div>
         </div>
         <div id="withdraw" class="tab-pane fade ">
-          <div class="internal_section">
+          <div class="loading_content" *ngIf="noContent">
+            <i class="fas fa-spinner fa-spin"></i>
+            <br>
+            <b>Please wait...</b>
+          </div>
+          <div *ngIf="!noContent" class="internal_section">
             <div class="text_align_center width_80">
               <h4 class="text_align_left">Withdraw Money</h4>
               <div>

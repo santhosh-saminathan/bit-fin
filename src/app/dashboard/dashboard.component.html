@@ -35,6 +35,31 @@
 
       <hr>
 
+      <h4 class="font_bold color_black">Transfer / Receive Money &nbsp;<img src="./../../assets/img/help.png" title="help"
+        style="height:15px;width:15px;margin-top:-5px"> </h4>
+    <br>
+    <div style="display:-webkit-box" class="row">
+      <div class="col-xs-12 col-sm-4" style="cursor:pointer">
+        <div class="outer_box" (click)="redirectToWalletPage()">
+          <h4 class="font_bold color_white">Send Money</h4>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-4" style="cursor:pointer">
+        <div class="outer_box" (click)="redirectToWalletPageReceive()">
+          <h4 class="font_bold color_white">Receive Money</h4>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-4" style="cursor:pointer">
+        <div class="outer_box" (click)="redirectToWalletPageDeposit()">
+          <h4 class="font_bold color_white">Add money to your Wallet</h4>
+        </div>
+      </div>
+    </div>
+    <hr>
+
+
       <div *ngIf="lineChartData && lineChartLabels" class="graph_section">
         <h4 class="font_bold color_black">XLM Rate Flow</h4>
         <br>

@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ProfileService } from './../services/profile.service';
 import { CryptoService } from './../services/crypto.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router, ActivatedRoute } from '@angular/router';
+
 declare var jQuery: any;
 declare var $: any;
 
@@ -56,13 +58,23 @@ export class WalletComponent implements OnInit {
   showSuccessAlert: boolean = false;
 
 
-  constructor(public toastr: ToastrService, private walletService: WalletService, private fb: FormBuilder, private profileService: ProfileService, private cryptoService: CryptoService) { }
+  constructor(private route: ActivatedRoute, public toastr: ToastrService, private walletService: WalletService, private fb: FormBuilder, private profileService: ProfileService, private cryptoService: CryptoService) { }
 
 
   getBalance() {
     this.profileService.getBalance().subscribe(data => {
       this.availableBalance = data;
       this.noContent = false;
+      if (this.route.snapshot.queryParams['type'] && this.route.snapshot.queryParams['type'] == "receive") {
+        this.showReceive();
+      }
+
+      if (this.route.snapshot.queryParams['type'] && this.route.snapshot.queryParams['type'] == "deposit") {
+        this.showDeposit();
+      }
+
+
+
     }, err => {
       this.toastr.error('Failed to get user balance data', 'Error!');
     });
@@ -89,6 +101,8 @@ export class WalletComponent implements OnInit {
     this.profileService.getUserDetails().subscribe(data => {
       this.userDetails = data;
       this.yourMobileNumber = this.userDetails.mobile_number;
+
+
     }, err => {
       this.toastr.error('Failed to get user details', 'Error!');
     });
@@ -117,7 +131,30 @@ export class WalletComponent implements OnInit {
     this.savedDetails();
 
 
+
+
+
+
+
   }
+
+
+  showDeposit() {
+    $("#sendTab").removeClass('active');
+    $("#depositTab").addClass('active');
+
+    $("#send").removeClass('in active');
+    $("#deposit").addClass('in active');
+  }
+
+  showReceive() {
+    $("#receiveTab").addClass('active');
+    $("#sendTab").removeClass('active');
+
+    $("#receive").addClass('in active');
+    $("#send").removeClass('in active');
+  }
+
 
   savedDetails() {
     this.walletService.userSavedCardDetails().subscribe(data => {
@@ -394,16 +431,9 @@ export class WalletComponent implements OnInit {
       this.toastr.error('SSN number should be 4 digits', 'Error!');
     }
 
-    console.log(this.withdraw.dob);
-
     if (this.withdraw.dob.split('-')[0] <= 12 && this.withdraw.dob.split('-')[1] <= 31 && this.withdraw.dob.split('-')[2] < new Date().getFullYear() && this.withdraw.dob.split('-')[2] > 1900) {
-      console.log(new Date().getFullYear());
-      console.log(parseInt(this.withdraw.dob.split('-')[2]));
-
-
 
       let years = new Date().getFullYear() - parseInt(this.withdraw.dob.split('-')[2]);
-      console.log(years);
       if (years >= 18 && years <= 100) {
         validDOB = true;
       } else {
