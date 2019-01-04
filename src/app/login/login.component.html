@@ -165,7 +165,7 @@
                                     <span class="check-mark"></span>
                                 </label>
                                 <small>Please fill all the details</small>
-                                <button id="contact-submit-btn" class="main-gradient-bg contact-submit-btn" (click)="loginUser()" type="submit">Sign in
+                                <button id="contact-submit-btn" class="main-gradient-bg contact-submit-btn" (click)="loginUser()" type="submit"> <span *ngIf="url=='signin'" > Sign in </span> <span *ngIf="url=='signup'"> Sign up </span> 
                                 </button>
                             </div>
 
