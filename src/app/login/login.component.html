@@ -243,7 +243,10 @@
 
                         </form>
                         <div class="sign-up-btn" (click)="newLogin()">
-                            <a style="color:white;cursor:pointer" class="blue-light-background hover-up">Or create a new account</a>
+                            <a style="color:white;cursor:pointer" class="blue-light-background hover-up">
+                               <span *ngIf="url=='signin'" (click)="signUp()">Or create a new account</span> 
+                               <span *ngIf="url=='signup'" (click)="signIn()">Already have an account ? Signin</span>
+                            </a>
                         </div>
                     </div>
                 </div>

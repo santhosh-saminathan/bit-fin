@@ -64,7 +64,16 @@ export class LoginComponent implements OnInit {
 
   newLogin() {
     this.login = {};
+    this.url = "signup";
     this.showLoginScreen();
+  }
+
+  signIn(){
+    this.router.navigate(['/login']);
+  }
+
+  signUp(){
+    this.router.navigate(['/signup']);
   }
 
   loginUser() {
