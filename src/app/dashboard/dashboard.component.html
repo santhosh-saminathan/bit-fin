@@ -11,22 +11,24 @@
     <div *ngIf="!noContent" class="container dashboard_section">
       <div class="balance_section">
         <h4 class="font_bold color_black">Your Account Balance</h4>
+        <p class="desc">The total Available Balance in your account is shown in (USD). The represented XLM value is for informational purpose only.</p>
         <div style="display:-webkit-box" class="row" *ngIf="userBalance && usd_Xlm && xlm_Usd">
           <div class="col-xs-12 col-sm-4">
             <div class="outer_box">
-              <h4 class="font_bold color_white">Available Balance - USD</h4>
+              <h4 class="font_bold ">Available Balance - USD<img src="./../../assets/img/help.png" title="The total Available Balance in your account shown in USD" style="height:15px;width:15px;margin-top:-5px;margin-left:5px"></h4>
               <h3 class="font_bold">$ {{userBalance * xlm_Usd.USD | number : '1.2-2'}}</h3>
             </div>
           </div>
           <div class="col-xs-12 col-sm-4">
             <div class="outer_box">
-              <h4 class="font_bold">Available Balance - XLM</h4>
+              <h4 class="font_bold">Available Balance - XLM<img src="./../../assets/img/help.png" title="The total Available Balance in your account shown in XLM" style="height:15px;width:15px;margin-top:-5px;margin-left:5px"></h4>
               <h3 class="font_bold"> {{userBalance}} XLM</h3>
             </div>
           </div>
           <div class="col-xs-12 col-sm-4">
             <div class="outer_box">
-              <h4 *ngIf="xlm_Usd" class="font_bold">1 XLM = {{xlm_Usd.USD}} USD</h4>
+                <h4 class="font_bold">Market Cap<img src="./../../assets/img/help.png" title="For informational purpose, the current market capitalization rate." style="height:15px;width:15px;margin-top:-5px;margin-left:5px"></h4>
+              <!-- <h4 *ngIf="xlm_Usd" class="font_bold">1 XLM = {{xlm_Usd.USD}} USD</h4> -->
               <h3 *ngIf="usd_Xlm" class="font_bold">1 USD = {{usd_Xlm.XLM}} XLM</h3>
             </div>
           </div>
@@ -35,25 +37,25 @@
 
       <hr>
 
-      <h4 class="font_bold color_black">Transfer / Receive Money &nbsp;<img src="./../../assets/img/help.png" title="help"
-        style="height:15px;width:15px;margin-top:-5px"> </h4>
-    <br>
+      <h4 class="font_bold color_black">Transfer / Receive Money </h4>
+      <p class="desc">Send money to others or receive from people who are registered on the platform. To add more balance, click on <b>Add money to your wallet</b> </p>
+ 
     <div style="display:-webkit-box" class="row">
       <div class="col-xs-12 col-sm-4" style="cursor:pointer">
         <div class="outer_box" (click)="redirectToWalletPage()">
-          <h4 class="font_bold color_white">Send Money</h4>
+          <h4 class="font_bold button_color">Send Money</h4>
         </div>
       </div>
 
       <div class="col-xs-12 col-sm-4" style="cursor:pointer">
         <div class="outer_box" (click)="redirectToWalletPageReceive()">
-          <h4 class="font_bold color_white">Receive Money</h4>
+          <h4 class="font_bold button_color">Receive Money</h4>
         </div>
       </div>
 
       <div class="col-xs-12 col-sm-4" style="cursor:pointer">
         <div class="outer_box" (click)="redirectToWalletPageDeposit()">
-          <h4 class="font_bold color_white">Add money to your Wallet</h4>
+          <h4 class="font_bold button_color">Add money to your Wallet</h4>
         </div>
       </div>
     </div>
@@ -61,7 +63,8 @@
 
 
       <div *ngIf="lineChartData && lineChartLabels" class="graph_section">
-        <h4 class="font_bold color_black">XLM Rate Flow</h4>
+        <h4 class="font_bold color_black">STELLAR (XLM) Price chart</h4>
+        <p class="desc">The price chart of stellar over a period of time. This is for informational purpose only.</p>
         <br>
         <div style="display: block;" *ngIf="lineChartData && lineChartLabels">
           <canvas baseChart width="300" height="80" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
@@ -76,7 +79,8 @@
         <div class="row" style="display:-webkit-box">
           <div class="col-md-6">
             <h4 class="font_bold color_black text_align_center">Recent sent Transactions</h4>
-            <br>
+            <p class="desc" style="text-align:center">Recent transactions that were sent by you.</p>
+           
             <div class="card" (click)="modalData(transaction,'Sent Transaction Detail')" data-toggle="modal" data-target="#myModal" *ngFor="let transaction of sentTransactions | slice:0:4">
               <div class="small-font">
                 <span>Sent to</span>
@@ -97,8 +101,8 @@
 
           <div class="col-md-6">
             <h4 class="font_bold color_black text_align_center">Recent Deposit Transactions</h4>
-            <br>
-
+            <p class="desc" style="text-align:center">Recent deposits made by you to your wallet.</p>
+            
 
             <div class="card" (click)="modalData(transaction,'Deposit Transaction Detail')" data-toggle="modal" data-target="#myModal"
               *ngFor="let transaction of depositTransactions | slice:0:4">

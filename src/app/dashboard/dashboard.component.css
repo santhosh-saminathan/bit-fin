@@ -16,13 +16,17 @@
 
 .outer_box {
     width: 95%;
-    border: 1px solid #151935;
+    border: 1px solid #a95309;
     padding: 10px;
     border-radius: 4px;
-    background: #151935;
-    color: white;
+    /* background: #151935; */
+  color:#5A3F3F;
     text-align: center;
     margin: 10px;
+}
+
+.button_color{
+    color: #8C8C8C;
 }
 
 .font_bold {
@@ -60,7 +64,8 @@ i {
     border: 1px solid lightgrey;
     margin: 15px auto;
     padding: 15px;
-    background:  #151935;;
+    background:  #151935;
+    cursor: pointer;
 }
 
 .right-float {
@@ -128,4 +133,8 @@ td {
     .col-md-6{
         width: 99%;
     } */
+}
+
+.desc{
+    color: #959698;
 }
